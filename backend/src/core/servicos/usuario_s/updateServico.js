@@ -8,7 +8,7 @@ async function HashPassword(password) {
   return await bcrypt.hash(password, saltRounds);
 }
 
-    async function update(id, nome, username, email, senha, senhaConfirmacao){
+    async function update(id, nome, username){
         try {
             const usuario = await database("usuario").select("*").where("id", id).first();
             
@@ -16,7 +16,8 @@ async function HashPassword(password) {
               throw new Error("Usuário não encontrado!");
             }
 
-            if (senha.length < 4) {
+            //EM CASO DE async function update(id, nome, username, email, senha, senhaConfirmacao)
+            /*if (senha.length < 4) {
               throw new Error("Senha muito curta!");
             }
         
@@ -33,11 +34,10 @@ async function HashPassword(password) {
             }
 
             const hash = await HashPassword(senha);
+            */
             const updatedUser = {
               nome: nome,
-              username: username,
-              email: email,
-              senha: hash
+              username: username
             }
 
             await database("usuario").update(updatedUser).where("id",id);
