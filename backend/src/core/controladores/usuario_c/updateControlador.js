@@ -4,9 +4,22 @@ const { update } = require('../../servicos/usuario_s/updateServico');
 const updateControlador = async (req = request, res = response) => {
   try {
     const updateId = req.params.id;
-    let updatedUser = req.body;
+    const {
+      nome,
+      username,
+      email,
+      senha,
+      senhaConfirmacao,
+    } = req.body;
 
-    let updateService = await update(updateId, updatedUser);
+    let updateService = await update(
+      updateId, 
+      nome,
+      username,
+      email,
+      senha,
+      senhaConfirmacao,);
+      
     res.json(updateService);
 
   } catch (error) {

@@ -12,8 +12,6 @@ router.get('/usuario/read/:id', readOneControlador);
 router.patch('/usuario/update/:id', updateControlador);
 router.post('/usuario/cadaster', cadastroControlador);
 router.delete('/usuario/delete/:id', deleteControlador);
-/*
-router.post('/usuario/create', )
-*/
+
 
 module.exports = router;
