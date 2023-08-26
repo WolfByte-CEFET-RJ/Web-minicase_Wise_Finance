@@ -1,8 +1,10 @@
-import { database } from "../../../config/database";
-import { ComparePassword } from "../../../utils/secure";
-import jwt from "jsonwebtoken";
+const knex = require('knex');
+const knexConfig = require('../../../config/conexao_db');
+const database = knex(knexConfig.development);
+/*const { ComparePassword } = require("../../../utils/secure");
+const jwt = require("jsonwebtoken");*/
 
-export async function loginUserService(identificador, senha, res) {
+async function loginUsuario(identificador, senha, res) {
   try {
     // Verifica se o identificador é um email ou um nome de usuário
     let consultaUsuario = database("usuario").select("*");
@@ -51,3 +53,5 @@ export async function loginUserService(identificador, senha, res) {
     };
   }
 }
+
+module.exports = { loginUsuario };
