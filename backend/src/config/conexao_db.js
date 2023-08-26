@@ -11,6 +11,10 @@ const knexConfig = {
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
     },
+    migrations: {
+      tableName: "migrations",
+      directory: 'migrations'
+  }
   }
 };
 
