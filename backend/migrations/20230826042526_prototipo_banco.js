@@ -7,7 +7,7 @@ exports.up = function(knex) {
     .createTable('Usuario', function (table) {
       table.increments('ID').primary();
       table.string('Username').notNullable();
-      table.string('Email').notNullable().unique();
+      table.string('Email', 255).notNullable();
       table.string('Nome').notNullable();
       table.string('Senha').notNullable();
       table.timestamp('Data_Registro').defaultTo(knex.fn.now());
