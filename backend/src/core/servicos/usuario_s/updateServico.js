@@ -3,14 +3,17 @@ const knexConfig = require('../../../config/conexao_db');
 const database = knex(knexConfig.development);
 const bcrypt = require('bcrypt');
 
-async function HashPassword(password) {
+/*async function HashPassword(password) {
   const saltRounds = 10;
   return await bcrypt.hash(password, saltRounds);
-}
+}*/
 
     async function update(id, nome, username){
         try {
-            const usuario = await database("usuario").select("*").where("id", id).first();
+            const usuario = await database("usuario")
+            .select("*")
+            .where("id", id)
+            .first();
             
             if (!usuario) {
               throw new Error("Usuário não encontrado!");
@@ -40,14 +43,16 @@ async function HashPassword(password) {
               username: username
             }
 
-            await database("usuario").update(updatedUser).where("id",id);
+            await database("usuario")
+            .update(updatedUser)
+            .where("id",id);
             
             return {
               status: true,
               message: "Informações atualizadas!",
             };
           } catch (error) {
-            console.log(error);
+              console.log(error);
             return {
               status: false,
               message: error["message"]

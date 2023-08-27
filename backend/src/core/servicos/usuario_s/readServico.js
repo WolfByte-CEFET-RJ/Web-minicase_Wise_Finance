@@ -4,10 +4,13 @@ const database = knex(knexConfig.development);
 
 async function readAll(){
     try { 
-    const lista = await database('usuario').select("*");
+        const lista = await database('usuario')
+        .select("*");
+
         if(lista.length==0){
             throw new Error("Usuários não encontrados");
         }
+
         return {
             status: true,
             lista
@@ -22,10 +25,15 @@ async function readAll(){
 
 async function readOne(id){
     try { 
-        const usuario = await database('usuario').select("*").where("id",id).first();
+        const usuario = await database('usuario')
+        .select("*")
+        .where("id",id)
+        .first();
+
         if(usuario==null){
             throw new Error("Usuário não encontrado");
         }
+        
         return {
             status: true,
             usuario
