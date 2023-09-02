@@ -3,11 +3,14 @@ import Botao from "../components/Botao"
 import Input from "../components/Input"
 
 
+
+
 const Cadastro = () => {
   return (
-    <div className = "@apply bg-[src('../../public/FundoWise.png')] bg-no-repeat bg-contain">
-      
-    </div>
+    <body className = "w-screen h-screen bg-no-repeat bg-cover"
+    style = {{backgroundImage:"url(/FundoWise.png)"}}
+    >
+    </body>
   );
 }
 
