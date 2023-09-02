@@ -3,6 +3,14 @@ import { useNavigate, Link } from "react-router-dom";
 import useApi from "../hooks/useApi";
 
 const Cadastro = () => {
+  const [name, setName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [passVer, setPassVer] = useState("");
+  const handleChange = (event, setText) => {
+    setText(event.target.value);
+  };
 
   return (
     <div className = "w-screen h-screen bg-no-repeat bg-cover flex items-center	justify-center flex-col" style = {{backgroundImage:"url(/Fundo.svg)"}}>
@@ -13,19 +21,19 @@ const Cadastro = () => {
             <input
               className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
               type="text"
-              name="nomeCompleto"
-              id="nomeCompleto"
+              name="name"
+              id="name"
               placeholder="Digite seu nome completo"
-              onChange=""
+              onChange={(event) => handleChange(event, setName)}
             />
           <h1 className="mt-[10px] font-medium">Nome de Usuário:</h1>
           <input
               className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
               type="text"
-              name="nomeUsuario"
-              id="nomeUsuario"
+              name="userName"
+              id="userName"
               placeholder="Digite seu nome de usuário"
-              onChange=""
+              onChange={(event) => handleChange(event, setUserName)}
             />
           <h1 className="mt-[10px] font-medium">Email:</h1>
           <input
@@ -34,25 +42,25 @@ const Cadastro = () => {
               name="email"
               id="email"
               placeholder="Digite seu e-mail"
-              onChange=""
+              onChange={(event) => handleChange(event, setEmail)}
             />
           <h1 className="mt-[10px] font-medium">Senha:</h1>
           <input
               className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
               type="text"
-              name="senha"
-              id="senha"
+              name="pass"
+              id="pass"
               placeholder="Digite sua senha"
-              onChange=""
+              onChange={(event) => handleChange(event, setPass)}
             />
           <h1 className="mt-[10px] font-medium">Confirmar Senha:</h1>
           <input
               className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
               type="text"
-              name="confirmarSenha"
-              id="confirmarSenha"
+              name="passVer"
+              id="passVer"
               placeholder="Confirme sua senha"
-              onChange=""
+              onChange={(event) => handleChange(event, setPassVer)}
             />
           <button className="mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black">
             Cadastre-se
