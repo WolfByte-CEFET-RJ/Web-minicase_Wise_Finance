@@ -66,10 +66,10 @@ const Cadastro = () => {
           <button className="mt-[35px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF]">
             Cadastre-se
           </button>
-          <button className="mt-[15px] border-2 border-black rounded-[9px] bg-green text-[#FFF]">
+        </form>
+        <button className="w-[100%] border-2 border-black rounded-[9px] bg-green text-[#FFF]">
             Voltar
           </button>
-        </form>
       </div>
     </div>
   );
