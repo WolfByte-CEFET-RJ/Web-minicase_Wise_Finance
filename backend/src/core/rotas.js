@@ -10,6 +10,6 @@ router.get('/usuario/read/:id', readOneControlador);
 router.patch('/usuario/update/:id', updateControlador);
 router.post('/usuario/cadastro', cadastroControlador);
 router.delete('/usuario/delete/:id', deleteControlador);
-router.post("/login", loginControlador);
+router.post('/login', loginControlador);
 
 module.exports = router;
