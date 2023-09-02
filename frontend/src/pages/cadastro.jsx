@@ -9,11 +9,12 @@ const Cadastro = () => {
   
   
   return (
-    <div className = "w-screen h-screen bg-no-repeat bg-cover flex items-center	justify-items-center flex-col" style = {{backgroundImage:"url(/Fundo.svg)"}}>
-      <div className="bg-[#FFF]">
-        <form action="" className="">
-          <h1 className="">Nome Completo:</h1>
-          <div className="">
+    <div className = "w-screen h-screen bg-no-repeat bg-cover flex items-center	justify-center flex-col" style = {{backgroundImage:"url(/Fundo.svg)"}}>
+      <div className="rounded-[60px] bg-[#FFF] md:h-[766px] md:w-[466px] p-[43px] ">
+        <form action="" className="flex justify-items-center flex-col h-[100%] w-[100%]">
+          <img src="/userFoto.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
+          <h1 className="mt-[37px]">Nome Completo:</h1>
+          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
             <input
               type="text"
               name="nomeCompleto"
@@ -22,8 +23,8 @@ const Cadastro = () => {
               onChange=""
             />
           </div>
-          <h1 className="">Nome de Usuário:</h1>
-          <div className="">
+          <h1 className="mt-[10px]">Nome de Usuário:</h1>
+          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
               type="text"
               name="nomeUsuario"
@@ -32,8 +33,8 @@ const Cadastro = () => {
               onChange=""
             />
           </div>
-          <h1 className="">Email:</h1>
-          <div className="">
+          <h1 className="mt-[10px]">Email:</h1>
+          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
               type="text"
               name="email"
@@ -42,8 +43,8 @@ const Cadastro = () => {
               onChange=""
             />
           </div>
-          <h1 className="">Senha:</h1>
-          <div className="">
+          <h1 className="mt-[10px]">Senha:</h1>
+          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
               type="text"
               name="senha"
@@ -52,8 +53,8 @@ const Cadastro = () => {
               onChange=""
             />
           </div>
-          <h1 className="">Confirmar Senha:</h1>
-          <div className="">
+          <h1 className="mt-[10px]">Confirmar Senha:</h1>
+          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
               type="text"
               name="confirmarSenha"
@@ -62,10 +63,10 @@ const Cadastro = () => {
               onChange=""
             />
           </div>
-          <button className="">
+          <button className="mt-[35px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF]">
             Cadastre-se
           </button>
-          <button className="">
+          <button className="mt-[15px] border-2 border-black rounded-[9px] bg-green text-[#FFF]">
             Voltar
           </button>
         </form>
