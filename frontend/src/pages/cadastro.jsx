@@ -14,62 +14,57 @@ const Cadastro = () => {
         <form action="" className="flex justify-items-center flex-col h-[100%] w-[100%]">
           <img src="/userFoto.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
           <h1 className="mt-[37px]">Nome Completo:</h1>
-          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
             <input
+              className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px]"
               type="text"
               name="nomeCompleto"
               id="nomeCompleto"
               placeholder="Digite seu nome completo"
               onChange=""
             />
-          </div>
           <h1 className="mt-[10px]">Nome de Usuário:</h1>
-          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
+              className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px]"
               type="text"
               name="nomeUsuario"
               id="nomeUsuario"
               placeholder="Digite seu nome de Usuário"
               onChange=""
             />
-          </div>
           <h1 className="mt-[10px]">Email:</h1>
-          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
+              className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px]"
               type="text"
               name="email"
               id="email"
               placeholder="Digite seu E-mail"
               onChange=""
             />
-          </div>
           <h1 className="mt-[10px]">Senha:</h1>
-          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
+              className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px]"
               type="text"
               name="senha"
               id="senha"
               placeholder="Digite sua senha"
               onChange=""
             />
-          </div>
           <h1 className="mt-[10px]">Confirmar Senha:</h1>
-          <div className="pt-3 w-[355px] h-[46px] border-2 border-green rounded-[9px]">
           <input
+              className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px]"
               type="text"
               name="confirmarSenha"
               id="confirmarSenha"
               placeholder="Confirme sua senha"
               onChange=""
             />
-          </div>
-          <button className="mt-[35px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF]">
+          <button className="mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF]">
             Cadastre-se
           </button>
-        </form>
-        <button className="w-[100%] border-2 border-black rounded-[9px] bg-green text-[#FFF]">
+          <button className="w-[100%] border-2 border-black rounded-[9px] bg-green text-[#FFF] mt-[15px]">
             Voltar
-          </button>
+        </button>
+        </form>
       </div>
     </div>
   );
