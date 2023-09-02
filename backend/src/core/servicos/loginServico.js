@@ -1,14 +1,14 @@
 const database = require('../../database/index');
 const jwt = require("jsonwebtoken"); 
-const { ComparePassword } = require("../../../utils/seguranca");
+const { comparePassword } = require("../../utils/seguranca");
 
 async function loginUsuario(identificador, senha, res) {
   try {
     let consultaUsuario = database("usuario").select("*");
     if (identificador.includes("@")) {
-      consultaUsuario = consultaUsuario.where({ email: identificador, ativo: 1 });
+      consultaUsuario = consultaUsuario.where({ email: identificador});
     } else {
-      consultaUsuario = consultaUsuario.where({ nome_de_usuario: identificador, ativo: 1 });
+      consultaUsuario = consultaUsuario.where({ nome: identificador});
     }
 
     const usuario = await consultaUsuario.first();
@@ -17,7 +17,7 @@ async function loginUsuario(identificador, senha, res) {
       throw new Error("Usuário não encontrado");
     }
 
-    const verificarSenha = await ComparePassword(senha, usuario.senha);
+    const verificarSenha = await comparePassword(senha, usuario.Senha);
     if (!verificarSenha) {
       throw new Error("Senha inválida");
     }
@@ -42,9 +42,9 @@ async function loginUsuario(identificador, senha, res) {
       status: true,
       message: "Login realizado com sucesso",
       usuario: {
-        id: usuario.id,
-        nome: usuario.nome,
-        email: usuario.email,
+        id: usuario.ID,
+        nome: usuario.Nome,
+        email: usuario.Email,
       },
     };
   } catch (error) {

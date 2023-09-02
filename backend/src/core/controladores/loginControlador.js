@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");  
-const { loginUsuario } = require('../servicos/usuarioServico');
+const { loginUsuario } = require('../servicos/loginServico');
 
 async function loginControlador(req, res) {
   const { identificador, senha } = req.body;
