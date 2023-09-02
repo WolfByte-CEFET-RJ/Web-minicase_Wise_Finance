@@ -61,7 +61,7 @@ const Cadastro = () => {
           <button className="mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF]">
             Cadastre-se
           </button>
-          <button className="w-[100%] border-2 border-black rounded-[9px] bg-green text-[#FFF] mt-[15px]">
+          <button className="border-2 border-black rounded-[9px] bg-green text-[#FFF] mt-[15px]">
             Voltar
         </button>
         </form>
