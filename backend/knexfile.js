@@ -5,15 +5,14 @@ const knexConfig = {
   development: {
     client: 'mysql2',
     connection: {
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      user: process.env.DB_USER,
+      database: process.env.DB_NAME, 
+      user: process.env.DB_USER, 
       password: process.env.DB_PASS,
-      database: process.env.DB_NAME,
+      port: process.env.DB_PORT
     },
     migrations: {
       tableName: "migrations",
-      directory: 'migrations'
+      directory: './src/database/migrations'
   }
   }
 };

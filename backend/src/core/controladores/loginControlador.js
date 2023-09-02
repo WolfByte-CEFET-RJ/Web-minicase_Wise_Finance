@@ -1,4 +1,4 @@
-const { loginUsuario } = require('../../servicos/usuario_s/loginServico');
+const { loginUsuario } = require('../servicos/loginServico');
 /*const jwt = require("jsonwebtoken");
 const { ComparePassword } = require("../../../utils/secure");  */
 

@@ -1,6 +1,4 @@
-const knex = require('knex');
-const knexConfig = require('../../../config/conexao_db');
-const database = knex(knexConfig.development);
+const database = require('../../database/index');
 /*const { ComparePassword } = require("../../../utils/secure");
 const jwt = require("jsonwebtoken");*/
 

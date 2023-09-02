@@ -7,7 +7,7 @@ const servidor = express()
 servidor.use(express.json())
 
 //ROTAS
-const rotas = require("./core/rotas")
+const rotas = require("./rotas")
 servidor.use('', rotas)
 
 
