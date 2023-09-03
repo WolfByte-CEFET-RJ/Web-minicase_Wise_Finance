@@ -8,10 +8,14 @@ const Cadastro = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [passVer, setPassVer] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
   const handleChange = (event, setText) => {
     setText(event.target.value);
   };
-
+  const navigate = useNavigate();
   return (
     <div className = "w-screen h-screen bg-no-repeat bg-cover flex items-center	justify-center flex-col" style = {{backgroundImage:"url(/Fundo.svg)"}}>
       <div className="rounded-[60px] bg-[#FFF] md:h-[766px] md:w-[466px] p-[43px] ">

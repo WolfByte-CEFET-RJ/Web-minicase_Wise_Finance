@@ -1,6 +1,7 @@
 import React from "react";
 
-const Botao = ({Text, onClick, Type = "button"}) => {
+const passButton = ({Text, onClick, Type = "button"}) => {
+    
     return(
         <button
         className = "Botao"
@@ -14,4 +15,4 @@ const Botao = ({Text, onClick, Type = "button"}) => {
     ) 
 };
 
-export default Botao;
+export default passButton;
