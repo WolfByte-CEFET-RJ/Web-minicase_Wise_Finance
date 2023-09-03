@@ -1,32 +1,32 @@
 const database = require('../../database/index');
-/*const { ComparePassword } = require("../../../utils/secure");
-const jwt = require("jsonwebtoken");*/
+const jwt = require("jsonwebtoken"); 
+const { comparePassword } = require("../../utils/seguranca");
 
-async function loginUsuario(identificador, senha, res) {
+async function loginUsuario(identificador, senha) {
   try {
-    // Verifica se o identificador é um email ou um nome de usuário
     let consultaUsuario = database("usuario").select("*");
     if (identificador.includes("@")) {
-      consultaUsuario = consultaUsuario.where({ email: identificador, ativo: 1 });
+      consultaUsuario = consultaUsuario.where({ email: identificador});
     } else {
-      consultaUsuario = consultaUsuario.where({ nome_de_usuario: identificador, ativo: 1 });
+      consultaUsuario = consultaUsuario.where({ username: identificador});
     }
-    
+
     const usuario = await consultaUsuario.first();
-    
+
     if (!usuario) {
       throw new Error("Usuário não encontrado");
     }
 
-    const verificarSenha = await ComparePassword(senha, usuario.senha);
+    const verificarSenha = await comparePassword(senha, usuario.Senha);
     if (!verificarSenha) {
       throw new Error("Senha inválida");
     }
 
+    // Cria o token JWT
     const tokenPayload = {
       InformacoesUsuario: {
         id: usuario.id,
-        nome: usuario.nome,
+        username: usuario.username,
         email: usuario.email,
       },
     };
@@ -34,14 +34,17 @@ async function loginUsuario(identificador, senha, res) {
     const token = jwt.sign(tokenPayload, process.env.JWT_KEY || "", {
       expiresIn: "48h",
     });
-    res.cookie("access_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
 
+    // Retorna o token JWT
     return {
       status: true,
       message: "Login realizado com sucesso",
+      usuario: {
+        id: usuario.ID,
+        username: usuario.Username,
+        email: usuario.Email,
+      },
+      token: token, // Adiciona o token JWT ao objeto de retorno
     };
   } catch (error) {
     console.log(error);
