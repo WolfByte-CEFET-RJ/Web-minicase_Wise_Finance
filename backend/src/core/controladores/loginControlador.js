@@ -5,22 +5,11 @@ async function loginControlador(req, res) {
   const { identificador, senha } = req.body;
 
   try {
-    const loginService = await loginUsuario(identificador, senha, res);
+    const loginService = await loginUsuario(identificador, senha);
 
     if (loginService.status) {
-      const tokenPayload = {
-        InformacoesUsuario: {
-          id: loginService.usuario.id,
-          nome: loginService.usuario.nome,
-          email: loginService.usuario.email,
-        },
-      };
-
-      const token = jwt.sign(tokenPayload, process.env.JWT_KEY || "", {
-        expiresIn: "48h",
-      });
-
-      res.cookie("access_token", token, {
+      // Define o token JWT como um cookie
+      res.cookie("access_token", loginService.token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
       });

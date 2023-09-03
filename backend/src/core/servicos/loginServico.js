@@ -2,7 +2,7 @@ const database = require('../../database/index');
 const jwt = require("jsonwebtoken"); 
 const { comparePassword } = require("../../utils/seguranca");
 
-async function loginUsuario(identificador, senha, res) {
+async function loginUsuario(identificador, senha) {
   try {
     let consultaUsuario = database("usuario").select("*");
     if (identificador.includes("@")) {
@@ -22,6 +22,7 @@ async function loginUsuario(identificador, senha, res) {
       throw new Error("Senha inválida");
     }
 
+    // Cria o token JWT
     const tokenPayload = {
       InformacoesUsuario: {
         id: usuario.id,
@@ -33,11 +34,8 @@ async function loginUsuario(identificador, senha, res) {
     const token = jwt.sign(tokenPayload, process.env.JWT_KEY || "", {
       expiresIn: "48h",
     });
-    res.cookie("access_token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-    });
 
+    // Retorna o token JWT
     return {
       status: true,
       message: "Login realizado com sucesso",
@@ -46,6 +44,7 @@ async function loginUsuario(identificador, senha, res) {
         nome: usuario.Nome,
         email: usuario.Email,
       },
+      token: token, // Adiciona o token JWT ao objeto de retorno
     };
   } catch (error) {
     console.log(error);
