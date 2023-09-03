@@ -8,7 +8,7 @@ async function loginUsuario(identificador, senha) {
     if (identificador.includes("@")) {
       consultaUsuario = consultaUsuario.where({ email: identificador});
     } else {
-      consultaUsuario = consultaUsuario.where({ nome: identificador});
+      consultaUsuario = consultaUsuario.where({ username: identificador});
     }
 
     const usuario = await consultaUsuario.first();
@@ -26,7 +26,7 @@ async function loginUsuario(identificador, senha) {
     const tokenPayload = {
       InformacoesUsuario: {
         id: usuario.id,
-        nome: usuario.nome,
+        username: usuario.username,
         email: usuario.email,
       },
     };
@@ -41,7 +41,7 @@ async function loginUsuario(identificador, senha) {
       message: "Login realizado com sucesso",
       usuario: {
         id: usuario.ID,
-        nome: usuario.Nome,
+        username: usuario.Username,
         email: usuario.Email,
       },
       token: token, // Adiciona o token JWT ao objeto de retorno
