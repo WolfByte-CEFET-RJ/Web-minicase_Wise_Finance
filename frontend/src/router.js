@@ -1,11 +1,17 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Cadastro from "./pages/cadastro";
+import Login from "./pages/login"
+
 
 const routes = [
   {
     path: "/",
     element: <Cadastro />,
+  } ,
+  {
+    path: "/login",
+    element: <Login/>,
   }
 ];
 

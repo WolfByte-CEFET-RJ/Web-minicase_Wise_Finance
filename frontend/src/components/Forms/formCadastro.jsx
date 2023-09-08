@@ -97,7 +97,6 @@ const FormCadastro = () => {
                   : <Eye size={30} weight="duotone" onClick={handlePasswordVerToggle} className="ml-[-90%]  h-[98%] mr-[5%] pt-[2%] cursor-pointer" />
                 }
            
-
          
           </div>
     
