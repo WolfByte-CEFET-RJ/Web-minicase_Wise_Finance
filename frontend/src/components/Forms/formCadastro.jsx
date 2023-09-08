@@ -1,7 +1,8 @@
 import Input from "../componentsCadastro/inputCadastro"
 import React, { useState } from "react";
 import Button from "../componentsCadastro/buttonCadastro"
-import hide from '../../assets/images/olho (1).png'
+import {EyeSlash, Eye } from 'phosphor-react'
+
 
 const FormCadastro = () => {
     const [name, setName] = useState("");
@@ -12,9 +13,13 @@ const FormCadastro = () => {
     const [passVer, setPassVer] = useState("");
 
     const [showPassword, setShowPassword] = useState(false);
+    const [showPasswordVer, setShowPasswordVer] = useState(false);
 
     const handlePasswordToggle = () => {
       setShowPassword(!showPassword);
+    };
+    const handlePasswordVerToggle = () => {
+      setShowPasswordVer(!showPasswordVer);
     };
 
     const handleChange = (event, setText) => {
@@ -62,19 +67,16 @@ const FormCadastro = () => {
           <h1 className="mt-[10px] font-medium">Senha:</h1>
           <div className="w-full flex justify-between items-center;">
             <Input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="pass"
             id="pass"
             placeholder="Digite sua senha"
             onChange={(event) => handleChange(event, setPass)}
             />
-           
-            <img 
-              className="ml-[-90%] pr-[5%] h-[98%] pt-[2%] cursor-pointer" 
-              src = "/olhocortado.png"
-              id = 'icon' 
-              onclick ='showHide(pass,icon)'
-              />
+              {showPassword
+                  ? <EyeSlash size={30} weight="duotone" onClick={handlePasswordToggle}className="ml-[-90%]  h-[98%] mr-[5%] pt-[2%] cursor-pointer" />
+                  : <Eye size={30} weight="duotone" onClick={handlePasswordToggle} className="ml-[-90%]  h-[98%] mr-[5%] pt-[2%] cursor-pointer" />
+              }
 
           </div>
           
@@ -83,20 +85,20 @@ const FormCadastro = () => {
           <div className=" w-full flex justify-between items-center;">
             <Input
             className = "mb-[100px]"
-            type="password"
+            type={showPasswordVer ? "text" : "password"}
             name="passVer"
             id="passVer"
             placeholder="Confirme sua senha"
             onChange={(event) => handleChange(event, setPassVer)}
             />
 
-            <img
-             className="ml-[-90%] pr-[5%] h-[98%] pt-[2%] cursor-pointer" 
-             src = "/olhocortado.png"
-             id = 'icone' 
-             onclick='showHide(passVer, icone)'
-            />
-            
+                {showPasswordVer
+                  ? <EyeSlash size={30} weight="duotone" onClick={handlePasswordVerToggle}className="ml-[-90%]  h-[98%] mr-[5%] pt-[2%] cursor-pointer" />
+                  : <Eye size={30} weight="duotone" onClick={handlePasswordVerToggle} className="ml-[-90%]  h-[98%] mr-[5%] pt-[2%] cursor-pointer" />
+                }
+           
+
+         
           </div>
     
         </div>
