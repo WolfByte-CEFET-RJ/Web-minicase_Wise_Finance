@@ -10,8 +10,8 @@ async function loginControlador(req, res) {
     if (loginService.status) {
       // Define o token JWT como um cookie
       res.cookie("access_token", loginService.token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
+        httpOnly: false,
+        secure: false,
       });
 
       res.json({

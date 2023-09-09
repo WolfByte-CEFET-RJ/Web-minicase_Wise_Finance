@@ -6,7 +6,7 @@ const express = require("express")
 const servidor = express()
 servidor.use(express.json())
 
-//ROTAS
+//PREDEFINIÇÃO DAS ROTAS
 const rotas = require("./rotas")
 servidor.use('', rotas)
 
