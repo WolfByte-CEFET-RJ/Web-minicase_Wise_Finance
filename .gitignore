@@ -1,7 +1,6 @@
 # Arquivos .env
 .env
-.env.development.local
-.env.test.local
-.env.production.local
-.env.local
 
+# Arquivos de node
+
+node_modules
