@@ -6,12 +6,12 @@ import Login from "./pages/login"
 
 const routes = [
   {
-    path: "/",
+    path: "/cadastro",
     element: <Cadastro />,
   } ,
   {
-    path: "/login",
-    element: <Login/>,
+    path: "/",
+    element: <Login />,
   }
 ];
 
