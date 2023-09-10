@@ -6,7 +6,7 @@ const auth = require("../middleware/auth")
 
 
 //USUÁRIO
-router.get('/usuario/read',auth, readAllControlador);
+router.get('/usuario/read', readAllControlador);
 router.get('/usuario/read/:id', readOneControlador);
 router.patch('/usuario/update/:id', updateControlador);
 router.post('/usuario/cadastro', cadastroControlador);
