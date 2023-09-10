@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { readAllControlador, readOneControlador, updateControlador, cadastroControlador, deleteControlador } = require("./controladores/usuarioControlador");
 const { loginControlador } = require("./controladores/loginControlador");
+const auth = require("../middleware/auth")
 
 
 //USUÁRIO

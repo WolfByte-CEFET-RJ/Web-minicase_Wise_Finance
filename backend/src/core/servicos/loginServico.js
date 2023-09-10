@@ -1,3 +1,4 @@
+require('dotenv').config();
 const database = require('../../database/index');
 const jwt = require("jsonwebtoken"); 
 const { comparePassword } = require("../../utils/seguranca");
@@ -31,7 +32,7 @@ async function loginUsuario(identificador, senha) {
       },
     };
 
-    const token = jwt.sign(tokenPayload, process.env.JWT_KEY || "", {
+    const token = jwt.sign(tokenPayload, process.env.JWT_KEY, {
       expiresIn: "48h",
     });
 

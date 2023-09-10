@@ -1,1 +1,6 @@
-# vazio por enquanto
+# Arquivos .env
+.env
+
+# Arquivos de node
+
+node_modules
