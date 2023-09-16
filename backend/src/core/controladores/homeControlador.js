@@ -1,4 +1,5 @@
-const DespesaFixaService = require('../services/despesaFixaService');
+const { request, response } = require('express');
+const { createDespesaFixa, getAllDespesasFixas, getDespesaFixaById,  updateDespesaFixa, deleteDespesaFixa } = require('../servicos/homeServico');
 
 async function createDespesaFixa(req, res) {
   const userId = req.user.id;

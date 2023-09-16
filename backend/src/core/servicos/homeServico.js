@@ -1,5 +1,3 @@
-// services/despesaFixaService.js
-
 const database = require('../../database/index');
 
 async function createDespesaFixa(userId, despesaFixaData) {
