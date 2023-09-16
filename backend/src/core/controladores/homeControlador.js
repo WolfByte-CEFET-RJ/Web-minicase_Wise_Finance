@@ -1,13 +1,17 @@
 const { request, response } = require('express');
-const { createDespesaFixa, getAllDespesasFixas, getDespesaFixaById,  updateDespesaFixa, deleteDespesaFixa } = require('../servicos/homeServico');
+const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico } = require('../servicos/homeServico');
 
 async function createDespesaFixa(req, res) {
-  const userId = req.user.id;
-  const despesaFixaData = req.body;
+  const userId = req.params.id;
+  const {
+    nome,
+    valor,
+    descricao,
+  } = req.body;
 
   try {
-    const result = await DespesaFixaService.createDespesaFixa(userId, despesaFixaData);
-    res.json(result);
+    const create = await createDespesaFixaServico(userId, nome, valor, descricao);
+    res.json(create);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -42,35 +46,30 @@ async function getDespesaFixaById(req, res) {
 }
 
 async function updateDespesaFixa(req, res) {
-  const userId = req.user.id;
-  const despesaFixaId = req.params.id;
-  const despesaFixaData = req.body;
+  const userId = req.params.id_user;
+  const despesaId = req.params.id_desp;
+
+  const {
+    nome,
+    valor,
+    descricao,
+  } = req.body;
 
   try {
-    const result = await DespesaFixaService.updateDespesaFixa(userId, despesaFixaId, despesaFixaData);
-
-    if (result === 0) {
-      return res.status(404).json({ error: 'Despesa fixa não encontrada' });
-    }
-
-    res.json({ message: 'Despesa fixa atualizada com sucesso' });
+    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao);
+    res.json(update);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
 async function deleteDespesaFixa(req, res) {
-  const userId = req.user.id;
-  const despesaFixaId = req.params.id;
+  const userId = req.params.id_user;
+  const despesaId = req.params.id_desp;
 
   try {
-    const result = await DespesaFixaService.deleteDespesaFixa(userId, despesaFixaId);
-
-    if (result === 0) {
-      return res.status(404).json({ error: 'Despesa fixa não encontrada' });
-    }
-
-    res.json({ message: 'Despesa fixa excluída com sucesso' });
+    const deletar = await deleteDespesaFixaServico(userId, despesaId);
+    res.json(deletar);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
