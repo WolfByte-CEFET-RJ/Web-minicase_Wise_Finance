@@ -1,11 +1,11 @@
 import Input from "../componentsCadastro/inputCadastro"
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Button from "../componentsCadastro/buttonCadastro"
 import {EyeSlash, Eye } from 'phosphor-react'
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import useApi from "../../hooks/useApi";
 
 
 const FormCadastro = () => {
@@ -17,6 +17,7 @@ const FormCadastro = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordVer, setShowPasswordVer] = useState(false);
     const navigate = useNavigate();
+    const api = useCallback(useApi, [])();
     async function handleSubmit(event) {
       event.preventDefault();
         const user = {
@@ -27,7 +28,7 @@ const FormCadastro = () => {
           passVer,
         };
         try {
-          const response = await axios.post("/usuario/cadastro", user);
+          const response = await api.post("/usuario/cadastro", user);
           console.log(response.data);
           if (response.data.status === false) {
             toast.error("Falha no envio do formulário");
