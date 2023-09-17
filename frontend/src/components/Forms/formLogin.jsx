@@ -87,4 +87,4 @@ const FormCadastro = () => {
     )
 }
 
-export default FormCadastro
+export default FormCadastro;
