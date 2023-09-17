@@ -1,10 +1,7 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React from "react";
 import Form from "../components/Forms/formLogin"
-import useApi from "../hooks/useApi";
 
 const Login = () => {
-  const navigate = useNavigate();
   return (
 <div className="border-4 border-[black] h-screen w-screen" >
       <div className = " fixed w-[50%] h-screen bg-no-repeat bg-cover flex items-center	justify-center flex-col" style = {{backgroundImage:"url(/Fundo.svg)"}}>

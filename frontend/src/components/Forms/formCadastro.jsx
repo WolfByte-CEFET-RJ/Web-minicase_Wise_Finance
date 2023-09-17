@@ -2,19 +2,55 @@ import Input from "../componentsCadastro/inputCadastro"
 import React, { useState } from "react";
 import Button from "../componentsCadastro/buttonCadastro"
 import {EyeSlash, Eye } from 'phosphor-react'
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const FormCadastro = () => {
     const [name, setName] = useState("");
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
-    
     const [pass, setPass] = useState("");
     const [passVer, setPassVer] = useState("");
-
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordVer, setShowPasswordVer] = useState(false);
-
+    const navigate = useNavigate();
+    async function handleSubmit(event) {
+      event.preventDefault();
+        const user = {
+          name,
+          userName,
+          email,
+          pass,
+          passVer,
+        };
+        try {
+          const response = await axios.post("/usuario/cadastro", user);
+          console.log(response.data);
+          if (response.data.status === false) {
+            toast.error("Falha no envio do formulário");
+          }
+          if (response.data.message === "Preencha os campos obrigatórios.") {
+            toast.error("Preencha os campos obrigatórios!");
+          } else if (response.data.message === "Senha muito curta!") {
+            toast.error("Senha muito curta!");
+          } else if (response.data.message === "As senhas precisam ser iguais.") {
+            toast.error("As senhas precisam ser iguais!");
+          } else if (
+            response.data.message === "Endereço de e-mail já cadastrado!"
+          ) {
+            toast.error("Endereço de e-mail já cadastrado!");
+          } else if (response.data.status === true) {
+            toast.success("Usuário cadastrado com êxito!");
+            navigate("/login");
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Falha no envio do formulário");
+        }
+      }
     const handlePasswordToggle = () => {
       setShowPassword(!showPassword);
     };
@@ -25,12 +61,8 @@ const FormCadastro = () => {
     const handleChange = (event, setText) => {
       setText(event.target.value);
     };
-
-
-    
-   
     return(
-        <form action="" className="flex justify-items-center flex-col h-[100%] w-[100%]">
+        <form onSubmit={handleSubmit} className="flex justify-items-center flex-col h-[100%] w-[100%]">
 
         <img src="/userFoto.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
         <div className= "mb-[20px]">
@@ -101,8 +133,8 @@ const FormCadastro = () => {
           </div>
     
         </div>
-        <Button Text = "Cadastre-se"/>
-        <Button Text="Voltar"/>
+        <Button type = "submit" Text = "Cadastre-se"/>
+        <Button type = "text" onClick={() => navigate("/login")} Text="Voltar"/>
       </form>
 
     )

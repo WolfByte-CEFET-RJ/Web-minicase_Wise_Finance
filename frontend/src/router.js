@@ -10,7 +10,7 @@ const routes = [
     element: <Cadastro />,
   } ,
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   }
 ];
