@@ -2,23 +2,52 @@ import Input from "../componentsLogin/inputLogin"
 import React, { useState } from "react";
 import Button from "../componentsLogin/buttonLogin"
 import {EyeSlash, Eye } from 'phosphor-react'
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useApi from "../../hooks/useApi";
 
 
 const FormCadastro = () => {
-    const [userName, setUserName] = useState("");  
+    const [login, setLogin] = useState("");
     const [pass, setPass] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-
+    const navigate = useNavigate();
+    const api = useApi();
     const handlePasswordToggle = () => {
       setShowPassword(!showPassword);
     };
-
     const handleChange = (event, setText) => {
       setText(event.target.value);
     };
-   
+    async function handleSubmit(event) {
+      event.preventDefault();
+      const user = {
+        login,
+        pass
+      };
+  
+      try {
+        const response = await api.post("http://localhost:5000/login", user);
+        console.log(response.data);
+        if (response.data.status === false) {
+          toast.error("Falha ao realizar o login!");
+        }
+        if (response.data.message === "Usuário não encontrado") {
+          toast.error("Usuário não encontrado!");
+        } else if (response.data.message === "Senha inválida") {
+          toast.error("Senha inválida!");
+        } else if (response.data.status === true) {
+          toast.success("Login realizado com êxito!");
+           navigate("/");
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Falha ao realizar o login!");
+      }
+    }
     return(
-        <form action="" className="flex justify-items-center flex-col h-[100%] w-[100%]">
+        <form onSubmit={handleSubmit} className="flex justify-items-center flex-col h-[100%] w-[100%]">
 
         <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
         <div className= "ml-[40px] mb-[20px]">
@@ -29,7 +58,7 @@ const FormCadastro = () => {
           name="login"
           id="login"
           placeholder="Digite seu nome de usuário ou E-mail"
-          onChange={(event) => handleChange(event, setUserName)}
+          onChange={(event) => handleChange(event, setLogin)}
           />
 
           <h1 className="mt-[10px] font-medium">Senha:</h1>
@@ -50,8 +79,8 @@ const FormCadastro = () => {
     
         </div>
         <div className="ml-[40px]">
-          <Button Text = "Entrar"/>
-          <Button Text="Criar Conta"/>
+          <Button type = "submit" Text = "Entrar"/>
+          <Button type = "text" onClick={() => navigate("/cadastro")} Text="Criar Conta"/>
         </div>
       </form>
 

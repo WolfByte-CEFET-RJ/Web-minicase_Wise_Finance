@@ -1,5 +1,5 @@
 import Input from "../componentsCadastro/inputCadastro"
-import React, { useState, useCallback } from "react";
+import React, {useState} from "react";
 import Button from "../componentsCadastro/buttonCadastro"
 import {EyeSlash, Eye } from 'phosphor-react'
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const FormCadastro = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showPasswordVer, setShowPasswordVer] = useState(false);
     const navigate = useNavigate();
-    const api = useCallback(useApi, [])();
+    const api = useApi();
     async function handleSubmit(event) {
       event.preventDefault();
         const user = {
@@ -28,7 +28,7 @@ const FormCadastro = () => {
           passVer,
         };
         try {
-          const response = await api.post("/usuario/cadastro", user);
+          const response = await api.post("http://localhost:5000/usuario/cadastro", user);
           console.log(response.data);
           if (response.data.status === false) {
             toast.error("Falha no envio do formulário");
