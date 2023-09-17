@@ -18,7 +18,7 @@ const FormCadastro = () => {
     const [showPasswordVer, setShowPasswordVer] = useState(false);
     const navigate = useNavigate();
     const api = useApi();
-    async function handleSubmit(event) {
+    async function handleEnvio(event) {
       event.preventDefault();
         const user = {
           name,
@@ -63,7 +63,7 @@ const FormCadastro = () => {
       setText(event.target.value);
     };
     return(
-        <form onSubmit={handleSubmit} className="flex justify-items-center flex-col h-[100%] w-[100%]">
+        <form className="flex justify-items-center flex-col h-[100%] w-[100%]">
 
         <img src="/userFoto.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
         <div className= "mb-[20px]">
@@ -134,8 +134,8 @@ const FormCadastro = () => {
           </div>
     
         </div>
-        <Button type = "submit" Text = "Cadastre-se"/>
-        <Button type = "text" onClick={() => navigate("/login")} Text="Voltar"/>
+        <Button onClick={handleEnvio} Text = "Cadastre-se"/>
+        <Button onClick={() => navigate("/login")} Text="Voltar"/>
       </form>
 
     )

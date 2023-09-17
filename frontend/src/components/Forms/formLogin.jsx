@@ -20,7 +20,7 @@ const FormCadastro = () => {
     const handleChange = (event, setText) => {
       setText(event.target.value);
     };
-    async function handleSubmit(event) {
+    async function handleEnvio(event) {
       event.preventDefault();
       const user = {
         login,
@@ -47,7 +47,7 @@ const FormCadastro = () => {
       }
     }
     return(
-        <form onSubmit={handleSubmit} className="flex justify-items-center flex-col h-[100%] w-[100%]">
+        <form className="flex justify-items-center flex-col h-[100%] w-[100%]">
 
         <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
         <div className= "ml-[40px] mb-[20px]">
@@ -79,8 +79,8 @@ const FormCadastro = () => {
     
         </div>
         <div className="ml-[40px]">
-          <Button type = "submit" Text = "Entrar"/>
-          <Button type = "text" onClick={() => navigate("/cadastro")} Text="Criar Conta"/>
+          <Button onClick={handleEnvio} Text = "Entrar"/>
+          <Button onClick={() => navigate("/cadastro")} Text="Criar Conta"/>
         </div>
       </form>
 
