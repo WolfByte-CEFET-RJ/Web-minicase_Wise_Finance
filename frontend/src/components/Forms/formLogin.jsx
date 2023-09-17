@@ -47,11 +47,8 @@ const FormCadastro = () => {
       }
     }
     return(
-<<<<<<< Updated upstream
-        <form className="flex justify-items-center flex-col h-[100%] w-[100%]">
-=======
-        <form onSubmit={handleSubmit} className="flex justify-items-center flex-col h-[100%] w-[100%] ">
->>>>>>> Stashed changes
+        <form onSubmit={handleEnvio} className="flex justify-items-center flex-col h-[100%] w-[100%] ">
+
 
         <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
         <div className= "ml-[40px] mb-[20px]">
