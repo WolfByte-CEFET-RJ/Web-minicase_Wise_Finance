@@ -47,7 +47,7 @@ const FormCadastro = () => {
       }
     }
     return(
-        <form onSubmit={handleEnvio} className="flex justify-items-center flex-col h-[100%] w-[100%] ">
+        <form className="flex justify-items-center flex-col h-[100%] w-[100%] ">
 
 
         <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
