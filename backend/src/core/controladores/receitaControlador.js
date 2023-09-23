@@ -5,6 +5,12 @@ const { createReceitaFixaServico, updateReceitaFixaServico, deleteReceitaFixaSer
 
 //RECEITAS FIXAS
 
+
+
+
+
+
+
 //RECEITAS VARIÁVEIS
 
 module.exports = {
