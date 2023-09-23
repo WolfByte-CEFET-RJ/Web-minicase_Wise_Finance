@@ -1,10 +1,8 @@
 const database = require('../../database/index');
 
+//DESPESAS FIXAS
 
 async function createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento) {
-
-  //DESPESAS FIXAS
-
   try {
     
     if (
@@ -78,9 +76,9 @@ async function getAllDespesasFixas_Usuario_Servico() {
         message: error.message,
       };
     }
-  }
+}
 
-  async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
+async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
     try {
       
       if (
@@ -126,7 +124,7 @@ async function getAllDespesasFixas_Usuario_Servico() {
         message: error.message,
       };
     }
-  }
+}
   
 
 async function deleteDespesaFixaServico(userId, despesaId) {
@@ -162,10 +160,43 @@ async function deleteDespesaFixaServico(userId, despesaId) {
 
 //DESPESAS VARIÁVEIS
 
+
 async function getAllDespesaVarServico(userId) {
   try {
     console.log(userId)
     return await database('Despesa_Variavel').select('*').where('ID_Usuario', userId);
+
+async function createDespesaVarServico(userId, nome, valor, descricao, dataPagamento) {
+  try {
+    
+    if (
+      !nome ||
+      !valor ||
+      !descricao ||
+      !dataPagamento
+    ) {
+      throw new Error("Preencha todos os campos obrigatórios.");
+    }
+
+    const usuario = await database("Usuario").select('*').where("id",userId).first()
+    if(!usuario){
+      throw new Error("Usuário não encontrado");
+    }
+
+    const novaDespesaVar = { 
+      ID_Usuario : userId,
+      Nome: nome,
+      Valor: valor,
+      Data: dataPagamento, 
+      Descricao: descricao,
+    }
+
+    await database("Despesa_Variavel").insert(novaDespesaVar);
+    return {
+      status: true,
+      message: `Despesa adicionada ao usuário ${userId}`,
+    };
+  
   } catch (error) {
     return {
       status: false,
@@ -174,12 +205,54 @@ async function getAllDespesaVarServico(userId) {
   }
 }
 
+
 async function getDespesaVarByIdServico(userId, despesaVariavelId) {
   try {
     return await database('Despesa_Variavel')
       .select("*")
       .where({ ID: despesaVariavelId, ID_Usuario: userId })
       .first();
+
+async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
+  try {
+    
+    if (
+      !nome ||
+      !valor ||
+      !descricao ||
+      !dataPagamento
+    ) {
+      throw new Error("Preencha todos os campos obrigatórios.");
+    }
+
+    const usuario = await database("Usuario").select('*').where("id",userId).first()
+    if(!usuario){
+      throw new Error("Usuário não encontrado");
+    }
+
+    const despesa = await database("Despesa_Variavel").select('*').where("id",despesaId).first()
+    if(!despesa){
+      throw new Error("Despesa não encontrada");
+    }
+
+    if(usuario.ID !== despesa.ID_Usuario){
+      throw new Error("Despesa não relacionada ao usuário");
+    }
+    
+    const novaDespesaVar = { 
+      ID_Usuario : userId,
+      Nome: nome,
+      Valor: valor,
+      Data: dataPagamento, 
+      Descricao: descricao,
+    }
+
+    await database("Despesa_Variavel").update(novaDespesaVar).where("id",despesaId);
+    return {
+      status: true,
+      message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+    };
+
   } catch (error) {
     return {
       status: false,
@@ -187,6 +260,7 @@ async function getDespesaVarByIdServico(userId, despesaVariavelId) {
     };
   }
 }
+
 
 async function getAllDespesaVar_Usuario_Servico() {
     try {
@@ -199,6 +273,36 @@ async function getAllDespesaVar_Usuario_Servico() {
     }
   }
 
+async function deleteDespesaVarServico(userId, despesaId) {
+  try {
+
+    const usuario = await database("Usuario").select('*').where("id",userId).first()
+    if(!usuario){
+      throw new Error("Usuário não encontrado");
+    }
+
+    const despesa = await database("Despesa_Variavel").select('*').where("id",despesaId).first()
+    if(!despesa){
+      throw new Error("Despesa não encontrada");
+    }
+
+    if(usuario.ID!==despesa.ID_Usuario){
+      throw new Error("Despesa não relacionada ao usuário");
+    }
+    
+    await database("Despesa_Variavel").where("id",despesaId).delete();
+    return {
+      status: true,
+      message: `Despesa deleteda com sucesso!`,
+    };
+  
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
 
 
 module.exports = {
@@ -211,13 +315,11 @@ module.exports = {
   getDespesaFixaByIdServico,
 
   //DESPESAS VARIÁVEIS
-  /*
   createDespesaVarServico,
   updateDespesaVarServico,
   deleteDespesaVarServico,
-  */
   getAllDespesaVarServico,
   getAllDespesaVar_Usuario_Servico,
-  getDespesaVarByIdServico
+  getDespesaVarByIdServico,
 
 };
