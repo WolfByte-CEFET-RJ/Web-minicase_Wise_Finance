@@ -5,7 +5,7 @@ const { loginControlador } = require("./controladores/loginControlador");
 const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas, getAllDespesasFixas_Usuario, getDespesaFixaById, 
         createDespesaVar, updateDespesaVar, deleteDespesaVar,getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
       } = require("./controladores/despesasControlador");
-const { //createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
+const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
         createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
       } = require("./controladores/receitaControlador");
 const auth = require("../middleware/auth")
@@ -35,15 +35,15 @@ router.get('/despesa_var/readAll',auth, getAllDespesasVar);
 router.get('/despesa_var/read/:id_user',auth, getAllDespesasVar_Usuario);
 router.get('/despesa_var/read/:id_user/:id_desp',auth, getDespesasVarById);
 
-/*
+
 //RECEITAS FIXAS
 router.post('/receita_fixa/create/:id_user',auth, createReceitaFixa);
-router.patch('/receita_fixa/update/:id_user/:id_desp',auth, updateReceitaFixa);
-router.delete('/receita_fixa/delete/:id_user/:id_desp',auth, deleteReceitaFixa);
+router.patch('/receita_fixa/update/:id_user/:id_rec',auth, updateReceitaFixa);
+router.delete('/receita_fixa/delete/:id_user/:id_rec',auth, deleteReceitaFixa);
 router.get('/receita_fixa/readAll',auth, getAllReceitaFixa);
 router.get('/receita_fixa/read/:id_user',auth, getAllReceitaFixa_Usuario);
-router.get('/receita_fixa/read/:id_user/:id_desp',auth, getReceitaFixaById);
-*/
+router.get('/receita_fixa/read/:id_user/:id_rec',auth, getReceitaFixaById);
+
 
 //RECEITAS VARIÁVEIS
 router.post('/receita_var/create/:id_user',auth, createReceitaVar);

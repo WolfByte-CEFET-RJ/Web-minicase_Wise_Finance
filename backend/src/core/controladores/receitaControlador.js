@@ -27,8 +27,8 @@ async function createReceitaFixa(req, res) {
     const userId = req.params.id_user;
     console.log(userId)
     try {
-      const despesasFixas = await getAllDespesasFixasServico(userId); 
-      res.json(despesasFixas);
+      const receitasFixas = await getAllReceitaFixaServico(userId); 
+      res.json(receitasFixas);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
@@ -36,33 +36,35 @@ async function createReceitaFixa(req, res) {
   
   async function getReceitaFixaById(req, res) {
     const userId = req.params.id_user;
-    const despesaFixaId = req.params.id_desp;
+    const receitaFixaId = req.params.id_rec;
   
     try {
-      const despesaFixa = await getReceitaFixaByIdServico(userId, despesaFixaId);
+      const receitaFixa = await getReceitaFixaByIdServico(userId, receitaFixaId);
   
-      if (!despesaFixa) {
-        return res.status(404).json({ error: 'Despesa fixa não encontrada' });
+      if (!receitaFixa) {
+        return res.status(404).json({ error: 'Receita fixa não encontrada' });
       }
   
-      res.json(despesaFixa);
+      res.json(receitaFixa);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
   }
   
   async function getAllReceitaFixa_Usuario(req, res) {
-  try {
-    const despesas = await getAllReceitaFixaServico();
-    res.json(despesas);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+    const userId = req.params.id_user;
+    console.log(userId)
+    try {
+      const despesasFixas = await getAllReceitasFixas_Usuario_Servico(userId); 
+      res.json(despesasFixas);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
   
   async function updateReceitaFixa(req, res) {
     const userId = req.params.id_user;
-  const despesaId = req.params.id_desp;
+    const receitaId = req.params.id_rec;
 
   const {
     nome,
@@ -72,7 +74,7 @@ async function createReceitaFixa(req, res) {
   } = req.body;
 
   try {
-    const update = await updateReceitaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
+    const update = await updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento);
 
     res.json(update);
   } catch (error) {
@@ -81,10 +83,10 @@ async function createReceitaFixa(req, res) {
 }
   async function deleteReceitaFixa(req, res) {
     const userId = req.params.id_user;
-    const despesaId = req.params.id_desp;
+    const receitaId = req.params.id_rec;
   
     try {
-      const deletar = await deleteReceitaFixaServico(userId, despesaId);
+      const deletar = await deleteReceitaFixaServico(userId, receitaId);
       res.json(deletar);
     } catch (error) {
       res.status(500).json({ error: error.message });
