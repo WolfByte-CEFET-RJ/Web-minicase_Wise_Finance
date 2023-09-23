@@ -1,6 +1,5 @@
 # Arquivos .env
 .env
 
-# Arquivos de node
-
-node_modules
+# Ignorar a pasta node_modules
+node_modules/
