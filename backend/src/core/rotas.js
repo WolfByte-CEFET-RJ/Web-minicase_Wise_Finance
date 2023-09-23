@@ -3,10 +3,10 @@ const router = express.Router();
 const { readAllControlador, readOneControlador, updateControlador, cadastroControlador, deleteControlador } = require("./controladores/usuarioControlador");
 const { loginControlador } = require("./controladores/loginControlador");
 const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas, getAllDespesasFixas_Usuario, getDespesaFixaById, 
-        createDespesaVar, updateDespesaVar, deleteDespesaVar, getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
+        //createDespesaVar, updateDespesaVar, deleteDespesaVar, getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
       } = require("./controladores/despesasControlador");
-const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
-        createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
+const { //createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
+        //createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
       } = require("./controladores/receitaControlador");
 const auth = require("../middleware/auth")
 
@@ -27,6 +27,7 @@ router.get('/despesa_fixa/readAll',auth, getAllDespesasFixas);
 router.get('/despesa_fixa/read/:id_user',auth, getAllDespesasFixas_Usuario);
 router.get('/despesa_fixa/read/:id_user/:id_desp',auth, getDespesaFixaById);
 
+/*
 //DESPESAS VARIAVEIS
 router.post('/despesa_var/create/:id_user',auth, createDespesaVar);
 router.patch('/despesa_var/update/:id_user/:id_desp',auth, updateDespesaVar);
@@ -52,6 +53,7 @@ router.get('/receita_var/read/:id_user',auth, getAllReceitaVar_Usuario);
 router.get('/receita_var/read/:id_user/:id_desp',auth, getReceitaVarById);
 
 //LIMITE MENSAL
+*/
 
 
 module.exports = router;

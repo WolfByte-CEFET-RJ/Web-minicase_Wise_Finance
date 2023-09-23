@@ -6,6 +6,7 @@ const database = require('../../database/index');
 
 module.exports = {
   //RECEITAS FIXAS
+  /*
   createReceitaFixaServico,
   updateReceitaFixaServico,
   deleteReceitaFixaServico,
@@ -13,10 +14,11 @@ module.exports = {
   getAllReceitaFixa_Usuario_Servico,
   getReceitaFixaByIdServico,
   //RECEITAS VARIÁVEIS
+  /*
   createReceitaVarServico,
   updateReceitaVarServico,
   deleteReceitaVarServico,
   getAllReceitaVarServico,
   getAllReceitaVar_Usuario_Servico,
-  getReceitaVarByIdServico,
+  getReceitaVarByIdServico,*/
 };
