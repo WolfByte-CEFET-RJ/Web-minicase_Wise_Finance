@@ -6,7 +6,7 @@ const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasF
         createDespesaVar, updateDespesaVar, deleteDespesaVar,getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
       } = require("./controladores/despesasControlador");
 const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
-        //createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
+        createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
       } = require("./controladores/receitaControlador");
 const auth = require("../middleware/auth")
 
@@ -44,17 +44,16 @@ router.get('/receita_fixa/readAll',auth, getAllReceitaFixa);
 router.get('/receita_fixa/read/:id_user',auth, getAllReceitaFixa_Usuario);
 router.get('/receita_fixa/read/:id_user/:id_rec',auth, getReceitaFixaById);
 
-/*
+
 //RECEITAS VARIÁVEIS
 router.post('/receita_var/create/:id_user',auth, createReceitaVar);
-router.patch('/receita_var/update/:id_user/:id_desp',auth, updateReceitaVar);
-router.delete('/receita_var/delete/:id_user/:id_desp',auth, deleteReceitaVar);
+router.patch('/receita_var/update/:id_user/:id_rec',auth, updateReceitaVar);
+router.delete('/receita_var/delete/:id_user/:id_rec',auth, deleteReceitaVar);
 router.get('/receita_var/readAll',auth, getAllReceitaVar);
 router.get('/receita_var/read/:id_user',auth, getAllReceitaVar_Usuario);
-router.get('/receita_var/read/:id_user/:id_desp',auth, getReceitaVarById);
+router.get('/receita_var/read/:id_user/:id_rec',auth, getReceitaVarById);
 
 //LIMITE MENSAL
-*/
 
 
 module.exports = router;
