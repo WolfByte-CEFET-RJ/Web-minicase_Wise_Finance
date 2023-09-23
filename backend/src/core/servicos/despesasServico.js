@@ -1,5 +1,6 @@
 const database = require('../../database/index');
 
+//DESPESAS FIXAS
 async function createDespesaFixaServico(userId, nome, valor, descricao) {
   try {
     
@@ -74,7 +75,7 @@ async function getAllDespesasFixas_Usuario_Servico() {
         message: error.message,
       };
     }
-  }
+}
 
 async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao) {
   try {
@@ -156,11 +157,22 @@ async function deleteDespesaFixaServico(userId, despesaId) {
   }
 }
 
+//DESPESAS VARIÁVEIS
+
+
 module.exports = {
+  //DISPESAS FIXAS
   createDespesaFixaServico,
   updateDespesaFixaServico,
   deleteDespesaFixaServico,
   getAllDespesasFixasServico,
   getAllDespesasFixas_Usuario_Servico,
-  getDespesaFixaByIdServico
+  getDespesaFixaByIdServico,
+  //DESPESAS VARIÁVEIS
+  createDespesaVarServico,
+  updateDespesaVarServico,
+  deleteDespesaVarServico,
+  getAllDespesaVarServico,
+  getAllDespesaVar_Usuario_Servico,
+  getDespesaVarByIdServico,
 };

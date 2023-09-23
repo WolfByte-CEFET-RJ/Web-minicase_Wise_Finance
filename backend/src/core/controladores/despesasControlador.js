@@ -1,8 +1,11 @@
 const { request, response } = require('express');
-const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico } = require('../servicos/homeServico');
+const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico,
+        createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
+      } = require('../servicos/despesasServico');
 
+//DESPESAS FIXAS
 async function createDespesaFixa(req, res) {
-  const userId = req.params.id;
+  const userId = req.params.id_user;
   const {
     nome,
     valor,
@@ -84,11 +87,22 @@ async function deleteDespesaFixa(req, res) {
   }
 }
 
+//DESPESAS VARIÁVEIS
+
+
 module.exports = {
+  //DESPESA FIXA
   createDespesaFixa,
   getAllDespesasFixas,
   getAllDespesasFixas_Usuario,
   getDespesaFixaById,
   updateDespesaFixa,
   deleteDespesaFixa,
+  //DESPESA VARIÁVEL
+  createDespesaVar,
+  getAllDespesasVar,
+  getAllDespesasVar_Usuario,
+  getDespesasVarById,
+  updateDespesaVar,
+  deleteDespesaVar
 };
