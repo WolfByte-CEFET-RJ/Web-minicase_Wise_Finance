@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { readAllControlador, readOneControlador, updateControlador, cadastroControlador, deleteControlador } = require("./controladores/usuarioControlador");
 const { loginControlador } = require("./controladores/loginControlador");
-const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas, getAllDespesasFixas_Usuario, getDespesaFixaById } = require("./controladores/homeControlador");
+const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas, getAllDespesasFixas_Usuario, getDespesaFixaById } = require("./controladores/despesasControlador");
 const auth = require("../middleware/auth")
 
 

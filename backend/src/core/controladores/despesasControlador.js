@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico } = require('../servicos/homeServico');
+const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico } = require('../servicos/despesasServico');
 
 async function createDespesaFixa(req, res) {
   const userId = req.params.id;
