@@ -96,7 +96,14 @@ async function getAllDespesasVar_Usuario(req, res) {
   try {
     const despesasVariaveis = await getAllDespesaVar_Usuario_Servico(userId); 
     res.json(despesasVariaveis);
-    
+  } catch (error) {
+  return {
+    status: false,
+    message: error.message,
+  };
+}
+}
+
 async function createDespesaVar(req, res){
   const userId = req.params.id_user;
   const {
@@ -128,6 +135,13 @@ async function getDespesasVarById(req, res) {
     }
 
     res.json(despesaVariavel);
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
 
 async function updateDespesaVar(req, res) {
   const userId = req.params.id_user;
