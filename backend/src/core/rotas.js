@@ -3,7 +3,7 @@ const router = express.Router();
 const { readAllControlador, readOneControlador, updateControlador, cadastroControlador, deleteControlador } = require("./controladores/usuarioControlador");
 const { loginControlador } = require("./controladores/loginControlador");
 const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas, getAllDespesasFixas_Usuario, getDespesaFixaById, 
-        //createDespesaVar, updateDespesaVar, deleteDespesaVar, getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
+        createDespesaVar, updateDespesaVar, deleteDespesaVar,// getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
       } = require("./controladores/despesasControlador");
 const { //createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
         //createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
@@ -27,11 +27,11 @@ router.get('/despesa_fixa/readAll',auth, getAllDespesasFixas);
 router.get('/despesa_fixa/read/:id_user',auth, getAllDespesasFixas_Usuario);
 router.get('/despesa_fixa/read/:id_user/:id_desp',auth, getDespesaFixaById);
 
-/*
 //DESPESAS VARIAVEIS
 router.post('/despesa_var/create/:id_user',auth, createDespesaVar);
 router.patch('/despesa_var/update/:id_user/:id_desp',auth, updateDespesaVar);
 router.delete('/despesa_var/delete/:id_user/:id_desp',auth, deleteDespesaVar);
+/*
 router.get('/despesa_var/readAll',auth, getAllDespesasVar);
 router.get('/despesa_var/read/:id_user',auth, getAllDespesasVar_Usuario);
 router.get('/despesa_var/read/:id_user/:id_desp',auth, getDespesasVarById);
