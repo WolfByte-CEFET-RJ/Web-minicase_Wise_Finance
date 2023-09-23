@@ -10,10 +10,12 @@ async function createDespesaFixa(req, res) {
     nome,
     valor,
     descricao,
+    dataPagamento, 
   } = req.body;
 
   try {
-    const create = await createDespesaFixaServico(userId, nome, valor, descricao);
+    const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento); 
+
     res.json(create);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -65,10 +67,12 @@ async function updateDespesaFixa(req, res) {
     nome,
     valor,
     descricao,
+    dataPagamento,
   } = req.body;
 
   try {
-    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao);
+    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
+
     res.json(update);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -86,7 +90,6 @@ async function deleteDespesaFixa(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-
 //DESPESAS VARIÁVEIS
 
 
@@ -98,6 +101,7 @@ module.exports = {
   getDespesaFixaById,
   updateDespesaFixa,
   deleteDespesaFixa,
+
   //DESPESA VARIÁVEL
   createDespesaVar,
   getAllDespesasVar,
