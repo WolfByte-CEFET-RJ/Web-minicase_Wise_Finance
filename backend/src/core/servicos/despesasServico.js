@@ -3,6 +3,7 @@ const database = require('../../database/index');
 //DESPESAS FIXAS
 
 async function createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento) {
+
   try {
     
     if (
@@ -41,7 +42,7 @@ async function createDespesaFixaServico(userId, nome, valor, descricao, dataPaga
   }
 }
 
-async function getAllDespesasFixasServico(userId) {
+async function getAllDespesasFixas_Usuario_Servico(userId) {
   try {
     console.log(userId)
     return await database('Despesa_Fixa').select('*').where('ID_Usuario', userId);
@@ -67,7 +68,7 @@ async function getDespesaFixaByIdServico(userId, despesaFixaId) {
   }
 }
 
-async function getAllDespesasFixas_Usuario_Servico() {
+async function getAllDespesasFixasServico() {
     try {
       return await database('Despesa_Fixa').select('*');
     } catch (error) {
@@ -76,9 +77,9 @@ async function getAllDespesasFixas_Usuario_Servico() {
         message: error.message,
       };
     }
-}
+  }
 
-async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
+  async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
     try {
       
       if (
@@ -124,7 +125,7 @@ async function updateDespesaFixaServico(userId, despesaId, nome, valor, descrica
         message: error.message,
       };
     }
-}
+  }
   
 
 async function deleteDespesaFixaServico(userId, despesaId) {

@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico,
+const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico, 
         createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
       } = require('../servicos/despesasServico');
 
@@ -10,10 +10,12 @@ async function createDespesaFixa(req, res) {
     nome,
     valor,
     descricao,
+    dataPagamento, 
   } = req.body;
 
   try {
-    const create = await createDespesaFixaServico(userId, nome, valor, descricao);
+    const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento); 
+
     res.json(create);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -24,7 +26,7 @@ async function getAllDespesasFixas_Usuario(req, res) {
   const userId = req.params.id_user;
   console.log(userId)
   try {
-    const despesasFixas = await getAllDespesasFixasServico(userId); 
+    const despesasFixas = await getAllDespesasFixas_Usuario_Servico(userId); 
     res.json(despesasFixas);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -50,7 +52,7 @@ async function getDespesaFixaById(req, res) {
 
 async function getAllDespesasFixas(req, res) {
 try {
-  const despesas = await getAllDespesasFixas_Usuario_Servico();
+  const despesas = await getAllDespesasFixasServico();
   res.json(despesas);
 } catch (error) {
   res.status(500).json({ error: error.message });
@@ -65,10 +67,12 @@ async function updateDespesaFixa(req, res) {
     nome,
     valor,
     descricao,
+    dataPagamento,
   } = req.body;
 
   try {
-    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao);
+    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
+
     res.json(update);
   } catch (error) {
     res.status(500).json({ error: error.message });
