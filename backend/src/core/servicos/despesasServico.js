@@ -160,6 +160,12 @@ async function deleteDespesaFixaServico(userId, despesaId) {
 
 //DESPESAS VARIÁVEIS
 
+
+async function getAllDespesaVarServico(userId) {
+  try {
+    console.log(userId)
+    return await database('Despesa_Variavel').select('*').where('ID_Usuario', userId);
+
 async function createDespesaVarServico(userId, nome, valor, descricao, dataPagamento) {
   try {
     
@@ -198,6 +204,14 @@ async function createDespesaVarServico(userId, nome, valor, descricao, dataPagam
     };
   }
 }
+
+
+async function getDespesaVarByIdServico(userId, despesaVariavelId) {
+  try {
+    return await database('Despesa_Variavel')
+      .select("*")
+      .where({ ID: despesaVariavelId, ID_Usuario: userId })
+      .first();
 
 async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
   try {
@@ -238,7 +252,7 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
       status: true,
       message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
     };
-  
+
   } catch (error) {
     return {
       status: false,
@@ -246,6 +260,18 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
     };
   }
 }
+
+
+async function getAllDespesaVar_Usuario_Servico() {
+    try {
+      return await database('Despesa_Variavel').select('*');
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message,
+      };
+    }
+  }
 
 async function deleteDespesaVarServico(userId, despesaId) {
   try {
@@ -278,6 +304,7 @@ async function deleteDespesaVarServico(userId, despesaId) {
   }
 }
 
+
 module.exports = {
   //DISPESAS FIXAS
   createDespesaFixaServico,
@@ -291,9 +318,8 @@ module.exports = {
   createDespesaVarServico,
   updateDespesaVarServico,
   deleteDespesaVarServico,
-  /*
   getAllDespesaVarServico,
   getAllDespesaVar_Usuario_Servico,
-  getDespesaVarByIdServico,*/
+  getDespesaVarByIdServico,
 
 };
