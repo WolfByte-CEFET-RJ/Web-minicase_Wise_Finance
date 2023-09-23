@@ -47,7 +47,7 @@ const FormCadastro = () => {
       }
     }
     return(
-        <form className="flex justify-items-center flex-col h-[100%] w-[100%] ">
+        <form className="flex justify-items-center flex-col h-[100%] w-[100%] " onSubmit={handleEnvio}>
 
 
         <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
@@ -80,7 +80,7 @@ const FormCadastro = () => {
     
         </div>
         <div className="ml-[40px]">
-          <Button onClick={handleEnvio} Text = "Entrar"/>
+          <Button type = "submit" Text = "Entrar"/>
           <Button onClick={() => navigate("/cadastro")} Text="Criar Conta"/>
         </div>
       </form>

@@ -63,7 +63,7 @@ const FormCadastro = () => {
       setText(event.target.value);
     };
     return(
-        <form className="flex justify-items-center flex-col h-[100%] w-[100%]">
+        <form className="flex justify-items-center flex-col h-[100%] w-[100%]" onSubmit={handleEnvio}>
 
         <img src="/userFoto.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
         <div className= "mb-[20px]">
@@ -134,7 +134,7 @@ const FormCadastro = () => {
           </div>
     
         </div>
-        <Button onClick={handleEnvio} Text = "Cadastre-se"/>
+        <Button type = "submit" onClick={() => navigate("/login")} Text = "Cadastre-se"/>
         <Button onClick={() => navigate("/login")} Text="Voltar"/>
       </form>
 
