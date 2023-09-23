@@ -169,14 +169,15 @@ module.exports = {
   deleteDespesaFixaServico,
   getAllDespesasFixasServico,
   getAllDespesasFixas_Usuario_Servico,
-
   getDespesaFixaByIdServico,
+
   //DESPESAS VARIÁVEIS
+  /*
   createDespesaVarServico,
   updateDespesaVarServico,
   deleteDespesaVarServico,
   getAllDespesaVarServico,
   getAllDespesaVar_Usuario_Servico,
-  getDespesaVarByIdServico,
+  getDespesaVarByIdServico,*/
 
 };

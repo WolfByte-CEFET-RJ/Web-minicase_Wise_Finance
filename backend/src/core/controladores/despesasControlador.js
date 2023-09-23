@@ -1,6 +1,6 @@
 const { request, response } = require('express');
 const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico,
-        createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
+        //createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
       } = require('../servicos/despesasServico');
 
 //DESPESAS FIXAS
@@ -103,10 +103,11 @@ module.exports = {
   deleteDespesaFixa,
 
   //DESPESA VARIÁVEL
+  /*
   createDespesaVar,
   getAllDespesasVar,
   getAllDespesasVar_Usuario,
   getDespesasVarById,
   updateDespesaVar,
-  deleteDespesaVar
+  deleteDespesaVar*/
 };
