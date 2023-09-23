@@ -45,7 +45,7 @@ const FormCadastro = () => {
             toast.error("Endereço de e-mail já cadastrado!");
           } else if (response.data.status === true) {
             toast.success("Usuário cadastrado com êxito!");
-            navigate("/login");
+            navigate("/");
           }
         } catch (error) {
           console.log(error);
@@ -134,8 +134,8 @@ const FormCadastro = () => {
           </div>
     
         </div>
-        <Button type = "submit" onClick={() => navigate("/login")} Text = "Cadastre-se"/>
-        <Button onClick={() => navigate("/login")} Text="Voltar"/>
+        <Button type = "submit" Text = "Cadastre-se"/>
+        <Button onClick={() => navigate("/")} Text="Voltar"/>
       </form>
 
     )

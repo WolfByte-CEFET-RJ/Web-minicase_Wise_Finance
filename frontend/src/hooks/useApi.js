@@ -6,6 +6,9 @@ export default function UseApi() {
     withCredentials: true,
     headers: {
       api_key: process.env.REACT_APP_API_KEY,
+      'accept': 'applications/json',
+      'Content-Type': 'application/json',
+      'Authorizations': 'applications/json'
     },
   });
 }

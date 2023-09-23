@@ -15,7 +15,7 @@ const auth = require("../middleware/auth")
 router.get('/usuario/read', readAllControlador);
 router.get('/usuario/read/:id', readOneControlador);
 router.patch('/usuario/update/:id', updateControlador);
-/*router.post('/usuario/cadastro', cadastroControlador);*/
+router.post('/usuario/cadastro', cadastroControlador);
 router.delete('/usuario/delete/:id', deleteControlador);
 router.post('/login', loginControlador);
 
