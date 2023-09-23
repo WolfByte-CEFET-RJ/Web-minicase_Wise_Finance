@@ -20,15 +20,15 @@ const FormCadastro = () => {
     const api = useApi();
     async function handleEnvio(event) {
       event.preventDefault();
-        const user = {
-          name,
-          userName,
-          email,
-          pass,
-          passVer,
-        };
-        try {
-          const response = await api.post("http://localhost:5000/usuario/cadastro", user);
+      const user = {
+        nome: name,
+        username: userName,
+        email: email,
+        senha: pass,
+        senhaConfirmacao: passVer,
+      };
+      try {
+        const response = await api.post("http://localhost:5000/usuario/cadastro", user);
           console.log(response.data);
           if (response.data.status === false) {
             toast.error("Falha no envio do formulário");
@@ -39,9 +39,7 @@ const FormCadastro = () => {
             toast.error("Senha muito curta!");
           } else if (response.data.message === "As senhas precisam ser iguais.") {
             toast.error("As senhas precisam ser iguais!");
-          } else if (
-            response.data.message === "Endereço de e-mail já cadastrado!"
-          ) {
+          } else if (response.data.message === "Endereço de e-mail já cadastrado!") {
             toast.error("Endereço de e-mail já cadastrado!");
           } else if (response.data.status === true) {
             toast.success("Usuário cadastrado com êxito!");

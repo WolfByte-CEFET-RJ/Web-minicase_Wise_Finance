@@ -23,8 +23,8 @@ const FormCadastro = () => {
     async function handleEnvio(event) {
       event.preventDefault();
       const user = {
-        login,
-        pass
+        identificador: login,
+        senha: pass,
       };
   
       try {
