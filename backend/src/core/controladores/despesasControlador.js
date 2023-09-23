@@ -1,7 +1,5 @@
 const { request, response } = require('express');
-const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico,
-        //createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
-      } = require('../servicos/despesasServico');
+const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico} = require('../servicos/despesasServico');
 
 //DESPESAS FIXAS
 async function createDespesaFixa(req, res) {
@@ -10,12 +8,10 @@ async function createDespesaFixa(req, res) {
     nome,
     valor,
     descricao,
-    dataPagamento, 
   } = req.body;
 
   try {
-    const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento); 
-
+    const create = await createDespesaFixaServico(userId, nome, valor, descricao);
     res.json(create);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -67,12 +63,10 @@ async function updateDespesaFixa(req, res) {
     nome,
     valor,
     descricao,
-    dataPagamento,
   } = req.body;
 
   try {
-    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
-
+    const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao);
     res.json(update);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -90,7 +84,46 @@ async function deleteDespesaFixa(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
+
 //DESPESAS VARIÁVEIS
+
+async function getAllDespesasVar_Usuario(req, res) {
+  const userId = req.params.id_user;
+  console.log(userId)
+  try {
+    const despesasVariaveis = await getAllDespesaVar_Usuario_Servico(userId); 
+    res.json(despesasVariaveis);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+async function getDespesasVarById(req, res) {
+  const userId = req.params.id_user;
+  const despesaVariavelId = req.params.id_desp;
+
+  try {
+    const despesaVariavel = await  getDespesaVarByIdServico(userId, despesaVariavelId);
+
+    if (!despesaVariavel) {
+      return res.status(404).json({ error: 'Despesa variável não encontrada' });
+    }
+
+    res.json(despesaVariavel);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
+async function getAllDespesasVar(req, res) {
+try {
+  const despesas = await getAllDespesaVarServico();
+  res.json(despesas);
+} catch (error) {
+  res.status(500).json({ error: error.message });
+}
+}
+
 
 
 module.exports = {
@@ -103,11 +136,10 @@ module.exports = {
   deleteDespesaFixa,
 
   //DESPESA VARIÁVEL
-  /*
-  createDespesaVar,
+  //createDespesaVar,
   getAllDespesasVar,
   getAllDespesasVar_Usuario,
   getDespesasVarById,
-  updateDespesaVar,
-  deleteDespesaVar*/
+  //updateDespesaVar,
+  //deleteDespesaVar,
 };

@@ -162,6 +162,45 @@ async function deleteDespesaFixaServico(userId, despesaId) {
 
 //DESPESAS VARIÁVEIS
 
+async function getAllDespesaVarServico(userId) {
+  try {
+    console.log(userId)
+    return await database('Despesa_Variavel').select('*').where('ID_Usuario', userId);
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
+
+async function getDespesaVarByIdServico(userId, despesaVariavelId) {
+  try {
+    return await database('Despesa_Variavel')
+      .select("*")
+      .where({ ID: despesaVariavelId, ID_Usuario: userId })
+      .first();
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
+
+async function getAllDespesaVar_Usuario_Servico() {
+    try {
+      return await database('Despesa_Variavel').select('*');
+    } catch (error) {
+      return {
+        status: false,
+        message: error.message,
+      };
+    }
+  }
+
+
+
 module.exports = {
   //DISPESAS FIXAS
   createDespesaFixaServico,
@@ -176,8 +215,9 @@ module.exports = {
   createDespesaVarServico,
   updateDespesaVarServico,
   deleteDespesaVarServico,
+  */
   getAllDespesaVarServico,
   getAllDespesaVar_Usuario_Servico,
-  getDespesaVarByIdServico,*/
+  getDespesaVarByIdServico
 
 };
