@@ -62,8 +62,9 @@ const FormCadastro = () => {
     };
     return(
         <form className="flex justify-items-center flex-col h-[100%] w-[100%]" onSubmit={handleEnvio}>
-        {name === "" ? <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
-          : <img src={`https://avatar.uimaterial.com/?setId=HovCX3s7UOrjv7DekigX&name=${name}`} alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
+        {name === "" 
+              ? <img src="/ImagemLogin.svg" alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
+              : <img src={`https://avatar.uimaterial.com/?setId=HovCX3s7UOrjv7DekigX&name=${name}`} alt="" className="ml-auto mr-auto w-[174px] h-[171px]" />
           }
         <div className= "mb-[20px]">
           <h1 className="mt-[37px] font-medium">Nome Completo:</h1>

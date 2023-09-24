@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Cadastro from "./pages/cadastro";
 import Login from "./pages/login"
+import Home from "./pages/home"
 
 
 const routes = [
@@ -12,6 +13,10 @@ const routes = [
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path:"/home",
+    element: <Home/>
   }
 ];
 
