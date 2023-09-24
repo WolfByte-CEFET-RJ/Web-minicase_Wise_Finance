@@ -24,7 +24,8 @@ async function limparReceitas() {
 async function viraMes(){
     schedule.scheduleJob('0 0 1 * *', limparDespesas);
     schedule.scheduleJob('0 0 1 * *', limparReceitas);
-    //schedule.scheduleJob(new Date(Date.now() + 10000), limparDespesas);
+    //schedule.scheduleJob(new Date(Date.now() + 100), limparDespesas);
+    //schedule.scheduleJob(new Date(Date.now() + 100), limparReceitas);
 }
 
 module.exports = {
