@@ -1,4 +1,5 @@
 require('dotenv').config();
+const temporizador = require("../utils/temporizador")
 const host = process.env.HOST;
 const port = process.env.PORT;
 
@@ -23,6 +24,7 @@ servidor.use(cors(corsOptions));
 const rotas = require("./rotas")
 servidor.use('', rotas)
 
+temporizador.viraMes();
 
 
 servidor.listen(port, host, () => {
