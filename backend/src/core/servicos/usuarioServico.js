@@ -176,6 +176,19 @@ async function cadastrarUsuario( nome, username, email, senha, senhaConfirmacao)
     const insertedUser = await database("Usuario").insert(newUser);
     const idUser = insertedUser[0]; // Assume que o retorno inclui o ID inserido
 
+    //DEFINE LIMITE
+    const data = new Date();
+    const [mesAtual, anoAtual] = [data.getMonth() + 1, data.getFullYear()];
+
+    const limite = {
+      ID_Usuario: idUser,
+      Valor_Limite: 100,
+      Mes_Definido: mesAtual,
+      Ano_Definido: anoAtual,
+  };
+
+  await database("Limite_Mensal").insert(limite);
+
     return {
       status: true,
       message: "Usuário cadastrado com êxito",
