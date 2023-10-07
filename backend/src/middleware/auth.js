@@ -31,8 +31,8 @@ function auth(req,res,next){
         }
     
         req.usuario = decoded;
-        console.log(decoded);
-        next(); // Passa para a próxima middleware ou rota
+        //console.log(decoded);
+        next();
       });
 }
 

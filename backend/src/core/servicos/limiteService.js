@@ -30,7 +30,7 @@ async function define(id_user, valor){
             Ano_Definido: anoAtual,
         };
 
-        //await database("Limite_Mensal").update(limite).where("id_usuario",id_user);
+        await database("Limite_Mensal").update(limite).where("id_usuario",id_user);
     
       return {
         status: true,

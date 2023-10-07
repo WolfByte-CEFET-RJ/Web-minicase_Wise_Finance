@@ -4,6 +4,7 @@ const { readAllControlador, readOneControlador, updateControlador, cadastroContr
 const { loginControlador } = require("./controladores/loginControlador");
 const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas, getAllDespesasFixas_Usuario, getDespesaFixaById, 
         createDespesaVar, updateDespesaVar, deleteDespesaVar,getAllDespesasVar, getAllDespesasVar_Usuario, getDespesasVarById, 
+        verificaLimite
       } = require("./controladores/despesasControlador");
 const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
         createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
@@ -22,17 +23,17 @@ router.delete('/usuario/delete/:id', deleteControlador);
 router.post('/login', loginControlador);
 
 //DESPESAS FIXAS
-router.post('/despesa_fixa/create/',auth, createDespesaFixa);
-router.patch('/despesa_fixa/update/:id_desp',auth, updateDespesaFixa);
-router.delete('/despesa_fixa/delete/:id_desp',auth, deleteDespesaFixa);
+router.post('/despesa_fixa/create/',auth, createDespesaFixa, verificaLimite);
+router.patch('/despesa_fixa/update/:id_desp',auth, updateDespesaFixa, verificaLimite);
+router.delete('/despesa_fixa/delete/:id_desp',auth, deleteDespesaFixa, verificaLimite);
 router.get('/despesa_fixa/readAll',auth, getAllDespesasFixas);
 router.get('/despesa_fixa/read/',auth, getAllDespesasFixas_Usuario);
 router.get('/despesa_fixa/read/:id_desp',auth, getDespesaFixaById);
 
 //DESPESAS VARIAVEIS
-router.post('/despesa_var/create/',auth, createDespesaVar);
-router.patch('/despesa_var/update/:id_desp',auth, updateDespesaVar);
-router.delete('/despesa_var/delete/:id_desp',auth, deleteDespesaVar);
+router.post('/despesa_var/create/',auth, createDespesaVar, verificaLimite);
+router.patch('/despesa_var/update/:id_desp',auth, updateDespesaVar, verificaLimite);
+router.delete('/despesa_var/delete/:id_desp',auth, deleteDespesaVar, verificaLimite);
 router.get('/despesa_var/readAll',auth, getAllDespesasVar);
 router.get('/despesa_var/read/',auth, getAllDespesasVar_Usuario);
 router.get('/despesa_var/read/:id_desp',auth, getDespesasVarById);
@@ -56,6 +57,6 @@ router.get('/receita_var/read/',auth, getAllReceitaVar_Usuario);
 router.get('/receita_var/read/:id_rec',auth, getReceitaVarById);
 
 //LIMITE MENSAL
-router.patch('/limite_mensal/define/:id_user/:val', auth, defineLimite);
+router.patch('/limite_mensal/define/', auth, defineLimite, verificaLimite);
 
 module.exports = router;
