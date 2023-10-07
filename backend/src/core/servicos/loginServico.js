@@ -25,11 +25,9 @@ async function loginUsuario(identificador, senha) {
 
     // Cria o token JWT
     const tokenPayload = {
-      InformacoesUsuario: {
-        id: usuario.id,
-        username: usuario.username,
-        email: usuario.email,
-      },
+        id: usuario.ID,
+        username: usuario.Username,
+        email: usuario.Email,
     };
 
     const token = jwt.sign(tokenPayload, process.env.JWT_KEY, {

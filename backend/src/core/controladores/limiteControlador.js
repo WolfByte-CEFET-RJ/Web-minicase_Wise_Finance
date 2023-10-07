@@ -1,12 +1,15 @@
 const { request, response } = require('express');
-const {altera, define} = require("../servicos/limiteService")
+const { define} = require("../servicos/limiteService")
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 async function defineLimite (req = request, res = response) {
     try {
   
         const user = req.params.id_user;
         const limite = req.params.val;
-
+        console.log(req.usuario.id);
+        
         const executa = await define(user, limite); 
 
         res.json(executa);
