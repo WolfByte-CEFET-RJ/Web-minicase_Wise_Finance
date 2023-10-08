@@ -22,7 +22,7 @@ function auth(req,res,next){
     }
 
 
-    //const decoded = jwt.verify(token, process.env.JWT_KEY); // Substitua pela sua chave secreta real
+    //const decoded = jwt.verify(token, process.env.JWT_KEY);
     //console.log('Informações do usuário:', decoded);
 
     jwt.verify(token, process.env.JWT_KEY, (error, decoded) => {
