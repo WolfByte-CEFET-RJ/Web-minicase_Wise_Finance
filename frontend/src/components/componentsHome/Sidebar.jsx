@@ -29,28 +29,28 @@ function Sidebar (){
                 <div className="flex items-center justify-center fixed  mt-[3%] ml-[0.35%]  " >
                     <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/DashBoard.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px] mt-[6px] fixed  mt-[3%]' > Dashboard </div>
+                <div className='text-[12px] ml-[87px]  fixed  mt-[3%]' > Dashboard </div>
               </button>
 
               <button className= "">
                 <div className="flex items-center justify-center fixed  mt-[6%] ml-[0.35%]  " >
                     <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/Perfil.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px] mt-[6px] fixed  mt-[6%]' > Perfil </div>
+                <div className='text-[12px] ml-[87px]  fixed  mt-[6%]' > Perfil </div>
               </button>
 
               <button className= "">
                 <div className="flex items-center justify-center fixed  mt-[9%] ml-[0.35%]  " >
                     <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/Baixar.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px] mt-[6px] fixed  mt-[9%]' > Baixar Relatório </div>
+                <div className='text-[12px] ml-[87px]  fixed  mt-[9%]' > Baixar Relatório </div>
               </button>
 
               <button className= "">
-                <div className="flex items-center justify-center fixed  mt-[45%] ml-[0.35%]  " >
+                <div className="flex items-center justify-center fixed  mt-[44%] ml-[0.35%]  " >
                     <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/logout.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px] mt-[6px] fixed  mt-[45%]' > Logout </div>
+                <div className='text-[12px] ml-[87px]  fixed  mt-[44%]' > Logout </div>
               </button>
         </div>
       );
