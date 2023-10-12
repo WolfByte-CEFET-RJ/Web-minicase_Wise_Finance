@@ -9,6 +9,7 @@ const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFi
         createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
       } = require("./controladores/receitaControlador");
 const {defineLimite, readLimite} = require("./controladores/limiteControlador")
+const {readBalanco} = require("./controladores/balancoControlador")
 const auth = require("../middleware/auth")
 
 
@@ -58,5 +59,8 @@ router.get('/receita_var/read/:id_rec',auth, getReceitaVarById);
 //LIMITE MENSAL
 router.patch('/limite_mensal/define/', auth, defineLimite);
 router.get('/limite_mensal/read/', auth, readLimite);
+
+//BALANCO MENSAL
+router.get('/balanco_mensal/read/:mes/:ano', auth, readBalanco);
 
 module.exports = router;

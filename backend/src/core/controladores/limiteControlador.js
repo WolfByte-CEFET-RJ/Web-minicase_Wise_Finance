@@ -1,6 +1,5 @@
 const { request, response } = require('express');
-const { define, readByUsuario} = require("../servicos/limiteService")
-const jwt = require('jsonwebtoken');
+const { readByUsuario} = require("../servicos/balancoServico")
 require('dotenv').config();
 
 async function defineLimite (req = request, res = response, next) {
