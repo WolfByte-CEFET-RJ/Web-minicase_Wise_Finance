@@ -4,7 +4,7 @@ const { cadastrarUsuario, deletarUsuario, readAll, readOne, update } = require('
 async function updateControlador (req = request, res = response) {
   try {
 
-    const updateId = req.params.id;
+    const updateId = req.usuario.id;
     const {
       nome, 
       username
@@ -38,7 +38,7 @@ async function readAllControlador (req = request, res = response) {
 
 async function readOneControlador (req = request, res = response) {
   try {
-    const id_usuario = req.params.id;
+    const id_usuario = req.usuario.id;
     const usuario = await readOne(id_usuario);
     res.json(usuario);
   } catch (error) {
@@ -48,7 +48,7 @@ async function readOneControlador (req = request, res = response) {
 };
 
 async function deleteControlador(req = request, res = response) {
-  const deleteId = req.params.id;
+  const deleteId = req.usuario.id;
   
   try {
 

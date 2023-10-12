@@ -15,11 +15,11 @@ const auth = require("../middleware/auth")
 
 //USUÁRIO
 //adicionar verificação de autenticação???
-router.get('/usuario/read', readAllControlador);
-router.get('/usuario/read/:id', readOneControlador);
-router.patch('/usuario/update/:id', updateControlador);
+router.get('/usuario/readAll', readAllControlador);
+router.get('/usuario/read/',auth, readOneControlador);
+router.patch('/usuario/update/',auth, updateControlador);
 router.post('/usuario/cadastro', cadastroControlador);
-router.delete('/usuario/delete/:id', deleteControlador);
+router.delete('/usuario/delete/',auth, deleteControlador);
 router.post('/login', loginControlador);
 
 //DESPESAS FIXAS
