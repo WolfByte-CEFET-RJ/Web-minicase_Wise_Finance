@@ -1,11 +1,12 @@
 const { request, response } = require('express');
+const database = require('../../database/index');
 const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico, 
         createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
       } = require('../servicos/despesasServico');
 
 //DESPESAS FIXAS
 async function createDespesaFixa(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const {
     nome,
     valor,
@@ -23,8 +24,7 @@ async function createDespesaFixa(req, res) {
 }
 
 async function getAllDespesasFixas_Usuario(req, res) {
-  const userId = req.params.id_user;
-  console.log(userId)
+  const userId = req.usuario.id;
   try {
     const despesasFixas = await getAllDespesasFixas_Usuario_Servico(userId); 
     res.json(despesasFixas);
@@ -34,7 +34,7 @@ async function getAllDespesasFixas_Usuario(req, res) {
 }
 
 async function getDespesaFixaById(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const despesaFixaId = req.params.id_desp;
 
   try {
@@ -60,7 +60,7 @@ try {
 }
 
 async function updateDespesaFixa(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
   const {
@@ -80,7 +80,7 @@ async function updateDespesaFixa(req, res) {
 }
 
 async function deleteDespesaFixa(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
   try {
@@ -91,11 +91,10 @@ async function deleteDespesaFixa(req, res) {
   }
 }
 
+
 //DESPESAS VARIÁVEIS
-
-
 async function getAllDespesasVar_Usuario(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   console.log(userId)
   try {
     const despesasVariaveis = await getAllDespesaVar_Usuario_Servico(userId); 
@@ -109,7 +108,7 @@ async function getAllDespesasVar_Usuario(req, res) {
 }
 
 async function createDespesaVar(req, res){
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const {
     nome,
     valor,
@@ -126,9 +125,8 @@ async function createDespesaVar(req, res){
   }
 }
 
-
 async function getDespesasVarById(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const despesaVariavelId = req.params.id_desp;
 
   try {
@@ -148,7 +146,7 @@ async function getDespesasVarById(req, res) {
 }
 
 async function updateDespesaVar(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
   const {
@@ -167,7 +165,6 @@ async function updateDespesaVar(req, res) {
   }
 }
 
-
 async function getAllDespesasVar(req, res) {
 try {
   const despesas = await getAllDespesaVarServico();
@@ -178,7 +175,7 @@ try {
 }
 
 async function deleteDespesaVar(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
   try {
@@ -189,8 +186,8 @@ async function deleteDespesaVar(req, res) {
   }
 }
 
-
 module.exports = {
+
   //DESPESA FIXA
   createDespesaFixa,
   getAllDespesasFixas,

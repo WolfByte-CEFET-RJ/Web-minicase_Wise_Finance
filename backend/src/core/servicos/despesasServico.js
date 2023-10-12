@@ -1,4 +1,5 @@
 const database = require('../../database/index');
+const { verificaLimite } = require("./limiteService")
 
 //DESPESAS FIXAS
 
@@ -32,6 +33,7 @@ async function createDespesaFixaServico(userId, nome, valor, descricao, dataPaga
     return {
       status: true,
       message: `Despesa adicionada ao usuário ${userId}`,
+      limite: await verificaLimite(userId)
     };
   
   } catch (error) {
@@ -79,7 +81,7 @@ async function getAllDespesasFixasServico() {
     }
   }
 
-  async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
+async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
     try {
       
       if (
@@ -117,6 +119,7 @@ async function getAllDespesasFixasServico() {
       return {
         status: true,
         message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+        limite: await verificaLimite(userId)
       };
     
     } catch (error) {
@@ -125,7 +128,7 @@ async function getAllDespesasFixasServico() {
         message: error.message,
       };
     }
-  }
+}
   
 
 async function deleteDespesaFixaServico(userId, despesaId) {
@@ -149,6 +152,7 @@ async function deleteDespesaFixaServico(userId, despesaId) {
     return {
       status: true,
       message: `Despesa deleteda com sucesso!`,
+      limite: await verificaLimite(userId)
     };
   
   } catch (error) {
@@ -202,6 +206,7 @@ async function createDespesaVarServico(userId, nome, valor, descricao, dataPagam
     return {
       status: true,
       message: `Despesa adicionada ao usuário ${userId}`,
+      limite: await verificaLimite(userId)
     };
   
   } catch (error) {
@@ -264,6 +269,7 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
     return {
       status: true,
       message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+      limite: await verificaLimite(userId)
     };
 
   } catch (error) {
@@ -307,6 +313,7 @@ async function deleteDespesaVarServico(userId, despesaId) {
     return {
       status: true,
       message: `Despesa deleteda com sucesso!`,
+      limite: await verificaLimite(userId)
     };
   
   } catch (error) {

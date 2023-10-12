@@ -6,7 +6,7 @@ const { createReceitaFixaServico, updateReceitaFixaServico, deleteReceitaFixaSer
 //RECEITAS FIXAS
 
 async function createReceitaFixa(req, res) {
-  const userId = req.params.id_user;
+  const userId = req.usuario.id;
   const {
     nome,
     valor,
@@ -23,19 +23,17 @@ async function createReceitaFixa(req, res) {
   }
 }
 
-  async function getAllReceitaFixa(req, res) {
-    const userId = req.params.id_user;
-    console.log(userId)
+async function getAllReceitaFixa(req, res) {
     try {
-      const receitasFixas = await getAllReceitaFixaServico(userId); 
+      const receitasFixas = await getAllReceitaFixaServico(); 
       res.json(receitasFixas);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+}
   
-  async function getReceitaFixaById(req, res) {
-    const userId = req.params.id_user;
+async function getReceitaFixaById(req, res) {
+    const userId = req.usuario.id;  
     const receitaFixaId = req.params.id_rec;
   
     try {
@@ -49,10 +47,10 @@ async function createReceitaFixa(req, res) {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+}
   
-  async function getAllReceitaFixa_Usuario(req, res) {
-    const userId = req.params.id_user;
+async function getAllReceitaFixa_Usuario(req, res) {
+    const userId = req.usuario.id;
     console.log(userId)
     try {
       const despesasFixas = await getAllReceitasFixas_Usuario_Servico(userId); 
@@ -60,10 +58,10 @@ async function createReceitaFixa(req, res) {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+}
   
   async function updateReceitaFixa(req, res) {
-    const userId = req.params.id_user;
+    const userId = req.usuario.id;
     const receitaId = req.params.id_rec;
 
   const {
@@ -81,8 +79,9 @@ async function createReceitaFixa(req, res) {
     res.status(500).json({ error: error.message });
   }
 }
-  async function deleteReceitaFixa(req, res) {
-    const userId = req.params.id_user;
+
+async function deleteReceitaFixa(req, res) {
+    const userId = req.usuario.id;
     const receitaId = req.params.id_rec;
   
     try {
@@ -91,12 +90,12 @@ async function createReceitaFixa(req, res) {
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+}
 
 //RECEITAS VARIÁVEIS
 
 async function createReceitaVar(req, res) {
-    const userId = req.params.id_user;
+    const userId = req.usuario.id;
     const {
       nome,
       valor,
@@ -123,7 +122,7 @@ async function getAllReceitaVar(req, res) {
 }
 
 async function getReceitaVarById(req, res) {
-    const userId = req.params.id_user;
+    const userId = req.usuario.id;
     const receitaVarId = req.params.id_rec;
   
     try {
@@ -140,7 +139,7 @@ async function getReceitaVarById(req, res) {
 }
 
 async function getAllReceitaVar_Usuario(req, res) {
-    const userId = req.params.id_user;
+    const userId = req.usuario.id;
     try {
       const receitaVariavel = await getAllReceitaVar_Usuario_Servico(userId); 
       res.json(receitaVariavel);
@@ -150,7 +149,7 @@ async function getAllReceitaVar_Usuario(req, res) {
 }
 
 async function updateReceitaVar(req, res) {
-    const userId = req.params.id_user;
+    const userId = req.usuario.id;
     const receitaId = req.params.id_rec;
 
   const {
@@ -170,7 +169,7 @@ async function updateReceitaVar(req, res) {
 }
 
 async function deleteReceitaVar(req, res) {
-    const userId = req.params.id_user;
+    const userId = req.usuario.id;
     const receitaId = req.params.id_rec;
   
     try {
