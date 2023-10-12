@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { readByUsuario} = require("../servicos/balancoServico")
+const { define, readByUsuario} = require("../servicos/limiteService")
 require('dotenv').config();
 
 async function defineLimite (req = request, res = response, next) {
