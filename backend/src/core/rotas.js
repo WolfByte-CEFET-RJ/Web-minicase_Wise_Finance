@@ -26,7 +26,7 @@ router.post('/login', loginControlador);
 router.post('/despesa_fixa/create/',auth, createDespesaFixa);
 router.patch('/despesa_fixa/update/:id_desp',auth, updateDespesaFixa);
 router.delete('/despesa_fixa/delete/:id_desp',auth, deleteDespesaFixa);
-router.get('/despesa_fixa/readAll',auth, getAllDespesasFixas);
+router.get('/despesa_fixa/readAll',auth, getAllDespesasFixas); // development
 router.get('/despesa_fixa/read/',auth, getAllDespesasFixas_Usuario);
 router.get('/despesa_fixa/read/:id_desp',auth, getDespesaFixaById);
 
@@ -34,7 +34,7 @@ router.get('/despesa_fixa/read/:id_desp',auth, getDespesaFixaById);
 router.post('/despesa_var/create/',auth, createDespesaVar);
 router.patch('/despesa_var/update/:id_desp',auth, updateDespesaVar);
 router.delete('/despesa_var/delete/:id_desp',auth, deleteDespesaVar);
-router.get('/despesa_var/readAll',auth, getAllDespesasVar);
+router.get('/despesa_var/readAll',auth, getAllDespesasVar); // development
 router.get('/despesa_var/read/',auth, getAllDespesasVar_Usuario);
 router.get('/despesa_var/read/:id_desp',auth, getDespesasVarById);
 
@@ -43,7 +43,7 @@ router.get('/despesa_var/read/:id_desp',auth, getDespesasVarById);
 router.post('/receita_fixa/create/',auth, createReceitaFixa);
 router.patch('/receita_fixa/update/:id_rec',auth, updateReceitaFixa);
 router.delete('/receita_fixa/delete/:id_rec',auth, deleteReceitaFixa);
-router.get('/receita_fixa/readAll',auth, getAllReceitaFixa);
+router.get('/receita_fixa/readAll',auth, getAllReceitaFixa); //development
 router.get('/receita_fixa/read/',auth, getAllReceitaFixa_Usuario);
 router.get('/receita_fixa/read/:id_rec',auth, getReceitaFixaById);
 
@@ -52,7 +52,7 @@ router.get('/receita_fixa/read/:id_rec',auth, getReceitaFixaById);
 router.post('/receita_var/create/',auth, createReceitaVar);
 router.patch('/receita_var/update/:id_rec',auth, updateReceitaVar);
 router.delete('/receita_var/delete/:id_rec',auth, deleteReceitaVar);
-router.get('/receita_var/readAll',auth, getAllReceitaVar);
+router.get('/receita_var/readAll',auth, getAllReceitaVar); //development
 router.get('/receita_var/read/',auth, getAllReceitaVar_Usuario);
 router.get('/receita_var/read/:id_rec',auth, getReceitaVarById);
 
