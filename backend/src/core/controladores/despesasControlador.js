@@ -5,7 +5,7 @@ const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaSer
       } = require('../servicos/despesasServico');
 
 //DESPESAS FIXAS
-async function createDespesaFixa(req, res,next) {
+async function createDespesaFixa(req, res) {
   const userId = req.usuario.id;
   const {
     nome,
@@ -18,7 +18,6 @@ async function createDespesaFixa(req, res,next) {
     const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento); 
 
     res.json(create);
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -60,7 +59,7 @@ try {
 }
 }
 
-async function updateDespesaFixa(req, res,next) {
+async function updateDespesaFixa(req, res) {
   const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
@@ -75,20 +74,18 @@ async function updateDespesaFixa(req, res,next) {
     const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
 
     res.json(update);
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
-async function deleteDespesaFixa(req, res, next) {
+async function deleteDespesaFixa(req, res) {
   const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
   try {
     const deletar = await deleteDespesaFixaServico(userId, despesaId);
     res.json(deletar);
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -110,7 +107,7 @@ async function getAllDespesasVar_Usuario(req, res) {
 }
 }
 
-async function createDespesaVar(req, res, next){
+async function createDespesaVar(req, res){
   const userId = req.usuario.id;
   const {
     nome,
@@ -123,7 +120,6 @@ async function createDespesaVar(req, res, next){
     const create = await createDespesaVarServico(userId, nome, valor, descricao, dataPagamento); 
 
     res.json(create);
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -149,7 +145,7 @@ async function getDespesasVarById(req, res) {
   }
 }
 
-async function updateDespesaVar(req, res, next) {
+async function updateDespesaVar(req, res) {
   const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
@@ -164,7 +160,6 @@ async function updateDespesaVar(req, res, next) {
     const update = await updateDespesaVarServico(userId, despesaId, nome, valor, descricao, dataPagamento);
 
     res.json(update);
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -179,49 +174,19 @@ try {
 }
 }
 
-async function deleteDespesaVar(req, res, next) {
+async function deleteDespesaVar(req, res) {
   const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
 
   try {
     const deletar = await deleteDespesaVarServico(userId, despesaId);
     res.json(deletar);
-    next();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 }
 
-
-//VERIFICA LIMITE
-async function verificaLimite(req, res) {
-  const userId = req.usuario.id;
-
-  try {
-    const [totalFixaResult, totalVarResult, limite] = await Promise.all([
-      database("Despesa_Fixa").sum("Valor as Tot_Desp_Fixa").where("id_usuario", userId).first(),
-      database("Despesa_Variavel").sum("Valor as Tot_Desp_Var").where("id_usuario", userId).first(),
-      database("limite_mensal").select("Valor_Limite").where("id_usuario", userId).first()
-    ]);
-
-    const totalFixa = parseFloat(totalFixaResult.Tot_Desp_Fixa) || 0;
-    const totalVar = parseFloat(totalVarResult.Tot_Desp_Var) || 0;
-
-    const soma = totalFixa + totalVar;
-
-    if (soma > parseFloat(limite.Valor_Limite)) {
-      console.log("NOTIFY: VALOR DO LIMITE ULTRAPASSADO");
-    } else{
-      console.log("NOTIFY: DENTRO DO LIMITE")
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 module.exports = {
-  //LIMITE
-  verificaLimite,
 
   //DESPESA FIXA
   createDespesaFixa,

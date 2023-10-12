@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { define} = require("../servicos/limiteService")
+const { define, readByUsuario} = require("../servicos/limiteService")
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -12,7 +12,21 @@ async function defineLimite (req = request, res = response, next) {
         const executa = await define(user, limite); 
 
         res.json(executa);
-        next();
+  
+    } catch (error) {
+      console.error("Erro:", error);
+      res.status(500).json({ error: "Erro" });
+  }
+};
+
+async function readLimite (req = request, res = response) {
+    try {
+  
+        const user = req.usuario.id;
+        
+        const limite = await readByUsuario(user); 
+
+        res.json(limite);
   
     } catch (error) {
       console.error("Erro:", error);
@@ -23,4 +37,5 @@ async function defineLimite (req = request, res = response, next) {
 
 module.exports = { 
     defineLimite,
+    readLimite
 };
