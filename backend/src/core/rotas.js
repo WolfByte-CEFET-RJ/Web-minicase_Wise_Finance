@@ -14,7 +14,6 @@ const auth = require("../middleware/auth")
 
 
 //USUÁRIO
-//adicionar verificação de autenticação???
 router.get('/usuario/readAll', readAllControlador);
 router.get('/usuario/read/',auth, readOneControlador);
 router.patch('/usuario/update/',auth, updateControlador);

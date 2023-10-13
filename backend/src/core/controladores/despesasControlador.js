@@ -1,8 +1,9 @@
 const { request, response } = require('express');
 const database = require('../../database/index');
 const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico, 
-        createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico,  
+        createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico, updateDespesaTotais,
       } = require('../servicos/despesasServico');
+const {calcularSaldoGeral, } = require('../servicos/saldoGeralServico');
 
 //DESPESAS FIXAS
 async function createDespesaFixa(req, res) {
@@ -15,7 +16,9 @@ async function createDespesaFixa(req, res) {
   } = req.body;
 
   try {
-    const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento); 
+    const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento);
+    await updateDespesaTotais(userId); 
+    await calcularSaldoGeral(userId);
 
     res.json(create);
   } catch (error) {
@@ -72,6 +75,8 @@ async function updateDespesaFixa(req, res) {
 
   try {
     const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
+    await updateDespesaTotais(userId);
+    await calcularSaldoGeral(userId);
 
     res.json(update);
   } catch (error) {
@@ -85,6 +90,8 @@ async function deleteDespesaFixa(req, res) {
 
   try {
     const deletar = await deleteDespesaFixaServico(userId, despesaId);
+    await updateDespesaTotais(userId);
+    await calcularSaldoGeral(userId);
     res.json(deletar);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -118,7 +125,8 @@ async function createDespesaVar(req, res){
 
   try {
     const create = await createDespesaVarServico(userId, nome, valor, descricao, dataPagamento); 
-
+    await updateDespesaTotais(userId);
+    await calcularSaldoGeral(userId);
     res.json(create);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -158,6 +166,8 @@ async function updateDespesaVar(req, res) {
 
   try {
     const update = await updateDespesaVarServico(userId, despesaId, nome, valor, descricao, dataPagamento);
+    await updateDespesaTotais(userId);
+    await calcularSaldoGeral(userId);
 
     res.json(update);
   } catch (error) {
@@ -180,6 +190,8 @@ async function deleteDespesaVar(req, res) {
 
   try {
     const deletar = await deleteDespesaVarServico(userId, despesaId);
+    await updateDespesaTotais(userId);
+    await calcularSaldoGeral(userId);
     res.json(deletar);
   } catch (error) {
     res.status(500).json({ error: error.message });
