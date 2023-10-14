@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 function Sidebar (){
     const [expandir, setExpandir] = useState(false);
-
+    const navigate = useNavigate();
     const  handleMouseEnter = () =>{
         setExpandir(true);
     } 
@@ -22,35 +23,45 @@ function Sidebar (){
               <div className="flex items-center justify-center  " >
                   <img className= "mt-[-5%] w-[33px] h-[32px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/android-chrome-192x192.png"/>
               </div>
-              <div className='text-[12px] ml-[85px] mt-[6px] fixed' > Wise Finance </div>
+   
+              {expandir && <div className="text-[12px] ml-[85px] mt-[6px] fixed">Wise Finance</div>}
+
             </div>
 
-              <button className= "">
+              <button 
+              onClick={() =>navigate("/home")}
+              >
                 <div className="flex items-center justify-center fixed  mt-[3%] ml-[0.35%]  " >
-                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/DashBoard.png"/>
+                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="SimboloDashBoard" src= "/DashBoard.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px]  fixed  mt-[3%]' > Dashboard </div>
+                {expandir && <div className='text-[12px] ml-[87px]  fixed  mt-[3%]' > Dashboard </div>}
               </button>
 
-              <button className= "">
+              <button 
+              onClick={() =>navigate("/perfil")}
+              >
                 <div className="flex items-center justify-center fixed  mt-[6%] ml-[0.35%]  " >
-                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/Perfil.png"/>
+                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="SimboloPerfil" src= "/Perfil.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px]  fixed  mt-[6%]' > Perfil </div>
+                {expandir && <div className='text-[12px] ml-[87px]  fixed  mt-[6%]' > Perfil </div>}
               </button>
 
-              <button className= "">
+              <button 
+              // onClick={}
+              >
                 <div className="flex items-center justify-center fixed  mt-[9%] ml-[0.35%]  " >
-                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/Baixar.png"/>
+                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="SimboloBaixar" src= "/Baixar.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px]  fixed  mt-[9%]' > Baixar Relatório </div>
+                {expandir && <div className='text-[12px] ml-[87px]  fixed  mt-[9%]' > Baixar Relatório </div>}
               </button>
 
-              <button className= "">
+              <button
+              // onClick={}
+              >
                 <div className="flex items-center justify-center fixed  mt-[44%] ml-[0.35%]  " >
-                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/logout.png"/>
+                    <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="SimboloLogout" src= "/logout.png"/>
                 </div>
-                <div className='text-[12px] ml-[87px]  fixed  mt-[44%]' > Logout </div>
+                {expandir && <div className='text-[12px] ml-[87px]  fixed  mt-[44%]' > Logout </div>}
               </button>
         </div>
       );
