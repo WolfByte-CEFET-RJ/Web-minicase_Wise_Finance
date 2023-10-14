@@ -85,16 +85,6 @@ async function getReceitaFixaByIdServico(userId, receitaFixaId) {
   }
 }
 
-async function getAllReceitaFixaServico() {
-    try {
-      return await database('Receita_Fixa').select('*');
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message,
-      };
-    }
-}
 
   async function updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
@@ -259,17 +249,6 @@ async function getReceitaVarByIdServico(userId, receitaVarId) {
   }
 }
 
-async function getAllReceitaVarServico() {
-    try {
-      return await database('Receita_Variavel').select('*');
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message,
-      };
-    }
-}
-
   async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
       
@@ -378,7 +357,6 @@ module.exports = {
   createReceitaFixaServico,
   updateReceitaFixaServico,
   deleteReceitaFixaServico,
-  getAllReceitaFixaServico,
   getAllReceitasFixas_Usuario_Servico,
   getReceitaFixaByIdServico,
   getTotalReceitasFixas,
@@ -387,7 +365,6 @@ module.exports = {
   createReceitaVarServico,
   updateReceitaVarServico,
   deleteReceitaVarServico,
-  getAllReceitaVarServico,
   getAllReceitaVar_Usuario_Servico,
   getReceitaVarByIdServico,
   getTotalReceitasVariaveis,

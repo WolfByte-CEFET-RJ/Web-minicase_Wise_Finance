@@ -87,17 +87,6 @@ async function getDespesaFixaByIdServico(userId, despesaFixaId) {
   }
 }
 
-async function getAllDespesasFixasServico() {
-    try {
-      return await database('Despesa_Fixa').select('*');
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message,
-      };
-    }
-  }
-
 async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
     try {
       
@@ -197,19 +186,6 @@ async function getTotalDespesasVariaveis(userId) {
     return totalVariaveis;
   } catch (error) {
     throw new Error("Erro ao calcular o total de despesas variáveis");
-  }
-}
-
-
-
-async function getAllDespesaVarServico() {
-  try {
-    return await database('Despesa_Variavel').select('*');
-  } catch (error) {
-    return {
-      status: false,
-      message: error.message,
-    };
   }
 }
 
@@ -391,7 +367,6 @@ module.exports = {
   createDespesaFixaServico,
   updateDespesaFixaServico,
   deleteDespesaFixaServico,
-  getAllDespesasFixasServico,
   getAllDespesasFixas_Usuario_Servico,
   getDespesaFixaByIdServico,
   getTotalDespesasFixas,
@@ -400,7 +375,6 @@ module.exports = {
   createDespesaVarServico,
   updateDespesaVarServico,
   deleteDespesaVarServico,
-  getAllDespesaVarServico,
   getAllDespesaVar_Usuario_Servico,
   getDespesaVarByIdServico,
   getTotalDespesasVariaveis,

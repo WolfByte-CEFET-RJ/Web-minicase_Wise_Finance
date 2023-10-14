@@ -59,27 +59,6 @@ async function update(id, nome, username){
       }
 }
 
-async function readAll(){
-    try { 
-        const lista = await database('usuario')
-        .select("*");
-
-        if(lista.length==0){
-            throw new Error("Usuários não encontrados");
-        }
-
-        return {
-            status: true,
-            lista
-        }
-    } catch (error) {
-        return {
-            status: false,
-            message: error["message"]
-        };
-    }
-}
-
 async function readOne(id){
     try { 
         const usuario = await database('usuario')
@@ -204,7 +183,6 @@ async function cadastrarUsuario( nome, username, email, senha, senhaConfirmacao)
 module.exports = { 
     cadastrarUsuario,
     deletarUsuario,
-    readAll,
     readOne,
     update
  };

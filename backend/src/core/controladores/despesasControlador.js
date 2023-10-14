@@ -1,7 +1,7 @@
 const { request, response } = require('express');
 const database = require('../../database/index');
-const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico, getAllDespesasFixasServico, 
-        createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, getAllDespesaVarServico, updateDespesaTotais,
+const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico,  
+        createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, updateDespesaTotais,
       } = require('../servicos/despesasServico');
 const {calcularSaldoGeral, } = require('../servicos/saldoGeralServico');
 
@@ -53,14 +53,6 @@ async function getDespesaFixaById(req, res) {
   }
 }
 
-async function getAllDespesasFixas(req, res) {
-try {
-  const despesas = await getAllDespesasFixasServico();
-  res.json(despesas);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
-}
 
 async function updateDespesaFixa(req, res) {
   const userId = req.usuario.id;
@@ -175,15 +167,6 @@ async function updateDespesaVar(req, res) {
   }
 }
 
-async function getAllDespesasVar(req, res) {
-try {
-  const despesas = await getAllDespesaVarServico();
-  res.json(despesas);
-} catch (error) {
-  res.status(500).json({ error: error.message });
-}
-}
-
 async function deleteDespesaVar(req, res) {
   const userId = req.usuario.id;
   const despesaId = req.params.id_desp;
@@ -202,7 +185,6 @@ module.exports = {
 
   //DESPESA FIXA
   createDespesaFixa,
-  getAllDespesasFixas,
   getAllDespesasFixas_Usuario,
   getDespesaFixaById,
   updateDespesaFixa,
@@ -210,7 +192,6 @@ module.exports = {
 
   //DESPESA VARIÁVEL
   createDespesaVar,
-  getAllDespesasVar,
   getAllDespesasVar_Usuario,
   getDespesasVarById,
   updateDespesaVar,

@@ -1,6 +1,6 @@
 const { request, response } = require('express');
-const { createReceitaFixaServico, updateReceitaFixaServico, deleteReceitaFixaServico, getAllReceitasFixas_Usuario_Servico, getReceitaFixaByIdServico, getAllReceitaFixaServico,
-        createReceitaVarServico, updateReceitaVarServico, deleteReceitaVarServico, getAllReceitaVar_Usuario_Servico, getReceitaVarByIdServico, getAllReceitaVarServico, updateReceitasTotais,
+const { createReceitaFixaServico, updateReceitaFixaServico, deleteReceitaFixaServico, getAllReceitasFixas_Usuario_Servico, getReceitaFixaByIdServico, 
+        createReceitaVarServico, updateReceitaVarServico, deleteReceitaVarServico, getAllReceitaVar_Usuario_Servico, getReceitaVarByIdServico,  updateReceitasTotais,
       } = require('../servicos/receitaServico');
 const {calcularSaldoGeral, } = require('../servicos/saldoGeralServico');
 
@@ -26,15 +26,6 @@ async function createReceitaFixa(req, res) {
   }
 }
 
-async function getAllReceitaFixa(req, res) {
-    try {
-      const receitasFixas = await getAllReceitaFixaServico(); 
-      res.json(receitasFixas);
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
-}
-  
 async function getReceitaFixaById(req, res) {
     const userId = req.usuario.id;  
     const receitaFixaId = req.params.id_rec;
@@ -124,15 +115,6 @@ async function createReceitaVar(req, res) {
     }
 }
 
-async function getAllReceitaVar(req, res) {
-    try {
-        const receita = await getAllReceitaVarServico();
-        res.json(receita);
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-}
-
 async function getReceitaVarById(req, res) {
     const userId = req.usuario.id;
     const receitaVarId = req.params.id_rec;
@@ -199,16 +181,16 @@ async function deleteReceitaVar(req, res) {
 }
 
 module.exports = {
+  
     //RECEITA FIXA    
     createReceitaFixa,
-    getAllReceitaFixa,
     getAllReceitaFixa_Usuario,
     getReceitaFixaById,
     updateReceitaFixa,
     deleteReceitaFixa,
+
     //DESPESA VARIÁVEL
     createReceitaVar,
-    getAllReceitaVar,
     getAllReceitaVar_Usuario,
     getReceitaVarById,
     updateReceitaVar,
