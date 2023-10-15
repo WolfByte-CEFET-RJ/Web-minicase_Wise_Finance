@@ -2,9 +2,8 @@ import React from "react";
 import Sidebar from '../components/componentsHome/Sidebar'
 const Perfil = () => {
   return (
-    <div >
+    <div className = "h-screen bg-no-repeat bg-cover relative " style = {{backgroundImage:"url(/Fundo.svg)"}}>
       <Sidebar/>
-      <h1>Perfil</h1>
     </div>
   );
 }

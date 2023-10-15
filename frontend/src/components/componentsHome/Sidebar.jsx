@@ -12,14 +12,14 @@ function Sidebar (){
 
     return (
       <div
-          className={`w-20 h-screen bg-[#1E7B71] font-black text-white transition-[width] duration-[0.3s] ease-[ease] p-5
+          className={`w-20 h-screen font-black text-white transition-[width] duration-[0.3s] ease-[ease] p-5
           ${expandir ? 
-            'w-[284px]' : 
-            ''}`}
+            'w-[284px] bg-[#1E7B71]' : 
+            ' bg-[#0b564f]'}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
       >
-            <div className= "flex bg-[#084841]">
+            <div className= "flex">
               <div className="flex items-center justify-center  " >
                   <img className= "mt-[-5%] w-[33px] h-[32px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/android-chrome-192x192.png"/>
               </div>
