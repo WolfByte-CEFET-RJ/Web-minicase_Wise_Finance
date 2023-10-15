@@ -12,10 +12,10 @@ function Sidebar (){
 
     return (
       <div
-          className={`w-20 h-screen font-black text-white transition-[width] duration-[0.3s] ease-[ease] p-5
+          className={`w-20 h-screen font-black text-white transition-[width] duration-[0.1s] ease-[ease] p-5
           ${expandir ? 
-            'w-[284px] bg-[#1E7B71]' : 
-            ' bg-[#0b564f]'}`}
+            'w-[284px] bg-[#0b564f] ' : 
+            ' bg-[#1E7B71]'}`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
       >
