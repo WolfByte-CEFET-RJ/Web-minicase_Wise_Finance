@@ -73,9 +73,9 @@ async function geraBalanco(){
 }
 
 async function viraMes(){
+    schedule.scheduleJob('0 0 1 * *', geraBalanco);
     schedule.scheduleJob('0 0 1 * *', limparDespesas);
     schedule.scheduleJob('0 0 1 * *', limparReceitas);
-    schedule.scheduleJob('0 0 1 * *', geraBalanco);
     //schedule.scheduleJob(new Date(Date.now() + 100), geraBalanco);
     //schedule.scheduleJob(new Date(Date.now() + 100), limparDespesas);
     //schedule.scheduleJob(new Date(Date.now() + 100), limparReceitas);
