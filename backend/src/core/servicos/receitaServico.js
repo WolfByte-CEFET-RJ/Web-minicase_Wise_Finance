@@ -2,6 +2,23 @@ const database = require('../../database/index');
 
 //RECEITAS FIXAS
 
+async function getTotalReceitasFixas(userId) {
+  try {
+    
+    const receitasFixas = await database('Receita_Fixa').select('Valor').where('ID_Usuario', userId);
+    let totalReceitasFixas = 0;
+
+    for (const receita of receitasFixas) {
+      totalReceitasFixas += parseFloat(receita.Valor);
+    }
+
+    return totalReceitasFixas;
+  } catch (error) {
+    throw new Error("Erro ao calcular o total de receitas fixas");
+  }
+}
+
+
 async function createReceitaFixaServico (userId, nome, valor, descricao, dataPagamento) {
 
   try {
@@ -68,16 +85,6 @@ async function getReceitaFixaByIdServico(userId, receitaFixaId) {
   }
 }
 
-async function getAllReceitaFixaServico() {
-    try {
-      return await database('Receita_Fixa').select('*');
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message,
-      };
-    }
-}
 
   async function updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
@@ -161,6 +168,22 @@ async function deleteReceitaFixaServico(userId, receitaId) {
 
 //RECEITAS VARIÁVEIS
 
+async function getTotalReceitasVariaveis(userId) {
+  try {
+  
+    const receitasVariaveis = await database('Receita_Variavel').select('Valor').where('ID_Usuario', userId);
+    let totalReceitasVariaveis = 0;
+
+    for (const receita of receitasVariaveis) {
+      totalReceitasVariaveis += parseFloat(receita.Valor);
+    }
+
+    return totalReceitasVariaveis;
+  } catch (error) {
+    throw new Error("Erro ao calcular o total de receitas variáveis");
+  }
+}
+
 async function createReceitaVarServico (userId, nome, valor, descricao, dataPagamento) {
   try {
     
@@ -224,17 +247,6 @@ async function getReceitaVarByIdServico(userId, receitaVarId) {
       message: error.message,
     };
   }
-}
-
-async function getAllReceitaVarServico() {
-    try {
-      return await database('Receita_Variavel').select('*');
-    } catch (error) {
-      return {
-        status: false,
-        message: error.message,
-      };
-    }
 }
 
   async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
@@ -316,19 +328,45 @@ async function deleteReceitaVarServico(userId, receitaId) {
   }
 }
 
+async function updateReceitasTotais(userId) {
+  try {
+    const totalReceitasVariaveis = await getTotalReceitasVariaveis(userId);
+    const totalReceitasFixas = await getTotalReceitasFixas(userId);
+
+    await database('Usuario')
+      .where('ID', userId)
+      .update({
+        Rec_Var_Total: totalReceitasVariaveis,
+        Rec_Fixa_Total: totalReceitasFixas,
+      });
+
+    return {
+      status: true,
+      message: 'Totais de despesas atualizados com sucesso!',
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
+
 module.exports = {
   //RECEITAS FIXAS
   createReceitaFixaServico,
   updateReceitaFixaServico,
   deleteReceitaFixaServico,
-  getAllReceitaFixaServico,
   getAllReceitasFixas_Usuario_Servico,
   getReceitaFixaByIdServico,
+  getTotalReceitasFixas,
+
   //RECEITAS VARIÁVEIS
   createReceitaVarServico,
   updateReceitaVarServico,
   deleteReceitaVarServico,
-  getAllReceitaVarServico,
   getAllReceitaVar_Usuario_Servico,
   getReceitaVarByIdServico,
+  getTotalReceitasVariaveis,
+  updateReceitasTotais,
 };

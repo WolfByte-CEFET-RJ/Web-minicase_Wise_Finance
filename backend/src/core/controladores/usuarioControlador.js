@@ -1,5 +1,5 @@
 const { request, response } = require('express');
-const { cadastrarUsuario, deletarUsuario, readAll, readOne, update } = require('../servicos/usuarioServico');
+const { cadastrarUsuario, deletarUsuario, readOne, update } = require('../servicos/usuarioServico');
 
 async function updateControlador (req = request, res = response) {
   try {
@@ -23,16 +23,6 @@ async function updateControlador (req = request, res = response) {
     console.error("Erro:", error);
     res.status(500).json({ error: "Erro" });
   
-  }
-};
-
-async function readAllControlador (req = request, res = response) {
-  try {
-    const lista = await readAll(req, res);
-    res.json(lista)
-  } catch (error) {
-    console.error("Erro:", error);
-    res.status(500).json({ error: "Erro" });
   }
 };
 
@@ -112,8 +102,7 @@ async function cadastroControlador(req = request, res = response) {
 
 module.exports = { 
   cadastroControlador, 
-  deleteControlador, 
-  readAllControlador, 
+  deleteControlador,  
   readOneControlador, 
   updateControlador  
 };
