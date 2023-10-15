@@ -2,19 +2,15 @@ const receitaServico = require('./receitaServico');
 const despesaServico = require('./despesasServico');
 const database = require('../../database/index');
 
-// Função para calcular o saldo geral de um usuário
 async function calcularSaldoGeral(userId) {
   try {
-    // Obter os totais de receitas e despesas
     const totalReceitasVariaveis = await receitaServico.getTotalReceitasVariaveis(userId);
     const totalReceitasFixas = await receitaServico.getTotalReceitasFixas(userId);
     const totalDespesasVariaveis = await despesaServico.getTotalDespesasVariaveis(userId);
     const totalDespesasFixas = await despesaServico.getTotalDespesasFixas(userId);
 
-    // Calcular o saldo geral
     const saldoGeral = totalReceitasVariaveis + totalReceitasFixas - totalDespesasVariaveis - totalDespesasFixas;
 
-    // Atualizar o saldo geral no banco de dados
     await atualizarSaldoGeralNoBanco(userId, saldoGeral);
 
     return saldoGeral;
@@ -23,7 +19,6 @@ async function calcularSaldoGeral(userId) {
   }
 }
 
-// Função para atualizar o saldo geral no banco de dados
 async function atualizarSaldoGeralNoBanco(userId, saldoGeral) {
   try {
     await database('Usuario')
@@ -32,7 +27,6 @@ async function atualizarSaldoGeralNoBanco(userId, saldoGeral) {
         Saldo_Geral: saldoGeral,
       });
   } catch (error) {
-    // Trate os erros relacionados ao banco de dados aqui
     throw new Error('Erro ao atualizar saldo geral no banco de dados: ' + error.message);
   }
 }
