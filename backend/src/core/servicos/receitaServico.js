@@ -18,7 +18,6 @@ async function getTotalReceitasFixas(userId) {
   }
 }
 
-
 async function createReceitaFixaServico (userId, nome, valor, descricao, dataPagamento) {
 
   try {
@@ -40,7 +39,7 @@ async function createReceitaFixaServico (userId, nome, valor, descricao, dataPag
     const novaReceitaFixa = { 
       ID_Usuario : userId,
       Nome: nome,
-      Valor: valor,
+      Valor: parseFloat(valor),
       Data: dataPagamento, 
       Descricao: descricao,
     }
@@ -61,7 +60,6 @@ async function createReceitaFixaServico (userId, nome, valor, descricao, dataPag
 
 async function getAllReceitasFixas_Usuario_Servico(userId) {
   try {
-    console.log(userId)
     return await database('Receita_Fixa').select('*').where('ID_Usuario', userId);
   } catch (error) {
     return {
@@ -85,8 +83,7 @@ async function getReceitaFixaByIdServico(userId, receitaFixaId) {
   }
 }
 
-
-  async function updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
+async function updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
       
       if (
@@ -115,7 +112,7 @@ async function getReceitaFixaByIdServico(userId, receitaFixaId) {
       const novaReceitaFixa = { 
         ID_Usuario : userId,
         Nome: nome,
-        Valor: valor,
+        Valor: parseFloat(valor),
         Data: dataPagamento, 
         Descricao: descricao,
       }
@@ -134,7 +131,6 @@ async function getReceitaFixaByIdServico(userId, receitaFixaId) {
     }
 }
   
-
 async function deleteReceitaFixaServico(userId, receitaId) {
   try {
 
@@ -204,7 +200,7 @@ async function createReceitaVarServico (userId, nome, valor, descricao, dataPaga
     const novaReceitaVar = { 
       ID_Usuario : userId,
       Nome: nome,
-      Valor: valor,
+      Valor: parseFloat(valor),
       Data: dataPagamento, 
       Descricao: descricao,
     }
@@ -225,7 +221,6 @@ async function createReceitaVarServico (userId, nome, valor, descricao, dataPaga
 
 async function getAllReceitaVar_Usuario_Servico(userId) {
   try {
-    console.log(userId)
     return await database('Receita_Variavel').select('*').where('ID_Usuario', userId);
   } catch (error) {
     return {
@@ -249,7 +244,7 @@ async function getReceitaVarByIdServico(userId, receitaVarId) {
   }
 }
 
-  async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
+async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
       
       if (
@@ -278,7 +273,7 @@ async function getReceitaVarByIdServico(userId, receitaVarId) {
       const novaReceitaVar = { 
         ID_Usuario : userId,
         Nome: nome,
-        Valor: valor,
+        Valor: parseFloat(valor),
         Data: dataPagamento, 
         Descricao: descricao,
       }
@@ -328,6 +323,7 @@ async function deleteReceitaVarServico(userId, receitaId) {
   }
 }
 
+//SOMATORIO DAS RECEITAS
 async function updateReceitasTotais(userId) {
   try {
     const totalReceitasVariaveis = await getTotalReceitasVariaveis(userId);
@@ -368,5 +364,7 @@ module.exports = {
   getAllReceitaVar_Usuario_Servico,
   getReceitaVarByIdServico,
   getTotalReceitasVariaveis,
+
+  //SOMATORIO DAS RECEITAS
   updateReceitasTotais,
 };

@@ -40,7 +40,7 @@ async function createDespesaFixaServico(userId, nome, valor, descricao, dataPaga
     const novaDespesaFixa = { 
       ID_Usuario : userId,
       Nome: nome,
-      Valor: valor,
+      Valor: parseFloat(valor),
       Data: dataPagamento, 
       Descricao: descricao,
     }
@@ -63,7 +63,6 @@ async function createDespesaFixaServico(userId, nome, valor, descricao, dataPaga
 
 async function getAllDespesasFixas_Usuario_Servico(userId) {
   try {
-    console.log(userId)
     return await database('Despesa_Fixa').select('*').where('ID_Usuario', userId);
   } catch (error) {
     return {
@@ -116,7 +115,7 @@ async function updateDespesaFixaServico(userId, despesaId, nome, valor, descrica
       const novaDespesaFixa = { 
         ID_Usuario : userId,
         Nome: nome,
-        Valor: valor,
+        Valor: parseFloat(valor),
         Data: dataPagamento, 
         Descricao: descricao,
       }
@@ -137,7 +136,6 @@ async function updateDespesaFixaServico(userId, despesaId, nome, valor, descrica
     }
 }
   
-
 async function deleteDespesaFixaServico(userId, despesaId) {
   try {
 
@@ -209,7 +207,7 @@ async function createDespesaVarServico(userId, nome, valor, descricao, dataPagam
     const novaDespesaVar = { 
       ID_Usuario : userId,
       Nome: nome,
-      Valor: valor,
+      Valor: parseFloat(valor),
       Data: dataPagamento, 
       Descricao: descricao,
     }
@@ -274,7 +272,7 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
     const novaDespesaVar = { 
       ID_Usuario : userId,
       Nome: nome,
-      Valor: valor,
+      Valor: parseFloat(valor),
       Data: dataPagamento, 
       Descricao: descricao,
     }
@@ -294,7 +292,6 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
   }
 }
 
-
 async function getAllDespesaVar_Usuario_Servico(userId) {
   try {
     return await database('Despesa_Variavel').select('*').where('ID_Usuario', userId);
@@ -304,7 +301,7 @@ async function getAllDespesaVar_Usuario_Servico(userId) {
       message: error.message,
     };
   }
-  }
+}
 
 async function deleteDespesaVarServico(userId, despesaId) {
   try {
@@ -338,6 +335,7 @@ async function deleteDespesaVarServico(userId, despesaId) {
   }
 }
 
+//SOMATORIO DAS DESPESAS
 async function updateDespesaTotais(userId) {
   try {
     const totalDespesasVariaveis = await getTotalDespesasVariaveis(userId);
@@ -378,6 +376,8 @@ module.exports = {
   getAllDespesaVar_Usuario_Servico,
   getDespesaVarByIdServico,
   getTotalDespesasVariaveis,
+
+  //SOMATORIO DAS DESPESAS
   updateDespesaTotais,
 
 };
