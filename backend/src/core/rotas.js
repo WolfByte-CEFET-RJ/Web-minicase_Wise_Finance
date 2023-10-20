@@ -34,14 +34,12 @@ router.delete('/despesa_var/:id_desp',auth, deleteDespesaVar);
 router.get('/despesa_var',auth, getAllDespesasVar_Usuario);
 router.get('/despesa_var/:id_desp',auth, getDespesasVarById);
 
-
 //RECEITAS FIXAS
 router.post('/receita_fixa',auth, createReceitaFixa);
 router.patch('/receita_fixa/:id_rec',auth, updateReceitaFixa);
 router.delete('/receita_fixa/:id_rec',auth, deleteReceitaFixa);
 router.get('/receita_fixa/',auth, getAllReceitaFixa_Usuario);
 router.get('/receita_fixa/:id_rec',auth, getReceitaFixaById);
-
 
 //RECEITAS VARIÁVEIS
 router.post('/receita_var',auth, createReceitaVar);
