@@ -21,12 +21,19 @@ function auth(req,res,next){
         return res.json({"message" : "Token mal formatado"})
     }
 
-    jwt.verify(token, process.env.JWT_KEY, (error)=> {
-        if(error){
-            return res.json({"message" : "Erro ao inverter token"})
+
+    //const decoded = jwt.verify(token, process.env.JWT_KEY);
+    //console.log('Informações do usuário:', decoded);
+
+    jwt.verify(token, process.env.JWT_KEY, (error, decoded) => {
+        if (error) {
+          return res.json({ message: "Erro ao verificar token" });
         }
-        return next()
-    })
+    
+        req.usuario = decoded;
+        //console.log(decoded);
+        next();
+      });
 }
 
 module.exports = auth

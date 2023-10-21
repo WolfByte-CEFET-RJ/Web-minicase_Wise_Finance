@@ -1,16 +1,13 @@
 require('dotenv').config();
+const temporizador = require("../utils/temporizador")
 const host = process.env.HOST;
 const port = process.env.PORT;
-
-
-
-
-
-
 const express = require("express")
+
 const servidor = express()
 servidor.use(express.json())
 
+//PERMISSÃO DO FRONT
 const cors = require('cors');
 const corsOptions ={
     origin:'http://localhost:3000', 
@@ -23,7 +20,8 @@ servidor.use(cors(corsOptions));
 const rotas = require("./rotas")
 servidor.use('', rotas)
 
-
+//TEMPORIZADOR
+temporizador.viraMes();
 
 servidor.listen(port, host, () => {
     console.log(`Servidor inicializado em http://${host}:${port}`);
