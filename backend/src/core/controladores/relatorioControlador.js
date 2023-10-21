@@ -7,8 +7,9 @@ async function gerarRelatorio(req, res) {
     const mes = req.params.mes;
     const ano = req.params.ano;
 
-    const relatorioPath = await gerarRelatorioServico(id_user, mes, ano);
-    res.download(relatorioPath, 'relatorio.pdf');
+    await gerarRelatorioServico(id_user, mes, ano);
+    res.json({message: 'Arquivo gerado!'})
+  
   } catch (error) {
     console.error(error);
     res.status(500).send('Erro na geração do relatório');

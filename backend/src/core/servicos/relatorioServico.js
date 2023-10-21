@@ -24,6 +24,22 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     .where('Ano', ano)
     .first();
 
+  // Criando caminho de saída para o relatório
+  const outputPath = path.join('C:/Users/vilag/Documents/GitHub/Web-minicase_Wise_Finance/', 'backend/relatorios'); // Diretório onde o PDF será salvo
+  if (!fs.existsSync(outputPath)) {
+    fs.mkdirSync(outputPath);
+  }
+  const outputFileName = `relatorio_${id_user}_${ano}_${mes}.pdf`;
+  const outputFilePath = path.join(outputPath, outputFileName);
+
+  // Verificando se o arquivo já existe
+  if (fs.existsSync(outputFilePath)) {
+    fs.unlinkSync(outputFilePath); // Remove o arquivo existente
+  }
+
+  // Criando PDF
+  doc.pipe(fs.createWriteStream(outputFilePath));
+  
   // Adicionando informações ao PDF
   doc.text('Relatório Mensal de Finanças Pessoais', { align: 'center' });
   doc.text(`Usuário: ${usuario.Nome}`);
@@ -47,28 +63,9 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   doc.text(`Balanço Mensal: $${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
 
   //doc.save('relatorio_mensal.pdf');
-
-  // Criando caminho de saída para o relatório
-  const outputPath = path.join('C:/Users/vilag/Documents/GitHub/Web-minicase_Wise_Finance/', 'backend'); // Diretório onde o PDF será salvo
-  if (!fs.existsSync(outputPath)) {
-    fs.mkdirSync(outputPath);
-  }
-  const outputFileName = `relatorio_${id_user}_${ano}_${mes}.pdf`;
-  const outputFilePath = path.join(outputPath, outputFileName);
-
-  // Verificando se o arquivo já existe
-  if (fs.existsSync(outputFilePath)) {
-    fs.unlinkSync(outputFilePath); // Remove o arquivo existente
-  }
-
-  // Criando PDF
-  doc.pipe(fs.createWriteStream(outputFilePath));
-
-  // Adicionando informações ao PDF (o restante do seu código)
-
   // Finalizando PDF
   doc.end();
-  
+
   return outputFilePath;
 }
 
