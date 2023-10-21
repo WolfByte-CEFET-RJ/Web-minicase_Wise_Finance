@@ -14,47 +14,45 @@ const auth = require("../middleware/auth")
 
 
 //USUÁRIO
-router.get('/usuario/read/',auth, readOneControlador);
-router.patch('/usuario/update/',auth, updateControlador);
-router.post('/usuario/cadastro', cadastroControlador);
-router.delete('/usuario/delete/',auth, deleteControlador);
+router.get('/usuario',auth, readOneControlador);
+router.patch('/usuario',auth, updateControlador);
+router.post('/usuario', cadastroControlador);
+router.delete('/usuario',auth, deleteControlador);
 router.post('/login', loginControlador);
 
 //DESPESAS FIXAS
-router.post('/despesa_fixa/create/',auth, createDespesaFixa);
-router.patch('/despesa_fixa/update/:id_desp',auth, updateDespesaFixa);
-router.delete('/despesa_fixa/delete/:id_desp',auth, deleteDespesaFixa);
-router.get('/despesa_fixa/read/',auth, getAllDespesasFixas_Usuario);
-router.get('/despesa_fixa/read/:id_desp',auth, getDespesaFixaById);
+router.post('/despesa_fixa',auth, createDespesaFixa);
+router.patch('/despesa_fixa/:id_desp',auth, updateDespesaFixa);
+router.delete('/despesa_fixa/:id_desp',auth, deleteDespesaFixa);
+router.get('/despesa_fixa',auth, getAllDespesasFixas_Usuario);
+router.get('/despesa_fixa/:id_desp',auth, getDespesaFixaById);
 
 //DESPESAS VARIAVEIS
-router.post('/despesa_var/create/',auth, createDespesaVar);
-router.patch('/despesa_var/update/:id_desp',auth, updateDespesaVar);
-router.delete('/despesa_var/delete/:id_desp',auth, deleteDespesaVar);
-router.get('/despesa_var/read/',auth, getAllDespesasVar_Usuario);
-router.get('/despesa_var/read/:id_desp',auth, getDespesasVarById);
-
+router.post('/despesa_var',auth, createDespesaVar);
+router.patch('/despesa_var/:id_desp',auth, updateDespesaVar);
+router.delete('/despesa_var/:id_desp',auth, deleteDespesaVar);
+router.get('/despesa_var',auth, getAllDespesasVar_Usuario);
+router.get('/despesa_var/:id_desp',auth, getDespesasVarById);
 
 //RECEITAS FIXAS
-router.post('/receita_fixa/create/',auth, createReceitaFixa);
-router.patch('/receita_fixa/update/:id_rec',auth, updateReceitaFixa);
-router.delete('/receita_fixa/delete/:id_rec',auth, deleteReceitaFixa);
-router.get('/receita_fixa/read/',auth, getAllReceitaFixa_Usuario);
-router.get('/receita_fixa/read/:id_rec',auth, getReceitaFixaById);
-
+router.post('/receita_fixa',auth, createReceitaFixa);
+router.patch('/receita_fixa/:id_rec',auth, updateReceitaFixa);
+router.delete('/receita_fixa/:id_rec',auth, deleteReceitaFixa);
+router.get('/receita_fixa/',auth, getAllReceitaFixa_Usuario);
+router.get('/receita_fixa/:id_rec',auth, getReceitaFixaById);
 
 //RECEITAS VARIÁVEIS
-router.post('/receita_var/create/',auth, createReceitaVar);
-router.patch('/receita_var/update/:id_rec',auth, updateReceitaVar);
-router.delete('/receita_var/delete/:id_rec',auth, deleteReceitaVar);
-router.get('/receita_var/read/',auth, getAllReceitaVar_Usuario);
-router.get('/receita_var/read/:id_rec',auth, getReceitaVarById);
+router.post('/receita_var',auth, createReceitaVar);
+router.patch('/receita_var/:id_rec',auth, updateReceitaVar);
+router.delete('/receita_var/:id_rec',auth, deleteReceitaVar);
+router.get('/receita_var',auth, getAllReceitaVar_Usuario);
+router.get('/receita_var/:id_rec',auth, getReceitaVarById);
 
 //LIMITE MENSAL
-router.patch('/limite_mensal/define/', auth, defineLimite);
-router.get('/limite_mensal/read/', auth, readLimite);
+router.patch('/limite_mensal', auth, defineLimite);
+router.get('/limite_mensal', auth, readLimite);
 
 //BALANCO MENSAL
-router.get('/balanco_mensal/read/:mes/:ano', auth, readBalanco);
+router.get('/balanco_mensal/:mes/:ano', auth, readBalanco);
 
 module.exports = router;

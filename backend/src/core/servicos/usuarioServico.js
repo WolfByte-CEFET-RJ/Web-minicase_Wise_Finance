@@ -161,7 +161,7 @@ async function cadastrarUsuario( nome, username, email, senha, senhaConfirmacao)
 
     const limite = {
       ID_Usuario: idUser,
-      Valor_Limite: 100,
+      Valor_Limite: 0, //default : R$00,00
       Mes_Definido: mesAtual,
       Ano_Definido: anoAtual,
   };
