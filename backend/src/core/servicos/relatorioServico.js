@@ -56,7 +56,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   // Finalizando PDF
   doc.end();
 
-  //return outputPath; // Retorna o caminho do relatório
+  //return outputPath; Retorna o caminho do relatório
 }
 
 module.exports = { gerarRelatorioServico };
