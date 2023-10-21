@@ -20,7 +20,8 @@
     "knex": "^2.5.1",
     "mysql": "^2.18.1",
     "mysql2": "^3.6.1",
-    "node-schedule": "^2.1.1"
+    "node-schedule": "^2.1.1",
+    "pdfkit": "^0.13.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
