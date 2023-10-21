@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 const { readOneControlador, updateControlador, cadastroControlador, deleteControlador } = require("./controladores/usuarioControlador");
 const { loginControlador } = require("./controladores/loginControlador");
+const { logoutControlador } = require("./controladores/logoutControlador");
 const { createDespesaFixa, updateDespesaFixa, deleteDespesaFixa, getAllDespesasFixas_Usuario, getDespesaFixaById, 
         createDespesaVar, updateDespesaVar, deleteDespesaVar, getAllDespesasVar_Usuario, getDespesasVarById
       } = require("./controladores/despesasControlador");
 const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFixa_Usuario, getReceitaFixaById, 
         createReceitaVar, updateReceitaVar, deleteReceitaVar, getAllReceitaVar_Usuario, getReceitaVarById 
       } = require("./controladores/receitaControlador");
-const {defineLimite, readLimite} = require("./controladores/limiteControlador")
-const {readBalanco} = require("./controladores/balancoControlador")
+const {defineLimite, readLimite} = require("./controladores/limiteControlador");
+const {readBalanco} = require("./controladores/balancoControlador");
 const auth = require("../middleware/auth")
 
 
@@ -19,6 +20,7 @@ router.patch('/usuario',auth, updateControlador);
 router.post('/usuario', cadastroControlador);
 router.delete('/usuario',auth, deleteControlador);
 router.post('/login', loginControlador);
+router.post('/logout', auth, logoutControlador);
 
 //DESPESAS FIXAS
 router.post('/despesa_fixa',auth, createDespesaFixa);
