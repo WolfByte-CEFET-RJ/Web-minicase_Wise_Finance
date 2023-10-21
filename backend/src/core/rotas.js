@@ -11,6 +11,7 @@ const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFi
       } = require("./controladores/receitaControlador");
 const {defineLimite, readLimite} = require("./controladores/limiteControlador");
 const {readBalanco} = require("./controladores/balancoControlador");
+const {gerarRelatorio} = require("./controladores/relatorioControlador");
 const auth = require("../middleware/auth")
 
 
@@ -56,5 +57,9 @@ router.get('/limite_mensal', auth, readLimite);
 
 //BALANCO MENSAL
 router.get('/balanco_mensal/:mes/:ano', auth, readBalanco);
+
+//RELATORIO
+router.get('/relatorio/:mes/:ano', auth, gerarRelatorio);
+
 
 module.exports = router;
