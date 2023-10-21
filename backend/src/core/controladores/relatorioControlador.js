@@ -1,7 +1,7 @@
 const { request, response } = require('express');
 const { gerarRelatorioServico } = require('../servicos/relatorioServico');
 
-async function gerarRelatorio(req, res) {
+async function gerarRelatorio(req = request, res = response) {
   try {
     const id_user = req.usuario.id;
     const mes = req.params.mes;
