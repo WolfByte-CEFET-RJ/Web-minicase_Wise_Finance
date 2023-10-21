@@ -25,9 +25,9 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     .first();
 
   // Criando caminho de saída para o relatório
-  const outputPath = path.join('C:/Users/vilag/Documents/GitHub/Web-minicase_Wise_Finance/', 'backend/relatorios'); // Diretório onde o PDF será salvo
+  const outputPath = path.join('C:', 'Users', 'ELIANE', 'Documents', 'GitHub', 'MinicaseWiseFinance', 'Web-minicase_Wise_Finance', 'backend', 'relatorios');
   if (!fs.existsSync(outputPath)) {
-    fs.mkdirSync(outputPath);
+    fs.mkdirSync(outputPath, { recursive: true }); // Use { recursive: true } para criar diretórios intermediários se não existirem
   }
   const outputFileName = `relatorio_${id_user}_${ano}_${mes}.pdf`;
   const outputFilePath = path.join(outputPath, outputFileName);
