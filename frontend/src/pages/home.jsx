@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {EyeSlash, Eye } from 'phosphor-react'
 import Sidebar from '../components/componentsHome/Sidebar'
+import ModalReceita from '../components/modais/modalReceitas'
+import ModalDespesa from '../components/modais/modalDespesas'
 const Home = () => {
   const [saldoGeral, setSaldoGeral] = useState("R$2000,00");
   const [balancoMensal, setBalancoMensal] = useState("+R$2000,00")
@@ -12,6 +14,22 @@ const Home = () => {
   const [despesasVariaveis, setDespesasVariaveis] = useState("-R$1000,00")
   const [receitasFixas, setReceitasFixas] = useState("R$2000,00")
   const [receitasVariaveis, setReceitasVariaveis] = useState("R$2000,00")
+  const [estadoModalReceitas, setEstadoModalReceitas] = useState(false);
+  const [estadoModalDespesas, setEstadoModalDespesas] = useState(false);
+  const AbrirModalReceitas = () => {
+    setEstadoModalReceitas(true);
+  }
+
+  const FecharModalReceitas = () => {
+    setEstadoModalReceitas(false);
+  }
+  const AbrirModalDespesas = () => {
+    setEstadoModalDespesas(true);
+  }
+
+  const FecharModalDespesas = () => {
+    setEstadoModalDespesas(false);
+  }
   const handleSaldoGeralToggle = () => {
     setShowSaldoGeral(!showSaldoGeral);
   };
@@ -55,10 +73,11 @@ const Home = () => {
             <div className=" border-green border-r-2 pr-[30%]">
                 <h1 className=" text-[50px] font-black text-green">Despesas</h1>
                 <button className=" ml-[20%] w-[120px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black "
-                // onClick={}
+                onClick={AbrirModalDespesas}
                 > 
                 Ver despesas
                 </button>
+                <ModalDespesa Aberto={estadoModalDespesas} Fechado={FecharModalDespesas}/>
                 <div className="text-[#EF0606] font-black text-[35px] mt-[5%]">{totalDespesas}</div>
                 <div className="text-[10px] ml-[15%] font-black text-green">Limite de Gastos:<span className="text-black">{limiteGastos}</span></div>
                 <div className="text-[15px] mt-[5%] font-black text-green">Despesas Fixas:<span className="text-[#EF0606]">{despesasFixas}</span></div>
@@ -66,10 +85,13 @@ const Home = () => {
             </div>
             <div className="ml-[30%]">
               <h1 className=" text-[50px] font-black text-green">Receitas</h1>
-              <button className="ml-[20%] w-[120px] h-[20px] rounded-[96px] bg-[#156808] text-[10px] font-black text-white border border-black "
-              // onClick={}
-              > Ver receitas
-              </button>
+              <div>
+                <button className="ml-[20%] w-[120px] h-[20px] rounded-[96px] bg-[#156808] text-[10px] font-black text-white border border-black "
+                 onClick={AbrirModalReceitas}
+                > Ver receitas
+                </button>
+                  <ModalReceita Aberto={estadoModalReceitas} Fechado={FecharModalReceitas}/>
+              </div>
               <div className="text-[#156808] font-black text-[35px] mt-[5%]">{totalReceitas}</div>
               <div className="text-[15px] mt-[5%] font-black text-green">Receitas Fixas:<span className="text-[#156808] ">{receitasFixas}</span></div>
               <div className="text-[15px] mt-[5%] font-black text-green">Receitas Variáveis:<span className="text-[#156808] ">{receitasVariaveis}</span></div>
