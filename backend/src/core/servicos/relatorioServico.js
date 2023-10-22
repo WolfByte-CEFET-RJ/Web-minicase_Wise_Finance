@@ -65,7 +65,56 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   // Finalizando PDF
   doc.end();
 
+  const dataAtual = new Date();
+  const mesAtual = dataAtual.getMonth() + 1; 
+  const anoAtual = dataAtual.getFullYear(); 
+
+  const relatorio = {
+    ID_Usuario: id_user,
+    Link_Relatorio: outputFilePath,
+    Mes: mesAtual,
+    Ano: anoAtual,
+    Data_Criacao: database.raw('CURRENT_TIMESTAMP')
+  };
+
+  await database('Relatorio_Mensal').insert(relatorio);
+
   return outputFilePath;
 }
 
-module.exports = { gerarRelatorioServico };
+async function readOneRelatoriosServico(id_user, mes, ano){
+  try {
+    const relatorio = await database('Relatorio_Mensal')
+    .select("*")
+    .where({ ID_Usuario: id_user, Mes: mes, Ano: ano })
+    .first();
+    
+    return relatorio
+  
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
+
+async function readAllRelatoriosServico(id_user){
+  try {
+    return await database('Relatorio_Mensal')
+      .select("*")
+      .where({ ID_Usuario: id_user })
+  } catch (error) {
+    return {
+      status: false,
+      message: error.message,
+    };
+  }
+}
+
+
+module.exports = { 
+  readAllRelatoriosServico,
+  readOneRelatoriosServico,
+  gerarRelatorioServico 
+};
