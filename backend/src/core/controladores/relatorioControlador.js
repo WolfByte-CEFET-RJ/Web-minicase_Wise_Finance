@@ -7,8 +7,8 @@ async function gerarRelatorio(req = request, res = response) {
     const mes = req.params.mes;
     const ano = req.params.ano;
 
-    await gerarRelatorioServico(id_user, mes, ano);
-    res.json({message: 'Arquivo gerado!'})
+    const relatorio = await gerarRelatorioServico(id_user, mes, ano);
+    res.json({status: true ,link: relatorio})
   
   } catch (error) {
     console.error(error);

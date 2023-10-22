@@ -25,7 +25,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     .first();
 
   // Criando caminho de saída para o relatório
-  const outputPath = path.join('C:', 'Users', 'ELIANE', 'Documents', 'GitHub', 'MinicaseWiseFinance', 'Web-minicase_Wise_Finance', 'backend', 'relatorios');
+  const outputPath = path.join(__dirname, 'relatorios');
   if (!fs.existsSync(outputPath)) {
     fs.mkdirSync(outputPath, { recursive: true }); // Use { recursive: true } para criar diretórios intermediários se não existirem
   }
@@ -62,7 +62,6 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   });
   doc.text(`Balanço Mensal: $${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
 
-  //doc.save('relatorio_mensal.pdf');
   // Finalizando PDF
   doc.end();
 
