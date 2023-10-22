@@ -81,9 +81,3 @@ const ModalReceita = ({ Aberto, Fechado}) => {
 };
 
 export default ModalReceita;
-
-
-
-
-
-// 
