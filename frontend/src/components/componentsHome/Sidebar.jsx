@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useApi from "../../hooks/useApi";
 
 const  Sidebar = () => {
     const [expandir, setExpandir] = useState(false);
     const navigate = useNavigate();
+    const api = useApi();
     const  handleMouseEnter = () =>{
         setExpandir(true);
     } 
