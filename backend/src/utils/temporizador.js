@@ -1,6 +1,7 @@
 //ARQUIVO COM TODAS AS FUNCIONALIDADES TEMPORIZADAS
 const schedule = require('node-schedule');
 const database = require('../database/index');
+const { gerarRelatorioServico } = require('../core/servicos/relatorioServico');
 
 
 //COLOCAR "BARREIRA DO RELATÓRIO" PARA SÓ APAGAR QUANDO O RELATORIO FOR GERADO
@@ -72,10 +73,35 @@ async function geraBalanco(){
   } 
 }
 
+async function geraRelatorioMensal() {
+  try {
+    const usuarios = await database("Usuario").select("id");
+
+    if(!usuarios){
+      throw new Error("Não há usuários");
+    }
+
+    const dataAtual = new Date();
+    const mesAtual = dataAtual.getMonth() + 1; 
+    const anoAtual = dataAtual.getFullYear(); 
+
+    for (const user of usuarios) {
+      const caminhoRelatorio = await gerarRelatorioServico(user.id, mesAtual, anoAtual);
+
+      console.log(`Relatório gerado com sucesso: ${caminhoRelatorio}`);
+    }
+  } catch (error) {
+    console.error('Erro ao gerar o relatório mensal:', error);
+  }
+}
+
+
 async function viraMes(){
     schedule.scheduleJob('0 0 1 * *', geraBalanco);
     schedule.scheduleJob('0 0 1 * *', limparDespesas);
     schedule.scheduleJob('0 0 1 * *', limparReceitas);
+    schedule.scheduleJob('0 0 1 * *', geraRelatorioMensal);
+    //schedule.scheduleJob(new Date(Date.now() + 100), geraRelatorioMensal);
     //schedule.scheduleJob(new Date(Date.now() + 100), geraBalanco);
     //schedule.scheduleJob(new Date(Date.now() + 100), limparDespesas);
     //schedule.scheduleJob(new Date(Date.now() + 100), limparReceitas);
