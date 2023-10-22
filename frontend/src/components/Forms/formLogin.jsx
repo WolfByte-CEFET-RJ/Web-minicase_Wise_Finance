@@ -38,7 +38,7 @@ const FormCadastro = () => {
         } else if (response.data.message === "Senha inválida") {
           toast.error("Senha inválida!");
         } else if (response.data.status === true) {
-          toast.success("Login realizado com sucesso");
+          toast.success("Login realizado com sucesso!");
           navigate("/home");
         }
       } catch (error) {
