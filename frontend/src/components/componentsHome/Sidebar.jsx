@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-function Sidebar (){
+
+const  Sidebar = () => {
     const [expandir, setExpandir] = useState(false);
     const navigate = useNavigate();
     const  handleMouseEnter = () =>{
@@ -8,7 +9,23 @@ function Sidebar (){
     } 
     const  handleMouseLeave = () =>{
         setExpandir(false);
-    }       
+    }     
+    async function logout(){
+      try {
+        const response = await api.post("http://localhost:5000/logout");
+          console.log(response.data);
+          if (response.data.status === false) {
+            toast.error("Ocorreu um erro ao realizar o logout");
+          } 
+          else if (response.data.status === true) {
+            toast.success("Logout bem-sucedido");
+            navigate("/login");
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Falha ao realizar o logout");
+        }
+      }  
 
     return (
       <div
@@ -24,7 +41,7 @@ function Sidebar (){
                   <img className= "mt-[-5%] w-[33px] h-[32px] mr-[30%] ml-[30%]  " alt="ramoLogo" src= "/android-chrome-192x192.png"/>
               </div>
    
-              {expandir && <div className="text-[12px] ml-[85px] mt-[6px] fixed">Wise Finance</div>}
+              {expandir && <div className="text-[12px] ml-[85px] mt-[6px] fixed"> Wise Finance</div>}
 
             </div>
 
@@ -56,7 +73,7 @@ function Sidebar (){
               </button>
 
               <button
-              // onClick={}
+              onClick={logout}
               >
                 <div className="flex items-center justify-center fixed  mt-[44%] ml-[0.35%]  " >
                     <img className= "mt-[-5%] w-[20px] h-[20px] mr-[30%] ml-[30%]  " alt="SimboloLogout" src= "/logout.png"/>
@@ -67,4 +84,4 @@ function Sidebar (){
       );
 }
 
-export default Sidebar
+export default Sidebar;
