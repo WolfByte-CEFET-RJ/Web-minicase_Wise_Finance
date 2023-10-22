@@ -11,6 +11,7 @@ const ModalReceita = ({ Aberto, Fechado}) => {
   
   if (!Aberto) return null;
   return (     
+    <div className = "fixed w-full h-full bg-[rgba(0,0,0,0.5)] z-[1000] left-0 top-0">
       <div className="w-[100%] h-[100%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  rounded-[96px]">
         <div className="container-modal">
           <img className='ml-[8%] mt-[5%]' alt="Fechar" src= "X.png"  onClick={Fechado}/>
@@ -23,10 +24,10 @@ const ModalReceita = ({ Aberto, Fechado}) => {
              <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
               <span className="mr-[10%] ml-[10%]">Nome Receita</span> <span className=" text-[#156808]">{ReceitaFixaUm}</span>
               <div className="ml-[20%]"> 
-                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
+                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
                   Editar
                 </button>
-                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
+                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
                   Excluir
                 </button>
               </div>
@@ -34,10 +35,10 @@ const ModalReceita = ({ Aberto, Fechado}) => {
             <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
               <span className="mr-[10%] ml-[10%]">Nome Receita</span> <span className=" text-[#156808]">{ReceitasFixaDois}</span>
               <div className="ml-[20%]"> 
-                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
+                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
                   Editar
                 </button>
-                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
+                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
                   Excluir
                 </button>
               </div>
@@ -52,10 +53,10 @@ const ModalReceita = ({ Aberto, Fechado}) => {
              <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
               <span className="mr-[10%] ml-[10%]">Nome Receita</span> <span className=" text-[#156808]">{ReceitaVariavelUm}</span>
               <div className="ml-[20%]"> 
-                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
+                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
                   Editar
                 </button>
-                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
+                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
                   Excluir
                 </button>
               </div>
@@ -63,22 +64,19 @@ const ModalReceita = ({ Aberto, Fechado}) => {
             <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
               <span className="mr-[10%] ml-[10%]">Nome Receita</span> <span className=" text-[#156808]">{ReceitasVariavelDois}</span>
               <div className="ml-[20%]"> 
-                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
+                <button className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
                   Editar
                 </button>
-                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black">
+                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
                   Excluir
                 </button>
               </div>
             </div>
           </div>
           </div>
-
-
-
-
         </div>
       </div>
+    </div>
   );
 };
 
