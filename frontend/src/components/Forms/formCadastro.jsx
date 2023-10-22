@@ -28,7 +28,7 @@ const FormCadastro = () => {
         senhaConfirmacao: passVer,
       };
       try {
-        const response = await api.post("http://localhost:5000/usuario/cadastro", user);
+        const response = await api.post("http://localhost:5000/usuario", user);
           console.log(response.data);
           if (response.data.status === false) {
             toast.error("Falha no envio do formulário");
