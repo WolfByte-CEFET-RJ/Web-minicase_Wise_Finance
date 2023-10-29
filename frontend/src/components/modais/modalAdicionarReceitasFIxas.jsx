@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Form from "../Forms/formReceitaFixa";
 const ModalReceitasFixas= ({ Aberto, Fechado}) => {
 
     if (!Aberto) return null;
@@ -9,6 +9,7 @@ const ModalReceitasFixas= ({ Aberto, Fechado}) => {
                 <img className='ml-[8%] mt-[5%]' alt="Fechar" src= "X.png"  onClick={Fechado}/>
                 <h1 className=" mt-[-3.6%] ml-[35%] text-[50px] font-black text-green">Receitas Fixas</h1>
                 <h1 className=" ml-[36.5%] text-[10px] font-black text-green">Lembrando que essa é uma receita fixa e se manterá todo mês</h1>
+                <Form/>
             </div>
         </div>
     )

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Form from "../Forms/formReceitasVariaveis"
 const ModalReceitasVariaveis = ({ Aberto, Fechado}) => {
 
     if (!Aberto) return null;
@@ -9,6 +9,7 @@ const ModalReceitasVariaveis = ({ Aberto, Fechado}) => {
                 <img className='ml-[8%] mt-[5%]' alt="Fechar" src= "X.png"  onClick={Fechado}/>
                 <h1 className=" mt-[-3.6%] ml-[32%] text-[50px] font-black text-green">Receitas Variaveis</h1>
                 <h1 className=" ml-[36%] text-[10px] font-black text-green">Lembrando que essa é uma receita variável e será apagada após um mês</h1>
+                <Form/>
             </div>
         </div>
     )
