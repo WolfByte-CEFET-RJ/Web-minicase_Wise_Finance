@@ -29,6 +29,11 @@ async function getTaxaDolar(req, res){
     }
 }
 
+async function getTaxaEuro(req, res){
+
+}
+
 module.exports = {
-    getTaxaDolar
+    getTaxaDolar,
+    getTaxaEuro
 }
