@@ -12,6 +12,7 @@ const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFi
 const {defineLimite, readLimite} = require("./controladores/limiteControlador");
 const {readBalanco} = require("./controladores/balancoControlador");
 const {gerarRelatorio, readOneRelatorios, readAllRelatorios} = require("./controladores/relatorioControlador");
+const { getTaxaDolar } = require("../utils/webScrapping")
 const auth = require("../middleware/auth")
 
 
@@ -60,7 +61,10 @@ router.get('/balanco_mensal/:mes/:ano', auth, readBalanco);
 
 //RELATORIO
 router.get('/relatorio', auth, readAllRelatorios);
-router.get('/relatorio/:mes/:ano', auth, readOneRelatorios)
+router.get('/relatorio/:mes/:ano', auth, readOneRelatorios);
+
+//TAXAS DE CÂMBIO
+router.get('/taxa/dol', auth, getTaxaDolar);
 
 //router.get('/relatorio/:mes/:ano', auth, gerarRelatorio);
 module.exports = router;
