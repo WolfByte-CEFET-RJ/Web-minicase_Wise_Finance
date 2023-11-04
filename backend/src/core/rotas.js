@@ -12,7 +12,7 @@ const { createReceitaFixa, updateReceitaFixa, deleteReceitaFixa, getAllReceitaFi
 const {defineLimite, readLimite} = require("./controladores/limiteControlador");
 const {readBalanco} = require("./controladores/balancoControlador");
 const {gerarRelatorio, readOneRelatorios, readAllRelatorios} = require("./controladores/relatorioControlador");
-const { getTaxaDolar, getTaxaEuro } = require("../utils/webScrapping")
+const { getTaxaDolar, getTaxaEuro } = require("./controladores/taxaControlador")
 const auth = require("../middleware/auth")
 
 
