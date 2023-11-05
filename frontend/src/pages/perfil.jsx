@@ -20,10 +20,15 @@ const Perfil = () => {
   //   setShowPasswordVer(!showPasswordVer);
   // };
 
-  const handleEditar = () => {
-    setEditarNome(!editarNome);
-    setEditarPassword(!editarPassword);
-    setEditarPasswordVer(!editarPasswordVer);
+  const handleEditartrue = () => {
+    setEditarNome(true);
+    setEditarPassword(true);
+    setEditarPasswordVer(true);
+  }
+  const handleEditarFalse = () => {
+    setEditarNome(false);
+    setEditarPassword(false);
+    setEditarPasswordVer(false);
   }
 
   const handleChange = (event, setText) => {
@@ -55,7 +60,7 @@ const Perfil = () => {
                       <div
                       className="border-l border-green w-[10%] h-[34px] mt-[1.5%]"
                       >
-                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditar} />
+                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditartrue} />
                       </div>
                     </div>
                 </div>
@@ -75,7 +80,7 @@ const Perfil = () => {
                       <div
                       className="border-l border-green w-[10%] h-[34px] mt-[1.5%]"
                       >
-                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditar} />
+                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditartrue} />
                       </div>
                     </div>
                 </div>
@@ -90,7 +95,7 @@ const Perfil = () => {
                         placeholder={passVer}
                     />
                     <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Salvar</button> 
-                    <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]" onClick={handleEditar}>Cancelar</button> 
+                    <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]" onClick={handleEditarFalse}>Cancelar</button> 
                 </div> 
                 : <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Deletar</button>
               }
