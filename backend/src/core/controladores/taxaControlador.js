@@ -15,7 +15,17 @@ async function getTaxaDolar(req, res){
 }
 
 async function getTaxaEuro(req, res){
+    try {
+        
+        const cotacaoEuro = await getTaxaEuroServico();
+        res.json(cotacaoEuro);
 
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: error.message,
+        });
+    }
 }
 
 module.exports = {
