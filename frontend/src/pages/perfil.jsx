@@ -8,14 +8,23 @@ const Perfil = () => {
   const [name, setName] = useState("Lucas Teixeira dos Santos");
   const [email, setEmail] = useState("lucast.santos2003@gmail.com");
   const [userName, setUserName] = useState("luquinhas");
-  const [pass, setPass] = useState("lucast.santos2003@gmail.com");
-  const [passVer, setPassVer] = useState("lucast.santos2003@gmail.com");
+  const [pass, setPass] = useState("123");
+  const [passVer, setPassVer] = useState("123");
+  const [editarNome, setEditarNome] = useState(false);
+  const [editarPassword, setEditarPassword] = useState(false);
+  const [editarPasswordVer, setEditarPasswordVer] = useState(false);
   // const handlePasswordToggle = () => {
   //   setShowPassword(!showPassword);
   // };
   // const handlePasswordVerToggle = () => {
   //   setShowPasswordVer(!showPasswordVer);
   // };
+
+  const handleEditar = () => {
+    setEditarNome(!editarNome);
+    setEditarPassword(!editarPassword);
+    setEditarPasswordVer(!editarPasswordVer);
+  }
 
   const handleChange = (event, setText) => {
     setText(event.target.value);
@@ -35,15 +44,18 @@ const Perfil = () => {
                     <div
                         className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens"
                     >
-                      <input
-                      id="nome"
-                      className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
-                      placeholder={userName}
-                      ></input>
+                        {editarPassword === true ?
+                        <input
+                        id="nome"
+                        className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
+                        placeholder={userName}
+                        ></input>
+                        : <h1  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]"> {userName} </h1>
+                      }
                       <div
                       className="border-l border-green w-[10%] h-[34px] mt-[1.5%]"
                       >
-                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" />
+                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditar} />
                       </div>
                     </div>
                 </div>
@@ -52,28 +64,39 @@ const Perfil = () => {
                     <div
                         className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens"
                     >
-                      <input
-                      id="nome"
-                      className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
-                      placeholder={userName}
-                      ></input>
+                      {editarPassword === true ?
+                        <input
+                        id="senha"
+                        className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
+                        placeholder={pass}
+                        ></input>
+                        : <h1  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]"> {pass} </h1>
+                      }
                       <div
                       className="border-l border-green w-[10%] h-[34px] mt-[1.5%]"
                       >
-                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" />
+                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditar} />
                       </div>
                     </div>
                 </div>
-                {/* <div className="mb-30 ">
+                
+                
+        {editarNome === true || editarPassword === true || editarPasswordVer === true ?        
+                <div className="mb-30 ">
                     <h1 className ="font-black text-[12px]" >Confirmar senha:</h1>
                     <input
                         id="nome"
                         className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px]"
-                        placeholder={userName}
+                        placeholder={passVer}
                     />
-                </div> */}
-          {/* <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Salvar</button> */}
-          <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Cancelar</button>
+                    <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Salvar</button> 
+                    <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]" onClick={handleEditar}>Cancelar</button> 
+                </div> 
+                : <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Deletar</button>
+              }
+
+
+
           </form>
         </div>
       </div>

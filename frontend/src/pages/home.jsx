@@ -34,16 +34,14 @@ const Home = () => {
     setShowSaldoGeral(!showSaldoGeral);
   };
 
-  <div className = "fixed w-full h-full bg-[rgba(0,0,0,0.5)] z-[1000] left-0 top-0"></div>
+
 
 
   return (
     <div className = "h-screen bg-no-repeat bg-cover relative " style = {{backgroundImage:"url(/Fundo.svg)"}}>
-      {/* {estadoModalReceitas === true ?     <div className = "fixed w-full h-full bg-[rgba(0,0,0,0.5)] z-[1000] left-0 top-0"/> :<div/>}
-      {estadoModalDespesas === true ?     <div className = "fixed w-full h-full bg-[rgba(0,0,0,0.5)] z-[1000] left-0 top-0"/> :<div/>} */}
       <div className=" w-[70%] h-[70%] ml-[1%] absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  rounded-[96px]">
         <div className="Partedecima">
-          <div className="Container-saldoGeral">
+          <div className="Container-saldoGeral mt-[2%]">
             <h1 className="text-[90px] ml-[30%]  font-black text-green">Saldo Geral</h1>
             <div className="ml-[38%]  text-[49px] flex items-center font-black ">
                       {showSaldoGeral ? (

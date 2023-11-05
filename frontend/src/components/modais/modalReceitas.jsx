@@ -30,7 +30,7 @@ const ModalReceita = ({ Aberto, Fechado}) => {
   }
   
   if (!Aberto) return null;
-  return (     
+  return (    
       <div className="w-[100%] h-[100%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  rounded-[96px]">
         <div className="container-modal">
           <img className='ml-[8%] mt-[5%]' alt="Fechar" src= "X.png"  onClick={Fechado}/>
@@ -89,7 +89,7 @@ const ModalReceita = ({ Aberto, Fechado}) => {
           </div>
           </div>
         </div>
-      </div>
+      </div>       
   );
 };
 
