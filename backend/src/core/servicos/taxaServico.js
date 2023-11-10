@@ -18,7 +18,7 @@ async function getTaxaDolarServico(){
         await browser.close();
         
         if (cotacaoDolar) {
-            return { status: true, cotacao_dolar: cotacaoDolar };
+            return { status: true, cotacao_dolar: parseFloat(cotacaoDolar).toFixed(2) };
           } else {
             return { status: false, message: 'Valor da cotação do dólar não encontrado' };
           }
@@ -55,7 +55,7 @@ async function getTaxaEuroServico(){
         await browser.close();
         
         if (cotacaoEuro) {
-            return { status: true, cotacao_euro: cotacaoEuro };
+            return { status: true, cotacao_euro: parseFloat(cotacaoEuro).toFixed(2) };
           } else {
             return { status: false, message: 'Valor da cotação do euro não encontrado' };
           }
