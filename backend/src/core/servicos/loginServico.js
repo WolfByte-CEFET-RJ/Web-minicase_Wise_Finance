@@ -51,9 +51,11 @@ async function loginUsuario(identificador, senha) {
         email: usuario.Email,
     };
 
-    const token = jwt.sign(tokenPayload, process.env.JWT_KEY, {
-      expiresIn: "48h",
-    });
+    const token = jwt.sign(
+      tokenPayload, 
+      process.env.JWT_KEY, 
+      {expiresIn: "48h"}
+    );
 
     return {
       status: true,
