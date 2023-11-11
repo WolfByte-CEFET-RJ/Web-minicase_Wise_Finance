@@ -2,16 +2,38 @@ require('dotenv').config();
 const database = require('../../database/index');
 const jwt = require("jsonwebtoken"); 
 const { comparePassword } = require("../../utils/seguranca");
+const Joi = require('joi');
+
+function validaLogin(identificador, senha) {
+  const schema = Joi.object({
+    identificador: Joi.string().required(),
+    senha: Joi.string().min(4).required()
+  });
+
+  const usuario = { identificador, senha };
+  return schema.validate(usuario, { abortEarly: false });
+}
 
 async function loginUsuario(identificador, senha) {
   try {
+
+    const { error } = validaLogin(identificador, senha);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
+    }
+
     let consultaUsuario = database("usuario").select("*");
+
     if (identificador.includes("@")) {
       consultaUsuario = consultaUsuario.where({ email: identificador});
     } else {
       consultaUsuario = consultaUsuario.where({ username: identificador});
     }
-
+    
     const usuario = await consultaUsuario.first();
 
     if (!usuario) {
@@ -23,27 +45,23 @@ async function loginUsuario(identificador, senha) {
       throw new Error("Senha inválida");
     }
 
-    // Cria o token JWT
     const tokenPayload = {
         id: usuario.ID,
         username: usuario.Username,
         email: usuario.Email,
     };
 
-    const token = jwt.sign(tokenPayload, process.env.JWT_KEY, {
-      expiresIn: "48h",
-    });
+    const token = jwt.sign(
+      tokenPayload, 
+      process.env.JWT_KEY, 
+      {expiresIn: "48h"}
+    );
 
-    // Retorna o token JWT
     return {
       status: true,
       message: "Login realizado com sucesso",
-      usuario: {
-        id: usuario.ID,
-        username: usuario.Username,
-        email: usuario.Email,
-      },
-      token: token, // Adiciona o token JWT ao objeto de retorno
+      //retona o token
+      token: token
     };
   } catch (error) {
     console.log(error);
