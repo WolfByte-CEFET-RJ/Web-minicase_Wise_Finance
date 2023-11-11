@@ -31,7 +31,7 @@ async function geraRelatorioMensal() {
     }
 
     const dataAtual = new Date();
-    const mesAtual = dataAtual.getMonth() + 1; 
+    const mesAtual = 1; 
     const anoAtual = dataAtual.getFullYear(); 
 
     for (const user of usuarios) {
@@ -57,18 +57,22 @@ async function atualizaSaldo(){
     }
 
     for (const user of usuarios) {
-      const [ totalDespFixaResult,  totalRecFixaResult] = await Promise.all([
-        database("Despesa_Fixa").sum("Valor as Tot_Desp_Fixa").where("id_usuario", user.id).first(),
-        database("Receita_Fixa").sum("Valor as Tot_Rec_Fixa").where("id_usuario", user.id).first(),
-      ]);
-      
-      const totalDespFixa = parseFloat(totalDespFixaResult.Tot_Desp_Fixa) || 0;
-      const totalRecFixa = parseFloat(totalRecFixaResult.Tot_Rec_Fixa) || 0;
-      
-      const atulizaFixas = totalRecFixa - totalDespFixa;
-      console.log(atulizaFixas)
+      const relatorio = await database("Relatorio_Mensal").select("*").where("ID_Usuario", user.id)
+      if(relatorio){
+        const [ totalDespFixaResult,  totalRecFixaResult] = await Promise.all([
+          database("Despesa_Fixa").sum("Valor as Tot_Desp_Fixa").where("id_usuario", user.id).first(),
+          database("Receita_Fixa").sum("Valor as Tot_Rec_Fixa").where("id_usuario", user.id).first(),
+        ]);
 
-      await aumentaSaldo(user.id, atulizaFixas);
+        
+        const totalDespFixa = parseFloat(totalDespFixaResult.Tot_Desp_Fixa) || 0;
+        const totalRecFixa = parseFloat(totalRecFixaResult.Tot_Rec_Fixa) || 0;
+        
+        const atulizaFixas = totalRecFixa - totalDespFixa;
+        console.log(atulizaFixas)
+
+        await aumentaSaldo(user.id, atulizaFixas);
+    }
     }
     
     console.log(`==SALDOS ATUALIZADOS==`);
@@ -76,50 +80,6 @@ async function atualizaSaldo(){
     // gerando os relatorios somente depois de todos os balanços estarem prontos
     geraRelatorioMensal();
 }
-
-/*LÓGICA NOVA 
-
-async function atualizaSaldo() {
-  try {
-    const usuarios = await database("Usuario").select("id");
-
-    if (!usuarios) {
-      throw new Error("Não há usuários");
-    }
-
-    for (const user of usuarios) {
-      // Verifica se já existe algum relatório para o mês e ano
-      const relatorioExistente = await database("Relatorio_Mensal")
-        .select("*")
-        .where("ID_Usuario", user.id)
-        .where("Link_Relatorio", "<>", null) // Procura por registros onde o Link_Relatorio não é nulo
-        .first();
-
-      if (relatorioExistente != null) {
-        const [totalDespFixaResult, totalRecFixaResult] = await Promise.all([
-          database("Despesa_Fixa").sum("Valor as Tot_Desp_Fixa").where("id_usuario", user.id).first(),
-          database("Receita_Fixa").sum("Valor as Tot_Rec_Fixa").where("id_usuario", user.id).first(),
-        ]);
-
-        const totalDespFixa = parseFloat(totalDespFixaResult.Tot_Desp_Fixa) || 0;
-        const totalRecFixa = parseFloat(totalRecFixaResult.Tot_Rec_Fixa) || 0;
-
-        const atualizaFixas = totalRecFixa - totalDespFixa;
-        console.log(atualizaFixas);
-
-        await aumentaSaldo(user.id, atualizaFixas);
-      }
-    }
-
-    console.log(`==SALDOS ATUALIZADOS==`);
-
-    // gerando os relatórios somente depois de todos os saldos estarem atualizados
-    geraRelatorioMensal();
-  } catch (error) {
-    console.error('Erro ao atualizar saldo:', error);
-  }
-}
-*/
 
 async function geraBalanco(){
   try {
@@ -130,7 +90,7 @@ async function geraBalanco(){
     }
 
     const timer = new Date();
-    const mesAtual = timer.getMonth() + 1;
+    const mesAtual = 1;
     const anoAtual = timer.getFullYear();
 
     for (const user of usuarios) {
