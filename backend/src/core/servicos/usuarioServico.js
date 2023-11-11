@@ -140,6 +140,14 @@ async function cadastrarUsuario(nome, username, email, senha, senhaConfirmacao) 
       throw new Error("Endereço de e-mail já cadastrado!");
     }
 
+    const userUsername = await database("Usuario")
+      .select("*")
+      .where({ Username: username })
+      .first();
+    if (userUsername) {
+      throw new Error("Username indisponível!");
+    }
+
     const { error } = validaCadastro(nome, username, email, senha, senhaConfirmacao);
     if (error) {
       const customErrors = error.details.map(err => err.message);

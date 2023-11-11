@@ -3,7 +3,7 @@ const database = require('../../database/index');
 const { createDespesaFixaServico, updateDespesaFixaServico, deleteDespesaFixaServico, getAllDespesasFixas_Usuario_Servico, getDespesaFixaByIdServico,  
         createDespesaVarServico, updateDespesaVarServico, deleteDespesaVarServico, getAllDespesaVar_Usuario_Servico, getDespesaVarByIdServico, updateDespesaTotais,
       } = require('../servicos/despesasServico');
-const {calcularSaldoGeral } = require('../servicos/saldoGeralServico');
+const { aumentaSaldo, diminuiSaldo } = require('../servicos/saldoGeralServico');
 
 //DESPESAS FIXAS
 async function createDespesaFixa(req, res) {
@@ -17,8 +17,10 @@ async function createDespesaFixa(req, res) {
 
   try {
     const create = await createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento);
-    await updateDespesaTotais(userId); 
-    await calcularSaldoGeral(userId, valor, false);
+    if(create.status){
+      await updateDespesaTotais(userId); 
+      await diminuiSaldo(userId, valor);
+    }
 
     res.json(create);
   } catch (error) {
@@ -67,8 +69,12 @@ async function updateDespesaFixa(req, res) {
 
   try {
     const update = await updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento);
-    await updateDespesaTotais(userId);
-    await calcularSaldoGeral(userId, valor, false);
+    if(update.status){
+      await updateDespesaTotais(userId);
+      await aumentaSaldo(userId, update.valorAnterior);
+      await diminuiSaldo(userId, valor);
+    }
+
     res.json(update);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -81,8 +87,11 @@ async function deleteDespesaFixa(req, res) {
 
   try {
     const deletar = await deleteDespesaFixaServico(userId, despesaId);
-    await updateDespesaTotais(userId);
-    await calcularSaldoGeral(userId, valor, false);
+    if(deletar.status){
+      await updateDespesaTotais(userId);
+      await aumentaSaldo(userId, deletar.valorAnterior);
+    }
+
     res.json(deletar);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -93,7 +102,6 @@ async function deleteDespesaFixa(req, res) {
 //DESPESAS VARIÁVEIS
 async function getAllDespesasVar_Usuario(req, res) {
   const userId = req.usuario.id;
-  console.log(userId)
   try {
     const despesasVariaveis = await getAllDespesaVar_Usuario_Servico(userId); 
     res.json(despesasVariaveis);
@@ -116,8 +124,11 @@ async function createDespesaVar(req, res){
 
   try {
     const create = await createDespesaVarServico(userId, nome, valor, descricao, dataPagamento); 
-    await updateDespesaTotais(userId);
-    await calcularSaldoGeral(userId, valor, false);
+    if(create.status){
+      await updateDespesaTotais(userId); 
+      await diminuiSaldo(userId, valor);
+    }
+
     res.json(create);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -157,8 +168,11 @@ async function updateDespesaVar(req, res) {
 
   try {
     const update = await updateDespesaVarServico(userId, despesaId, nome, valor, descricao, dataPagamento);
-    await updateDespesaTotais(userId);
-    await calcularSaldoGeral(userId, valor, false);
+    if(update.status){
+      await updateDespesaTotais(userId);
+      await aumentaSaldo(userId, update.valorAnterior);
+      await diminuiSaldo(userId, valor);
+    }
 
     res.json(update);
   } catch (error) {
@@ -172,8 +186,13 @@ async function deleteDespesaVar(req, res) {
 
   try {
     const deletar = await deleteDespesaVarServico(userId, despesaId);
-    await updateDespesaTotais(userId);
-    await calcularSaldoGeral(userId, valor, false);
+    if(deletar.status){
+      await updateDespesaTotais(userId);
+      await aumentaSaldo(userId, deletar.valorAnterior);
+    }
+
+    res.json(deletar)
+
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

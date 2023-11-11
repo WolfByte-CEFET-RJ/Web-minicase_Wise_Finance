@@ -6,6 +6,7 @@ const { gerarRelatorioServico } = require('../core/servicos/relatorioServico');
 async function limparDespesas() {
   try {
     await database("Despesa_Variavel").delete();
+    await database("Usuario")
     console.log('Despesas excluídas com sucesso!');
   } catch (error) {
     console.error('Erro ao excluir despesas:', error);
@@ -30,7 +31,7 @@ async function geraRelatorioMensal() {
     }
 
     const dataAtual = new Date();
-    const mesAtual = dataAtual.getMonth() + 1; 
+    const mesAtual = 12; 
     const anoAtual = dataAtual.getFullYear(); 
 
     for (const user of usuarios) {
@@ -57,7 +58,7 @@ async function geraBalanco(){
     }
 
     const timer = new Date();
-    const mesAtual = timer.getMonth() + 1;
+    const mesAtual = 12;
     const anoAtual = timer.getFullYear();
 
     for (const user of usuarios) {
