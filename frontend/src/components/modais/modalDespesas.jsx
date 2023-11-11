@@ -90,9 +90,9 @@ const ModalDespesa = ({ Aberto, Fechado}) => {
                 </button>
               </div>
             </div>
-           {/* <div className = " mt-[3%]">
+           <div className = " mt-[3%]">
               <Barra/>
-            </div>   */}
+            </div>  
           </div>
           </div>
         </div>
