@@ -5,7 +5,7 @@ const Joi = require('joi');
 function validaDespesa(nome, valor, descricao, dataPagamento) {
   const schema = Joi.object({
     nome: Joi.string().alphanum().required(),
-    valor: Joi.number().required(),
+    valor: Joi.number().positive().required(),
     descricao: Joi.string().required(),
     dataPagamento: Joi.date().iso().required(),
   });
@@ -137,6 +137,7 @@ async function updateDespesaFixaServico(userId, despesaId, nome, valor, descrica
       return {
         status: true,
         message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+        valorAnterior: despesa.Valor,
         limite: await verificaLimite(userId)
       };
     
@@ -170,6 +171,7 @@ async function deleteDespesaFixaServico(userId, despesaId) {
     return {
       status: true,
       message: `Despesa deleteda com sucesso!`,
+      valorAnterior: despesa.Valor,
       limite: await verificaLimite(userId)
     };
   
@@ -293,6 +295,7 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
     return {
       status: true,
       message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+      valorAnterior: despesa.Valor,
       limite: await verificaLimite(userId)
     };
 
@@ -336,6 +339,7 @@ async function deleteDespesaVarServico(userId, despesaId) {
     return {
       status: true,
       message: `Despesa deleteda com sucesso!`,
+      valorAnterior: despesa.Valor,
       limite: await verificaLimite(userId)
     };
   

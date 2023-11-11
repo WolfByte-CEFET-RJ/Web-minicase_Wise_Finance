@@ -2,7 +2,7 @@ const { request, response } = require('express');
 const { createReceitaFixaServico, updateReceitaFixaServico, deleteReceitaFixaServico, getAllReceitasFixas_Usuario_Servico, getReceitaFixaByIdServico, 
         createReceitaVarServico, updateReceitaVarServico, deleteReceitaVarServico, getAllReceitaVar_Usuario_Servico, getReceitaVarByIdServico,  updateReceitasTotais,
       } = require('../servicos/receitaServico');
-const {calcularSaldoGeral, } = require('../servicos/saldoGeralServico');
+const { aumentaSaldo, diminuiSaldo } = require('../servicos/saldoGeralServico');
 
 //RECEITAS FIXAS
 
@@ -17,8 +17,10 @@ async function createReceitaFixa(req, res) {
 
   try {
     const create = await createReceitaFixaServico(userId, nome, valor, descricao, dataPagamento); 
-    await updateReceitasTotais(userId);
-    await calcularSaldoGeral(userId); 
+    if(create.status){
+      await updateReceitasTotais(userId);
+      await aumentaSaldo(userId, valor);
+    }
 
     res.json(create);
   } catch (error) {
@@ -45,7 +47,6 @@ async function getReceitaFixaById(req, res) {
   
 async function getAllReceitaFixa_Usuario(req, res) {
     const userId = req.usuario.id;
-    console.log(userId)
     try {
       const despesasFixas = await getAllReceitasFixas_Usuario_Servico(userId); 
       res.json(despesasFixas);
@@ -67,9 +68,11 @@ async function getAllReceitaFixa_Usuario(req, res) {
 
   try {
     const update = await updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento);
-    await updateReceitasTotais(userId); 
-    await calcularSaldoGeral(userId);
-
+    if(update.status){
+      await updateReceitasTotais(userId); 
+      await diminuiSaldo(userId, update.valorAnterior);
+      await aumentaSaldo(userId, valor);
+    }
 
     res.json(update);
   } catch (error) {
@@ -83,8 +86,10 @@ async function deleteReceitaFixa(req, res) {
   
     try {
       const deletar = await deleteReceitaFixaServico(userId, receitaId);
-      await updateReceitasTotais(userId); 
-      await calcularSaldoGeral(userId);
+      if(deletar.status){
+        await updateReceitasTotais(userId); 
+        await diminuiSaldo(userId, deletar.valor);
+      }
 
       res.json(deletar);
     } catch (error) {
@@ -105,8 +110,10 @@ async function createReceitaVar(req, res) {
   
     try {
       const create = await createReceitaVarServico(userId, nome, valor, descricao, dataPagamento); 
-      await updateReceitasTotais(userId); 
-      await calcularSaldoGeral(userId);
+      if(create.status){
+        await updateReceitasTotais(userId); 
+        await aumentaSaldo(userId, valor);
+      }
 
   
       res.json(create);
@@ -155,8 +162,12 @@ async function updateReceitaVar(req, res) {
 
   try {
     const update = await updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento);
-    await updateReceitasTotais(userId); 
-    await calcularSaldoGeral(userId);
+    if(update.status){
+      await updateReceitasTotais(userId); 
+      await updateReceitasTotais(userId); 
+      await diminuiSaldo(userId, update.valorAnterior);
+      await aumentaSaldo(userId, valor);
+    }
 
 
     res.json(update);
@@ -171,8 +182,10 @@ async function deleteReceitaVar(req, res) {
   
     try {
       const deletar = await deleteReceitaVarServico(userId, receitaId);
-      await updateReceitasTotais(userId); 
-      await calcularSaldoGeral(userId);
+      if(deletar.status){
+          await updateReceitasTotais(userId); 
+          await diminuiSaldo(userId, deletar.valor);
+      }
 
       res.json(deletar);
     } catch (error) {

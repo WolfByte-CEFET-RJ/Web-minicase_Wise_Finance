@@ -4,7 +4,7 @@ const Joi = require('joi');
 function validaReceita(nome, valor, descricao, dataPagamento) {
   const schema = Joi.object({
     nome: Joi.string().alphanum().required(),
-    valor: Joi.number().required(),
+    valor: Joi.number().positive().required(),
     descricao: Joi.string().required(),
     dataPagamento: Joi.date().iso().required(),
   });
@@ -133,6 +133,7 @@ async function updateReceitaFixaServico(userId, receitaId, nome, valor, descrica
       return {
         status: true,
         message: `Informações da receita ${receitaId} atualizadas com sucesso!`,
+        valorAnterior: receita.Valor
       };
     
     } catch (error) {
@@ -164,6 +165,7 @@ async function deleteReceitaFixaServico(userId, receitaId) {
     return {
       status: true,
       message: `Receita deletada com sucesso!`,
+      valor: receita.Valor
     };
   
   } catch (error) {
@@ -264,12 +266,12 @@ async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao
         throw new Error("Usuário não encontrado");
       }
   
-      const despesa = await database("Receita_Variavel").select('*').where("id",receitaId).first()
-      if(!despesa){
+      const receita = await database("Receita_Variavel").select('*').where("id",receitaId).first()
+      if(!receita){
         throw new Error("Receita não encontrada");
       }
   
-      if(usuario.ID !== despesa.ID_Usuario){
+      if(usuario.ID !== receita.ID_Usuario){
         throw new Error("Receita não relacionada ao usuário");
       }
       
@@ -293,7 +295,8 @@ async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao
       await database("Receita_Variavel").update(novaReceitaVar).where("id",receitaId);
       return {
         status: true,
-        message: `Informações da despesa ${receitaId} atualizadas com sucesso!`,
+        message: `Informações da receita ${receitaId} atualizadas com sucesso!`,
+        valorAnterior: receita.Valor
       };
     
     } catch (error) {
@@ -312,12 +315,12 @@ async function deleteReceitaVarServico(userId, receitaId) {
       throw new Error("Usuário não encontrado");
     }
 
-    const despesa = await database("Receita_Variavel").select('*').where("id",receitaId).first()
-    if(!despesa){
+    const receita = await database("Receita_Variavel").select('*').where("id",receitaId).first()
+    if(!receita){
       throw new Error("Receita não encontrada");
     }
 
-    if(usuario.ID!==despesa.ID_Usuario){
+    if(usuario.ID!==receita.ID_Usuario){
       throw new Error("Receita não relacionada ao usuário");
     }
     
@@ -325,6 +328,7 @@ async function deleteReceitaVarServico(userId, receitaId) {
     return {
       status: true,
       message: `Receita deleteda com sucesso!`,
+      valor: receita.Valor
     };
   
   } catch (error) {
@@ -350,7 +354,7 @@ async function updateReceitasTotais(userId) {
 
     return {
       status: true,
-      message: 'Totais de despesas atualizados com sucesso!',
+      message: 'Totais de receitas atualizados com sucesso!',
     };
   } catch (error) {
     return {
