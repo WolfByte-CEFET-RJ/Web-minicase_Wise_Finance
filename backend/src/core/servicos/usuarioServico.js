@@ -1,88 +1,102 @@
 const database = require('../../database/index');
 const bcrypt = require('bcrypt');
+const Joi = require('joi');
 
 // Função para gerar um hash de senha
 async function HashPassword(password) {
-    const saltRounds = 10;
-    return await bcrypt.hash(password, saltRounds);
+  const saltRounds = 10;
+  return await bcrypt.hash(password, saltRounds);
 }
 
-async function update(id, nome, username){
-    try {
-        const usuario = await database("usuario")
-        .select("*")
-        .where("id", id)
-        .first();
-        
-        if (!usuario) {
-          throw new Error("Usuário não encontrado!");
-        }
+function validaUpdate(nome, username) {
+  const schema = Joi.object({
+    nome: Joi.string().regex(/^[A-Za-z]+$/),
+    username: Joi.string().alphanum().min(3).max(30)
+  });
 
-        //EM CASO DE async function update(id, nome, username, email, senha, senhaConfirmacao)
-        /*if (senha.length < 4) {
-          throw new Error("Senha muito curta!");
-        }
-    
-        if (senha !== senhaConfirmacao) {
-          throw new Error("As senhas precisam ser iguais.");
-        }
-    
-        const userEmail = await database("Usuario")
-          .select("*")
-          .where({ Email: email })
-          .first();
-        if (userEmail) {
-          throw new Error("Endereço de e-mail já cadastrado!");
-        }
-
-        const hash = await HashPassword(senha);
-        */
-        const updatedUser = {
-          nome: nome,
-          username: username
-        }
-
-        await database("usuario")
-        .update(updatedUser)
-        .where("id",id);
-        
-        return {
-          status: true,
-          message: "Informações atualizadas!",
-        };
-      } catch (error) {
-          console.log(error);
-        return {
-          status: false,
-          message: error["message"]
-        };
-      }
+  const usuario = { nome, username };
+  return schema.validate(usuario, { abortEarly: false });
 }
 
-async function readOne(id){
-    try { 
-        const usuario = await database('usuario')
-        .select("*")
-        .where("id",id)
-        .first();
+function validaCadastro(nome, username, email, senha, senhaConfirmacao) {
+  const schema = Joi.object({
+    nome: Joi.string().regex(/^[A-Za-z]+$/).required(),
+    username: Joi.string().alphanum().min(3).max(30).required(),
+    email: Joi.string().email().required(),
+    senha: Joi.string().min(4).required(),
+    senhaConfirmacao: Joi.string().valid(Joi.ref('senha')).required(),
+  });
 
-        if(usuario==null){
-            throw new Error("Usuário não encontrado");
-        }
-        
-        return {
-            status: true,
-            usuario
-        };
-    } catch (error) {
-        return {
-            status: false,
-            message: error["message"]
-        };
+  const usuario = { nome, username, email, senha, senhaConfirmacao };
+  return schema.validate(usuario, { abortEarly: false });
+}
+
+async function update(id, nome, username) {
+  try {
+    const usuario = await database("usuario")
+      .select("*")
+      .where("id", id)
+      .first();
+
+    if (!usuario) {
+      throw new Error("Usuário não encontrado!");
     }
+
+    const { error } = validaUpdate(nome, username);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
+    }
+
+    const updatedUser = {
+      nome: nome,
+      username: username
+    }
+
+    await database("usuario")
+      .update(updatedUser)
+      .where("id", id);
+
+    return {
+      status: true,
+      message: "Informações atualizadas!",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      status: false,
+      message: error["message"]
+    };
+  }
 }
 
-async function deletarUsuario(id){
+async function readOne(id) {
+  try {
+    const usuario = await database('usuario')
+      .select("*")
+      .where("id", id)
+      .first();
+
+    if (usuario == null) {
+      throw new Error("Usuário não encontrado");
+    }
+
+    return {
+      status: true,
+      usuario
+    };
+  } catch (error) {
+    return {
+      status: false,
+      message: error["message"]
+    };
+  }
+}
+
+async function deletarUsuario(id) {
   try {
     const user = await database("Usuario").select("*").where({ ID: id });
 
@@ -116,32 +130,31 @@ async function deletarUsuario(id){
   }
 }
 
-async function cadastrarUsuario( nome, username, email, senha, senhaConfirmacao){
+async function cadastrarUsuario(nome, username, email, senha, senhaConfirmacao) {
   try {
-    if (
-      !nome ||
-      !username ||
-      !email ||
-      !senha ||
-      !senhaConfirmacao
-    ) {
-      throw new Error("Preencha todos os campos obrigatórios.");
-    }
-
-    if (senha.length < 4) {
-      throw new Error("Senha muito curta!");
-    }
-
-    if (senha !== senhaConfirmacao) {
-      throw new Error("As senhas precisam ser iguais.");
-    }
-
     const userEmail = await database("Usuario")
       .select("*")
       .where({ Email: email })
       .first();
     if (userEmail) {
       throw new Error("Endereço de e-mail já cadastrado!");
+    }
+
+    const userUsername = await database("Usuario")
+      .select("*")
+      .where({ Username: username })
+      .first();
+    if (userUsername) {
+      throw new Error("Username indisponível!");
+    }
+
+    const { error } = validaCadastro(nome, username, email, senha, senhaConfirmacao);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
     }
 
     const hash = await HashPassword(senha);
@@ -161,12 +174,12 @@ async function cadastrarUsuario( nome, username, email, senha, senhaConfirmacao)
 
     const limite = {
       ID_Usuario: idUser,
-      Valor_Limite: 0, //default : R$00,00
+      Valor_Limite: 0, //default: R$00,00
       Mes_Definido: mesAtual,
       Ano_Definido: anoAtual,
-  };
+    };
 
-  await database("Limite_Mensal").insert(limite);
+    await database("Limite_Mensal").insert(limite);
 
     return {
       status: true,
@@ -180,9 +193,9 @@ async function cadastrarUsuario( nome, username, email, senha, senhaConfirmacao)
   }
 }
 
-module.exports = { 
-    cadastrarUsuario,
-    deletarUsuario,
-    readOne,
-    update
- };
+module.exports = {
+  cadastrarUsuario,
+  deletarUsuario,
+  readOne,
+  update
+};

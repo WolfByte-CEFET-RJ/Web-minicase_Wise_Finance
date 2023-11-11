@@ -1,6 +1,9 @@
 # Arquivos .env
 .env
 
+#relatorios
+/backend/src/core/servicos/relatorios
+
 # Ignorar a pasta node_modules e dependencias
 node_modules/
 /.pnp

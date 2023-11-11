@@ -1,5 +1,18 @@
 const database = require('../../database/index');
 const { verificaLimite } = require("./limiteService")
+const Joi = require('joi');
+
+function validaDespesa(nome, valor, descricao, dataPagamento) {
+  const schema = Joi.object({
+    nome: Joi.string().alphanum().required(),
+    valor: Joi.number().positive().required(),
+    descricao: Joi.string().required(),
+    dataPagamento: Joi.date().iso().required(),
+  });
+
+  const despesa = { nome, valor, descricao, dataPagamento };
+  return schema.validate(despesa, { abortEarly: false }  );
+}
 
 //DESPESAS FIXAS
 
@@ -20,21 +33,20 @@ async function getTotalDespesasFixas(userId) {
 }
 
 async function createDespesaFixaServico(userId, nome, valor, descricao, dataPagamento) {
-
   try {
-    
-    if (
-      !nome ||
-      !valor ||
-      !descricao ||
-      !dataPagamento
-    ) {
-      throw new Error("Preencha todos os campos obrigatórios.");
-    }
 
     const usuario = await database("Usuario").select('*').where("id",userId).first()
     if(!usuario){
       throw new Error("Usuário não encontrado");
+    }
+
+    const { error } = validaDespesa(nome, valor, descricao, dataPagamento);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
     }
 
     const novaDespesaFixa = { 
@@ -88,15 +100,6 @@ async function getDespesaFixaByIdServico(userId, despesaFixaId) {
 
 async function updateDespesaFixaServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
     try {
-      
-      if (
-        !nome ||
-        !valor ||
-        !descricao ||
-        !dataPagamento
-      ) {
-        throw new Error("Preencha todos os campos obrigatórios.");
-      }
   
       const usuario = await database("Usuario").select('*').where("id",userId).first()
       if(!usuario){
@@ -110,6 +113,15 @@ async function updateDespesaFixaServico(userId, despesaId, nome, valor, descrica
   
       if(usuario.ID !== despesa.ID_Usuario){
         throw new Error("Despesa não relacionada ao usuário");
+      }
+
+      const { error } = validaDespesa(nome, valor, descricao, dataPagamento);
+      if (error) {
+        const customErrors = error.details.map(err => err.message);
+        return {
+          status: false,
+          message: customErrors,
+        };
       }
       
       const novaDespesaFixa = { 
@@ -125,6 +137,7 @@ async function updateDespesaFixaServico(userId, despesaId, nome, valor, descrica
       return {
         status: true,
         message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+        valorAnterior: despesa.Valor,
         limite: await verificaLimite(userId)
       };
     
@@ -158,6 +171,7 @@ async function deleteDespesaFixaServico(userId, despesaId) {
     return {
       status: true,
       message: `Despesa deleteda com sucesso!`,
+      valorAnterior: despesa.Valor,
       limite: await verificaLimite(userId)
     };
   
@@ -190,18 +204,18 @@ async function getTotalDespesasVariaveis(userId) {
 async function createDespesaVarServico(userId, nome, valor, descricao, dataPagamento) {
   try {
     
-    if (
-      !nome ||
-      !valor ||
-      !descricao ||
-      !dataPagamento
-    ) {
-      throw new Error("Preencha todos os campos obrigatórios.");
-    }
-
     const usuario = await database("Usuario").select('*').where("id",userId).first()
     if(!usuario){
       throw new Error("Usuário não encontrado");
+    }
+
+    const { error } = validaDespesa(nome, valor, descricao, dataPagamento);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
     }
 
     const novaDespesaVar = { 
@@ -244,16 +258,7 @@ async function getDespesaVarByIdServico(userId, despesaVariavelId) {
 }
 
 async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao, dataPagamento) {
-  try {
-    
-    if (
-      !nome ||
-      !valor ||
-      !descricao ||
-      !dataPagamento
-    ) {
-      throw new Error("Preencha todos os campos obrigatórios.");
-    }
+  try { 
 
     const usuario = await database("Usuario").select('*').where("id",userId).first()
     if(!usuario){
@@ -268,6 +273,15 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
     if(usuario.ID !== despesa.ID_Usuario){
       throw new Error("Despesa não relacionada ao usuário");
     }
+
+    const { error } = validaDespesa(nome, valor, descricao, dataPagamento);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
+    }
     
     const novaDespesaVar = { 
       ID_Usuario : userId,
@@ -281,6 +295,7 @@ async function updateDespesaVarServico(userId, despesaId, nome, valor, descricao
     return {
       status: true,
       message: `Informações da despesa ${despesaId} atualizadas com sucesso!`,
+      valorAnterior: despesa.Valor,
       limite: await verificaLimite(userId)
     };
 
@@ -324,6 +339,7 @@ async function deleteDespesaVarServico(userId, despesaId) {
     return {
       status: true,
       message: `Despesa deleteda com sucesso!`,
+      valorAnterior: despesa.Valor,
       limite: await verificaLimite(userId)
     };
   

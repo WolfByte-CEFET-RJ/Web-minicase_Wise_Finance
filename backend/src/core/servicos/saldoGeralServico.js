@@ -1,30 +1,47 @@
-const receitaServico = require('./receitaServico');
-const despesaServico = require('./despesasServico');
 const database = require('../../database/index');
 
-async function calcularSaldoGeral(userId) {
+async function aumentaSaldo(userId, valor) {
   try {
-    const totalReceitasVariaveis = await receitaServico.getTotalReceitasVariaveis(userId);
-    const totalReceitasFixas = await receitaServico.getTotalReceitasFixas(userId);
-    const totalDespesasVariaveis = await despesaServico.getTotalDespesasVariaveis(userId);
-    const totalDespesasFixas = await despesaServico.getTotalDespesasFixas(userId);
+    const usuario = await database('Usuario').select('*').where('ID', userId).first();
 
-    const saldoGeral = totalReceitasVariaveis + totalReceitasFixas - totalDespesasVariaveis - totalDespesasFixas;
+    if (!usuario) {
+      throw new Error('Usuário não encontrado');
+    }
 
-    await atualizarSaldoGeralNoBanco(userId, saldoGeral);
+    saldoAtualizado = parseFloat(usuario.Saldo_Geral) + parseFloat(valor);
 
-    return saldoGeral;
+    await atualizarSaldoGeral(userId, saldoAtualizado);
+
+    return saldoAtualizado;
   } catch (error) {
     throw new Error('Erro ao calcular saldo geral: ' + error.message);
   }
 }
 
-async function atualizarSaldoGeralNoBanco(userId, saldoGeral) {
+async function diminuiSaldo(userId, valor) {
+  try {
+    const usuario = await database('Usuario').select('*').where('ID', userId).first();
+
+    if (!usuario) {
+      throw new Error('Usuário não encontrado');
+    }
+
+    saldoAtualizado = parseFloat(usuario.Saldo_Geral) - parseFloat(valor);
+
+    await atualizarSaldoGeral(userId, saldoAtualizado);
+
+    return saldoAtualizado;
+  } catch (error) {
+    throw new Error('Erro ao calcular saldo geral: ' + error.message);
+  }
+}
+
+async function atualizarSaldoGeral(userId, saldoAtualizado) {
   try {
     await database('Usuario')
       .where('ID', userId)
       .update({
-        Saldo_Geral: saldoGeral,
+        Saldo_Geral: saldoAtualizado,
       });
   } catch (error) {
     throw new Error('Erro ao atualizar saldo geral no banco de dados: ' + error.message);
@@ -32,5 +49,6 @@ async function atualizarSaldoGeralNoBanco(userId, saldoGeral) {
 }
 
 module.exports = {
-  calcularSaldoGeral,
+  aumentaSaldo,
+  diminuiSaldo
 };

@@ -1,5 +1,17 @@
 const database = require('../../database/index');
+const Joi = require('joi');
 
+function validaReceita(nome, valor, descricao, dataPagamento) {
+  const schema = Joi.object({
+    nome: Joi.string().alphanum().required(),
+    valor: Joi.number().positive().required(),
+    descricao: Joi.string().required(),
+    dataPagamento: Joi.date().iso().required(),
+  });
+
+  const receita = { nome, valor, descricao, dataPagamento };
+  return schema.validate(receita, { abortEarly: false }  );
+}
 //RECEITAS FIXAS
 
 async function getTotalReceitasFixas(userId) {
@@ -22,18 +34,18 @@ async function createReceitaFixaServico (userId, nome, valor, descricao, dataPag
 
   try {
     
-    if (
-      !nome ||
-      !valor ||
-      !descricao ||
-      !dataPagamento
-    ) {
-      throw new Error("Preencha todos os campos obrigatórios.");
-    }
-
     const usuario = await database("Usuario").select('*').where("id",userId).first()
     if(!usuario){
       throw new Error("Usuário não encontrado");
+    }
+
+    const { error } = validaReceita(nome, valor, descricao, dataPagamento);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
     }
 
     const novaReceitaFixa = { 
@@ -86,15 +98,6 @@ async function getReceitaFixaByIdServico(userId, receitaFixaId) {
 async function updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
       
-      if (
-        !nome ||
-        !valor ||
-        !descricao ||
-        !dataPagamento
-      ) {
-        throw new Error("Preencha todos os campos obrigatórios.");
-      }
-  
       const usuario = await database("Usuario").select('*').where("id",userId).first()
       if(!usuario){
         throw new Error("Usuário não encontrado");
@@ -109,6 +112,15 @@ async function updateReceitaFixaServico(userId, receitaId, nome, valor, descrica
         throw new Error("Receita não relacionada ao usuário");
       }
       
+      const { error } = validaReceita(nome, valor, descricao, dataPagamento);
+      if (error) {
+        const customErrors = error.details.map(err => err.message);
+        return {
+          status: false,
+          message: customErrors,
+        };
+      }
+
       const novaReceitaFixa = { 
         ID_Usuario : userId,
         Nome: nome,
@@ -120,7 +132,8 @@ async function updateReceitaFixaServico(userId, receitaId, nome, valor, descrica
       await database("Receita_Fixa").update(novaReceitaFixa).where("id",receitaId);
       return {
         status: true,
-        message: `Informações da respeita ${receitaId} atualizadas com sucesso!`,
+        message: `Informações da receita ${receitaId} atualizadas com sucesso!`,
+        valorAnterior: receita.Valor
       };
     
     } catch (error) {
@@ -152,6 +165,7 @@ async function deleteReceitaFixaServico(userId, receitaId) {
     return {
       status: true,
       message: `Receita deletada com sucesso!`,
+      valor: receita.Valor
     };
   
   } catch (error) {
@@ -182,19 +196,19 @@ async function getTotalReceitasVariaveis(userId) {
 
 async function createReceitaVarServico (userId, nome, valor, descricao, dataPagamento) {
   try {
-    
-    if (
-      !nome ||
-      !valor ||
-      !descricao ||
-      !dataPagamento
-    ) {
-      throw new Error("Preencha todos os campos obrigatórios.");
-    }
 
     const usuario = await database("Usuario").select('*').where("id",userId).first()
     if(!usuario){
       throw new Error("Usuário não encontrado");
+    }
+
+    const { error } = validaReceita(nome, valor, descricao, dataPagamento);
+    if (error) {
+      const customErrors = error.details.map(err => err.message);
+      return {
+        status: false,
+        message: customErrors,
+      };
     }
 
     const novaReceitaVar = { 
@@ -247,29 +261,29 @@ async function getReceitaVarByIdServico(userId, receitaVarId) {
 async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento) {
     try {
       
-      if (
-        !nome ||
-        !valor ||
-        !descricao ||
-        !dataPagamento
-      ) {
-        throw new Error("Preencha todos os campos obrigatórios.");
-      }
-  
       const usuario = await database("Usuario").select('*').where("id",userId).first()
       if(!usuario){
         throw new Error("Usuário não encontrado");
       }
   
-      const despesa = await database("Receita_Variavel").select('*').where("id",receitaId).first()
-      if(!despesa){
+      const receita = await database("Receita_Variavel").select('*').where("id",receitaId).first()
+      if(!receita){
         throw new Error("Receita não encontrada");
       }
   
-      if(usuario.ID !== despesa.ID_Usuario){
+      if(usuario.ID !== receita.ID_Usuario){
         throw new Error("Receita não relacionada ao usuário");
       }
       
+      const { error } = validaReceita(nome, valor, descricao, dataPagamento);
+      if (error) {
+        const customErrors = error.details.map(err => err.message);
+        return {
+          status: false,
+          message: customErrors,
+        };
+      }
+
       const novaReceitaVar = { 
         ID_Usuario : userId,
         Nome: nome,
@@ -281,7 +295,8 @@ async function updateReceitaVarServico(userId, receitaId, nome, valor, descricao
       await database("Receita_Variavel").update(novaReceitaVar).where("id",receitaId);
       return {
         status: true,
-        message: `Informações da despesa ${receitaId} atualizadas com sucesso!`,
+        message: `Informações da receita ${receitaId} atualizadas com sucesso!`,
+        valorAnterior: receita.Valor
       };
     
     } catch (error) {
@@ -300,12 +315,12 @@ async function deleteReceitaVarServico(userId, receitaId) {
       throw new Error("Usuário não encontrado");
     }
 
-    const despesa = await database("Receita_Variavel").select('*').where("id",receitaId).first()
-    if(!despesa){
+    const receita = await database("Receita_Variavel").select('*').where("id",receitaId).first()
+    if(!receita){
       throw new Error("Receita não encontrada");
     }
 
-    if(usuario.ID!==despesa.ID_Usuario){
+    if(usuario.ID!==receita.ID_Usuario){
       throw new Error("Receita não relacionada ao usuário");
     }
     
@@ -313,6 +328,7 @@ async function deleteReceitaVarServico(userId, receitaId) {
     return {
       status: true,
       message: `Receita deleteda com sucesso!`,
+      valor: receita.Valor
     };
   
   } catch (error) {
@@ -338,7 +354,7 @@ async function updateReceitasTotais(userId) {
 
     return {
       status: true,
-      message: 'Totais de despesas atualizados com sucesso!',
+      message: 'Totais de receitas atualizados com sucesso!',
     };
   } catch (error) {
     return {
