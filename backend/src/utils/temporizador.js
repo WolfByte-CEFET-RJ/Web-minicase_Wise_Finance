@@ -2,6 +2,7 @@
 const schedule = require('node-schedule');
 const database = require('../database/index');
 const { gerarRelatorioServico } = require('../core/servicos/relatorioServico');
+const { aumentaSaldo } = require('../core/servicos/saldoGeralServico')
 
 async function limparDespesas() {
   try {
@@ -48,6 +49,34 @@ async function geraRelatorioMensal() {
   }
 }
 
+async function atualizaSaldo(){
+  const usuarios = await database("Usuario").select("id");
+
+    if(!usuarios){
+      throw new Error("Não há usuários");
+    }
+
+    for (const user of usuarios) {
+      const [ totalDespFixaResult,  totalRecFixaResult] = await Promise.all([
+        database("Despesa_Fixa").sum("Valor as Tot_Desp_Fixa").where("id_usuario", user.id).first(),
+        database("Receita_Fixa").sum("Valor as Tot_Rec_Fixa").where("id_usuario", user.id).first(),
+      ]);
+      
+      const totalDespFixa = parseFloat(totalDespFixaResult.Tot_Desp_Fixa) || 0;
+      const totalRecFixa = parseFloat(totalRecFixaResult.Tot_Rec_Fixa) || 0;
+      
+      const atulizaFixas = totalRecFixa - totalDespFixa;
+      console.log(atulizaFixas)
+
+      await aumentaSaldo(user.id, atulizaFixas);
+    }
+    
+    console.log(`==SALDOS ATUALIZADOS==`);
+    
+    // gerando os relatorios somente depois de todos os balanços estarem prontos
+    geraRelatorioMensal();
+}
+
 async function geraBalanco(){
   try {
     const usuarios = await database("Usuario").select("id");
@@ -92,7 +121,7 @@ async function geraBalanco(){
     console.log(`==BALANÇOS DO MÊS ${mesAtual} DE ${anoAtual} GERADOS==`);
     
     // gerando os relatorios somente depois de todos os balanços estarem prontos
-    geraRelatorioMensal();
+    atualizaSaldo();
     
   } catch (error) {
     console.error('Erro ao gerar balanço mensal:', error);
@@ -101,7 +130,7 @@ async function geraBalanco(){
 
 /* 
  as funções mais a direita são chamadas na função imediatamente à esquerda 
- balanco --> relatorio --> limpar variáveis (despesas e receitas)
+ balanco --> atualiza saldo --> relatorio --> limpar variáveis (despesas e receitas)
 */
 async function viraMes(){
     schedule.scheduleJob('0 0 1 * *', geraBalanco);
