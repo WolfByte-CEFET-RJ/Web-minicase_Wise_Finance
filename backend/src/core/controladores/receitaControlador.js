@@ -18,7 +18,7 @@ async function createReceitaFixa(req, res) {
   try {
     const create = await createReceitaFixaServico(userId, nome, valor, descricao, dataPagamento); 
     await updateReceitasTotais(userId);
-    await calcularSaldoGeral(userId); 
+    await calcularSaldoGeral(userId, valor, true);
 
     res.json(create);
   } catch (error) {
@@ -68,7 +68,7 @@ async function getAllReceitaFixa_Usuario(req, res) {
   try {
     const update = await updateReceitaFixaServico(userId, receitaId, nome, valor, descricao, dataPagamento);
     await updateReceitasTotais(userId); 
-    await calcularSaldoGeral(userId);
+    await calcularSaldoGeral(userId, valor, true);
 
 
     res.json(update);
@@ -84,7 +84,7 @@ async function deleteReceitaFixa(req, res) {
     try {
       const deletar = await deleteReceitaFixaServico(userId, receitaId);
       await updateReceitasTotais(userId); 
-      await calcularSaldoGeral(userId);
+      await calcularSaldoGeral(userId, valor, false);
 
       res.json(deletar);
     } catch (error) {
@@ -106,7 +106,7 @@ async function createReceitaVar(req, res) {
     try {
       const create = await createReceitaVarServico(userId, nome, valor, descricao, dataPagamento); 
       await updateReceitasTotais(userId); 
-      await calcularSaldoGeral(userId);
+      await calcularSaldoGeral(userId, valor, true);
 
   
       res.json(create);
@@ -156,7 +156,7 @@ async function updateReceitaVar(req, res) {
   try {
     const update = await updateReceitaVarServico(userId, receitaId, nome, valor, descricao, dataPagamento);
     await updateReceitasTotais(userId); 
-    await calcularSaldoGeral(userId);
+    await calcularSaldoGeral(userId, valor, true);
 
 
     res.json(update);
@@ -172,7 +172,7 @@ async function deleteReceitaVar(req, res) {
     try {
       const deletar = await deleteReceitaVarServico(userId, receitaId);
       await updateReceitasTotais(userId); 
-      await calcularSaldoGeral(userId);
+      await calcularSaldoGeral(userId, valor, false);
 
       res.json(deletar);
     } catch (error) {
