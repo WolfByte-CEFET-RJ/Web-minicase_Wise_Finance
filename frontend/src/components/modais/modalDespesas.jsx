@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import modalDespesasFixas from './modalAdicionarDespesasFIxas'
-import modalDespesasVariaveis from './modalAdicionarDespesasVariaveis'
+import Barra from "../componentsHome/barraValor"
 import ModalDespesasFixas from "./modalAdicionarDespesasFIxas";
 import ModalDespesasVariaveis from "./modalAdicionarDespesasVariaveis";
 const ModalDespesa = ({ Aberto, Fechado}) => {
@@ -91,12 +90,11 @@ const ModalDespesa = ({ Aberto, Fechado}) => {
                 </button>
               </div>
             </div>
+           {/* <div className = " mt-[3%]">
+              <Barra/>
+            </div>   */}
           </div>
           </div>
-
-
-
-
         </div>
       </div> 
   );
