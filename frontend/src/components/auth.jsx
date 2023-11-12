@@ -1,28 +1,31 @@
 import React, { createContext, useEffect, useState } from "react";
-import parseCookies from "nookies";
-import { useNavigate } from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import {jwtDecode} from "jwt-decode";
+import Cookies from "js-cookie";
 
 export const AuthContext = createContext({});
 
-export function AuthProvider({ children }) {
+export default function AuthProvider({ children }) {
   const [userID, setUserID] = useState(null);
   const [token, setToken] = useState(null);
   const isAuthenticated = !!userID;
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const { "access_token": accessToken } = parseCookies();
+    const accessToken = Cookies.get("access_token");
 
     if (accessToken) {
-      const decodedToken = jwt_decode(accessToken);
-      setUserID(decodedToken.id);
-      setToken(accessToken);
+      try {
+        const decodedToken = jwtDecode(accessToken);
+        setUserID(decodedToken.id);
+        setToken(accessToken);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
     } else {
-      navigate('/');
+      console.log("No access token found. Redirecting...");
     }
-  }, [navigate]);
-
+  }, []);
+  console.log(userID);
+  console.log(token);
   return (
     <AuthContext.Provider value={{ userID, isAuthenticated, token }}>
       {children}

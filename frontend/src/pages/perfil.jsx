@@ -7,7 +7,7 @@ import { AuthContext } from "../components/auth";
 
 
 const Perfil = () => {
-  const { userID, getToken } = useContext(AuthContext);
+  const { userID, token } = useContext(AuthContext);
   const [name, setName] = useState("Lucas Teixeira dos Santos");
   const [email, setEmail] = useState("lucast.santos2003@gmail.com");
   const [userName, setUserName] = useState("luquinhas");
