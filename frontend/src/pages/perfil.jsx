@@ -1,10 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useApi from "../hooks/useApi";
 import Sidebar from '../components/componentsHome/Sidebar'
+import { AuthContext } from "../components/auth";
+
 
 const Perfil = () => {
+  const { userID, getToken } = useContext(AuthContext);
   const [name, setName] = useState("Lucas Teixeira dos Santos");
   const [email, setEmail] = useState("lucast.santos2003@gmail.com");
   const [userName, setUserName] = useState("luquinhas");
