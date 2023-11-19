@@ -30,14 +30,14 @@ const FormCadastro = () => {
       try {
         const response = await api.post("http://localhost:5000/login", user);
         console.log(response.data);
-        if (response.data.status === false) {
+        if (response.data.success === false) {
           toast.error("Falha ao realizar o login!");
         }
         if (response.data.message === "Usuário não encontrado") {
           toast.error("Usuário não encontrado!");
         } else if (response.data.message === "Senha inválida") {
           toast.error("Senha inválida!");
-        } else if (response.data.status === true) {
+        } else if (response.data.success === true) {
           toast.success("Login realizado com sucesso!");
           navigate("/home");
         }

@@ -18,14 +18,21 @@ const  Sidebar = () => {
     }     
     async function logout(){
       try {
-        const response = await api.post("http://localhost:5000/logout", token);
+        const response = await api.post("http://localhost:5000/logout", 
+        {},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+        );
           console.log(response.data);
           if (response.data.status === false) {
             toast.error("Ocorreu um erro ao realizar o logout");
           } 
           else if (response.data.status === true) {
             toast.success("Logout bem-sucedido");
-            navigate("/login");
+            navigate("/");
           }
         } catch (error) {
           console.log(error);

@@ -14,6 +14,7 @@ const Home = () => {
   const [despesasVariaveis, setDespesasVariaveis] = useState("-R$1000,00")
   const [receitasFixas, setReceitasFixas] = useState("R$2000,00")
   const [receitasVariaveis, setReceitasVariaveis] = useState("R$2000,00")
+  
   const [estadoModalReceitas, setEstadoModalReceitas] = useState(false);
   const [estadoModalDespesas, setEstadoModalDespesas] = useState(false);
   const AbrirModalReceitas = () => {
