@@ -22,7 +22,8 @@ const Perfil = () => {
   // const handlePasswordVerToggle = () => {
   //   setShowPasswordVer(!showPasswordVer);
   // };
-
+  console.log(userID);
+  console.log(token);
   const handleEditartrue = () => {
     setEditarNome(true);
     setEditarPassword(true);
