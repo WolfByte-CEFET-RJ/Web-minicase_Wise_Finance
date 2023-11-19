@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useApi from "../../hooks/useApi";
+import { AuthContext } from "../auth";
 
 const  Sidebar = () => {
+    const { token } = useContext(AuthContext);
     const [expandir, setExpandir] = useState(false);
     const navigate = useNavigate();
     const api = useApi();
@@ -16,7 +18,7 @@ const  Sidebar = () => {
     }     
     async function logout(){
       try {
-        const response = await api.post("http://localhost:5000/logout");
+        const response = await api.post("http://localhost:5000/logout", token);
           console.log(response.data);
           if (response.data.status === false) {
             toast.error("Ocorreu um erro ao realizar o logout");
