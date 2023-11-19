@@ -29,18 +29,12 @@ const FormCadastro = () => {
       };
       try {
         const response = await api.post("http://localhost:5000/usuario", user);
-          console.log(response.data);
           if (response.data.status === false) {
-            toast.error("Falha no envio do formulário");
-          }
-          if (response.data.message === "Preencha os campos obrigatórios.") {
-            toast.error("Preencha os campos obrigatórios!");
-          } else if (response.data.message === "Senha muito curta!") {
-            toast.error("Senha muito curta!");
-          } else if (response.data.message === "As senhas precisam ser iguais.") {
-            toast.error("As senhas precisam ser iguais!");
+            toast.error(JSON.stringify(response.data.message));
           } else if (response.data.message === "Endereço de e-mail já cadastrado!") {
             toast.error("Endereço de e-mail já cadastrado!");
+          }  else if (response.data.message === "Username indisponível!") {
+            toast.error("Username indisponível!");
           } else if (response.data.status === true) {
             toast.success("Usuário cadastrado com êxito!");
             navigate("/");
