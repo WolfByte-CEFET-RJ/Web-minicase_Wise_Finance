@@ -42,6 +42,14 @@ async function update(id, nome, username) {
       throw new Error("Usuário não encontrado!");
     }
 
+    const userUsername = await database("Usuario")
+      .select("*")
+      .where({ Username: username })
+      .first();
+    if (userUsername) {
+      throw new Error("Username indisponível!");
+    }
+
     const { error } = validaUpdate(nome, username);
     if (error) {
       const customErrors = error.details.map(err => err.message);
