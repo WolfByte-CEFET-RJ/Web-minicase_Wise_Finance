@@ -24,11 +24,11 @@ export default function AuthProvider({ children }) {
       } catch (error) {
         console.error("Erro desemcriptando token", error);
       }
-    } else if (authenticated && (url !== pageLogin && url !== pageCadastro)) {
+    } else if (!authenticated && (url !== pageLogin && url !== pageCadastro)) {
       window.location.href = "http://localhost:3000/";
     }
   }, [authenticated]);
-
+ 
   return (
     <AuthContext.Provider value={{ userID, token }}>
       {children}
