@@ -46,25 +46,22 @@ const  Sidebar = () => {
           const currentDate = new Date();
           const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
           const currentYear = currentDate.getFullYear();
-          console.log(currentMonth);
-          console.log(currentYear);
-          const response = await api.get(`http://localhost:5000/relatorio/${currentMonth}/${currentYear}`, {
+          
+          // console.log("Mês:", currentMonth);
+          // console.log("Ano:", currentYear);
+  
+          const response = await api.get(`http://localhost:5000/relatorio`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-          console.log("Resposta da API:", response.data);
-          if (response.data.status === true) {
-            window.open(response.data.link, "_blank"); 
-          } else {
-            toast.error("Erro ao baixar relatório");
-          }
+          // console.log("Resposta da API:", response.data);
+          // window.open(response.data.link, "_blank"); 
         } catch (error) {
           console.error(error);
           toast.error("Falha ao baixar relatório");
         }
       }
-    
 
     return (
       <div

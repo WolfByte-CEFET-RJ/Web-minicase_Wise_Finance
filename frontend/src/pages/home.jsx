@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, {useState, useContext, useEffect} from "react";
 import {EyeSlash, Eye } from 'phosphor-react'
 import Sidebar from '../components/componentsHome/Sidebar'
 import ModalReceita from '../components/modais/modalReceitas'
 import ModalDespesa from '../components/modais/modalDespesas'
+import useApi from "../hooks/useApi";
+import axios from 'axios';
+import { AuthContext } from "../components/auth";
 const Home = () => {
-  const [saldoGeral, setSaldoGeral] = useState("R$2000,00");
-  const [balancoMensal, setBalancoMensal] = useState("+R$2000,00")
+  const api = useApi();
+  const { token } = useContext(AuthContext);
+  const [saldoGeral, setSaldoGeral] = useState("NÃO");
+  const [balancoMensal, setBalancoMensal] = useState("")
   const [showSaldoGeral, setShowSaldoGeral] = useState(false);
-  const [totalDespesas, setTotalDespesas] = useState("-R$2000,00")
-  const [totalReceitas, setTotalReceitas] = useState("+R$4000,00")
-  const [limiteGastos, setLimiteGastos] = useState("R$5000,00")
-  const [despesasFixas, setDespesasFixas] = useState("-R$1000,00")
-  const [despesasVariaveis, setDespesasVariaveis] = useState("-R$1000,00")
-  const [receitasFixas, setReceitasFixas] = useState("R$2000,00")
-  const [receitasVariaveis, setReceitasVariaveis] = useState("R$2000,00")
+  const [totalDespesas, setTotalDespesas] = useState("")
+  const [totalReceitas, setTotalReceitas] = useState("")
+  const [limiteGastos, setLimiteGastos] = useState("")
+  const [despesasFixas, setDespesasFixas] = useState("NÃO")
+  const [despesasVariaveis, setDespesasVariaveis] = useState("NÃO")
+  const [receitasFixas, setReceitasFixas] = useState("NÃO")
+  const [receitasVariaveis, setReceitasVariaveis] = useState("NÃO")
   
   const [estadoModalReceitas, setEstadoModalReceitas] = useState(false);
   const [estadoModalDespesas, setEstadoModalDespesas] = useState(false);
@@ -35,6 +40,46 @@ const Home = () => {
     setShowSaldoGeral(!showSaldoGeral);
   };
 
+
+
+    useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+    const currentYear = currentDate.getFullYear();
+    
+    // Exemplo de solicitação usando axios
+    api.get(`http://localhost:5000/balanco_mensal/${currentMonth}/${currentYear}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      console.log('Dados recebidos:', response.data);
+      setBalancoMensal(response.data.balanco.Valor_Balanco);
+      setTotalDespesas(response.data.balanco.Total_Despesas);
+      setTotalReceitas(response.data.balanco.Total_Receitas);
+    })
+    .catch(error => {
+      console.error('Erro na solicitação:', error);
+    });
+
+
+    api.get("http://localhost:5000/limite_mensal", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then(response => {
+      console.log('Dados recebidos2:', response.data);
+      setLimiteGastos(response.data.limite.Valor_Limite)
+      console.log(limiteGastos);
+    })
+    .catch(error => {
+      console.error('Erro na solicitação:', error);
+    });
+
+
+  }, []);
 
 
 
