@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Cadastro from "./pages/cadastro";
 import Login from "./pages/login"
 import Home from "./pages/home"
-
+import Perfil from "./pages/perfil"
 
 const routes = [
   {
@@ -17,6 +17,10 @@ const routes = [
   {
     path:"/home",
     element: <Home/>
+  },
+  {
+    path:"/perfil",
+    element:<Perfil />,
   }
 ];
 
