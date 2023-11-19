@@ -33,7 +33,8 @@ async function geraRelatorioMensal() {
     }
 
     const dataAtual = new Date();
-    const mesAtual = 12; 
+    //const mesAtual = 2;
+    const mesAtual = dataAtual.getMonth() + 1; 
     const anoAtual = dataAtual.getFullYear(); 
 
     for (const user of usuarios) {
@@ -67,7 +68,6 @@ async function atualizaSaldo(){
       const totalRecFixa = parseFloat(totalRecFixaResult.Tot_Rec_Fixa) || 0;
 
       const atulizaFixas = totalRecFixa - totalDespFixa;
-      console.log(atulizaFixas)
 
       await aumentaSaldo(user.id, atulizaFixas);
     }
@@ -88,7 +88,8 @@ async function geraBalanco(){
     }
 
     const timer = new Date();
-    const mesAtual = 12;
+    //const mesAtual = 2;
+    const mesAtual = dataAtual.getMonth() + 1;
     const anoAtual = timer.getFullYear();
 
     for (const user of usuarios) {
