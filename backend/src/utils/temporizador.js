@@ -2,10 +2,12 @@
 const schedule = require('node-schedule');
 const database = require('../database/index');
 const { gerarRelatorioServico } = require('../core/servicos/relatorioServico');
+const { aumentaSaldo } = require('../core/servicos/saldoGeralServico')
 
 async function limparDespesas() {
   try {
     await database("Despesa_Variavel").delete();
+    await database('Usuario').update({ Desp_Var_Total: 0 });
     console.log('Despesas excluídas com sucesso!');
   } catch (error) {
     console.error('Erro ao excluir despesas:', error);
@@ -15,6 +17,7 @@ async function limparDespesas() {
 async function limparReceitas() {
     try {
       await database("Receita_Variavel").delete();
+      await database('Usuario').update({ Rec_Var_Total: 0 });
       console.log('Receitas excluídas com sucesso!');
     } catch (error) {
       console.error('Erro ao excluir receitas:', error);
@@ -30,7 +33,7 @@ async function geraRelatorioMensal() {
     }
 
     const dataAtual = new Date();
-    const mesAtual = dataAtual.getMonth() + 1; 
+    const mesAtual = 12; 
     const anoAtual = dataAtual.getFullYear(); 
 
     for (const user of usuarios) {
@@ -39,13 +42,41 @@ async function geraRelatorioMensal() {
       console.log(`Relatório gerado com sucesso: ${caminhoRelatorio}`);
     }
 
-    //limpando receitas e despesas variáveis soemnte depois do relatorios estar gerado
-    limparDespesas();
-    limparReceitas();
+    //atualizando saldo só depois que o mes é gerado
+    atualizaSaldo()
 
   } catch (error) {
     console.error('Erro ao gerar o relatório mensal:', error);
   }
+}
+
+async function atualizaSaldo(){
+  const usuarios = await database("Usuario").select("id");
+
+    if(!usuarios){
+      throw new Error("Não há usuários");
+    }
+
+    for (const user of usuarios) {
+      const [ totalDespFixaResult,  totalRecFixaResult] = await Promise.all([
+        database("Despesa_Fixa").sum("Valor as Tot_Desp_Fixa").where("id_usuario", user.id).first(),
+        database("Receita_Fixa").sum("Valor as Tot_Rec_Fixa").where("id_usuario", user.id).first(),
+      ]);
+
+      const totalDespFixa = parseFloat(totalDespFixaResult.Tot_Desp_Fixa) || 0;
+      const totalRecFixa = parseFloat(totalRecFixaResult.Tot_Rec_Fixa) || 0;
+
+      const atulizaFixas = totalRecFixa - totalDespFixa;
+      console.log(atulizaFixas)
+
+      await aumentaSaldo(user.id, atulizaFixas);
+    }
+
+    console.log(`==SALDOS ATUALIZADOS==`);
+
+      //limpando receitas e despesas variáveis soemnte depois do relatorios estar gerado
+      limparDespesas();
+      limparReceitas();
 }
 
 async function geraBalanco(){
@@ -57,7 +88,7 @@ async function geraBalanco(){
     }
 
     const timer = new Date();
-    const mesAtual = timer.getMonth() + 1;
+    const mesAtual = 12;
     const anoAtual = timer.getFullYear();
 
     for (const user of usuarios) {
@@ -101,7 +132,7 @@ async function geraBalanco(){
 
 /* 
  as funções mais a direita são chamadas na função imediatamente à esquerda 
- balanco --> relatorio --> limpar variáveis (despesas e receitas)
+ balanco --> relatorio --> atualiza saldo --> limpar variáveis (despesas e receitas)
 */
 async function viraMes(){
     schedule.scheduleJob('0 0 1 * *', geraBalanco);
