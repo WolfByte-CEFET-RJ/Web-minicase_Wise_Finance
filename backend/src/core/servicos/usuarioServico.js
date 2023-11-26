@@ -10,7 +10,7 @@ async function HashPassword(password) {
 
 function validaUpdate(nome, username) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[A-Za-z]+$/),
+    nome: Joi.string().regex(/^[A-Za-z\s]+$/),
     username: Joi.string().alphanum().min(3).max(30)
   });
 
@@ -20,7 +20,7 @@ function validaUpdate(nome, username) {
 
 function validaCadastro(nome, username, email, senha, senhaConfirmacao) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[A-Za-z]+$/).required(),
+    nome: Joi.string().regex(/^[A-Za-z\s]+$/).required(),
     username: Joi.string().alphanum().min(3).max(30).required(),
     email: Joi.string().email().required(),
     senha: Joi.string().min(4).required(),
