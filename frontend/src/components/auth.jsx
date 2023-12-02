@@ -10,11 +10,9 @@ export default function AuthProvider({ children }) {
   const [authenticated, setAuthenticated] = useState(false);
   const pageLogin = "http://localhost:3000/";
   const pageCadastro = "http://localhost:3000/cadastro";
-  
   useEffect(() => {
     const accessToken = Cookies.get("access_token");
     const url = window.location.href;
-    
     if (accessToken) {
       try {
         const decodedToken = jwtDecode(accessToken);
@@ -28,8 +26,7 @@ export default function AuthProvider({ children }) {
       window.location.href = "http://localhost:3000/";
     }
   }, [authenticated]);
- 
-  return (
+ return (
     <AuthContext.Provider value={{ userID, token }}>
       {children}
     </AuthContext.Provider>

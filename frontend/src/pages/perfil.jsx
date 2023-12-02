@@ -2,7 +2,7 @@ import React, {useState, useContext} from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useApi from "../hooks/useApi";
-import Sidebar from '../components/componentsHome/Sidebar'
+import Sidebar from '../components/sideBar'
 import { AuthContext } from "../components/auth";
 
 
@@ -22,8 +22,6 @@ const Perfil = () => {
   // const handlePasswordVerToggle = () => {
   //   setShowPasswordVer(!showPasswordVer);
   // };
-  console.log(userID);
-  console.log(token);
   const handleEditartrue = () => {
     setEditarNome(true);
     setEditarPassword(true);
@@ -34,7 +32,6 @@ const Perfil = () => {
     setEditarPassword(false);
     setEditarPasswordVer(false);
   }
-
   const handleChange = (event, setText) => {
     setText(event.target.value);
   };
@@ -48,64 +45,51 @@ const Perfil = () => {
             <h1 className="pt-3 w-[50%] h-[7%] border-2 border-green rounded-[9px] ml-auto mr-auto mt-[2%] pb-[10px] pl-[9%] font-black text-[12px]">{email}</h1>
           </div>
           <form action="" className="flex flex-col h-[100%] w-[50%] mt-[12%] mb-[12%]">
-                <div className="mb-30  ">
-                    <h1 className ="font-black text-[12px]" >Nome de Usuário:</h1>
-                    <div
-                        className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens"
-                    >
-                        {editarPassword === true ?
-                        <input
-                        id="nome"
-                        className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
-                        placeholder={userName}
-                        ></input>
-                        : <h1  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]"> {userName} </h1>
-                      }
-                      <div
-                      className="border-l border-green w-[10%] h-[34px] mt-[1.5%]"
-                      >
-                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditartrue} />
-                      </div>
-                    </div>
+            <div className="mb-30  ">
+              <h1 className ="font-black text-[12px]" >Nome de Usuário:</h1>
+                <div className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens">
+                  {editarPassword === true ?
+                  <input
+                  id="nome"
+                  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
+                  placeholder={userName}
+                  />
+                    : <h1  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]"> {userName} </h1>
+                  }
+                  <div className="border-l border-green w-[10%] h-[34px] mt-[1.5%]">
+                    <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditartrue} />
+                  </div>
                 </div>
-                <div className="mb-30  ">
-                    <h1 className ="font-black text-[12px]" >Senha:</h1>
-                    <div
-                        className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens"
-                    >
-                      {editarPassword === true ?
-                        <input
-                        id="senha"
-                        className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
-                        placeholder={pass}
-                        ></input>
-                        : <h1  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]"> {pass} </h1>
-                      }
-                      <div
-                      className="border-l border-green w-[10%] h-[34px] mt-[1.5%]"
-                      >
-                        <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditartrue} />
-                      </div>
-                    </div>
+            </div>
+            <div className="mb-30  ">
+              <h1 className ="font-black text-[12px]" >Senha:</h1>
+              <div className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens">
+                {editarPassword === true ?
+                <input
+                id="senha"
+                className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
+                placeholder={pass}
+                />
+                  : <h1  className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]"> {pass} </h1>
+                }
+                <div className="border-l border-green w-[10%] h-[34px] mt-[1.5%]">
+                  <img src="/Lapis.png" alt="" className=" w-[18px] h-[19px] ml-[10px] mt-[6px]" onClick={handleEditartrue} />
                 </div>
-                
-                
-        {editarNome === true || editarPassword === true || editarPasswordVer === true ?        
-                <div className="mb-30 ">
-                    <h1 className ="font-black text-[12px]" >Confirmar senha:</h1>
-                    <input
-                        id="nome"
-                        className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px]"
-                        placeholder={passVer}
-                    />
-                    <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Salvar</button> 
-                    <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]" onClick={handleEditarFalse}>Cancelar</button> 
-                </div> 
-                : <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Deletar</button>
-              }
-
-
-
+              </div>
+            </div>
+            {editarNome === true || editarPassword === true || editarPasswordVer === true ?        
+            <div className="mb-30 ">
+              <h1 className ="font-black text-[12px]" >Confirmar senha:</h1>
+              <input
+              id="nome"
+              className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px]"
+              placeholder={passVer}
+              />
+              <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Salvar</button> 
+              <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]" onClick={handleEditarFalse}>Cancelar</button> 
+            </div> 
+              : <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">Deletar</button>
+            }
           </form>
         </div>
       </div>

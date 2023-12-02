@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ModalReceitasFixas from "./modalAdicionarReceitasFIxas";
 import ModalReceitasVariaveis from "./modalAdicionarReceitasVariaveis";
+
 const ModalReceita = ({ Aberto, Fechado}) => {
-  const [totalReceitas, setTotalReceitas] = useState("R$4000,00");
   const [totalReceitasFixas, setTotalReceitasFixas] = useState("R$2000,00");
   const [totalReceitasVariaveis, setTotalReceitasVariaveis] = useState("R$2000,00");
   const [ReceitaFixaUm, setReceitaFixaUm] = useState("R$1000,00");

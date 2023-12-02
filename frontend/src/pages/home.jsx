@@ -1,14 +1,15 @@
 import React, {useState, useContext, useEffect} from "react";
 import {EyeSlash, Eye } from 'phosphor-react'
-import Sidebar from '../components/componentsHome/Sidebar'
+import Sidebar from '../components/sideBar'
 import ModalReceita from '../components/modais/modalReceitas'
 import ModalDespesa from '../components/modais/modalDespesas'
 import useApi from "../hooks/useApi";
 import axios from 'axios';
 import { AuthContext } from "../components/auth";
+
 const Home = () => {
   const api = useApi();
-  const { token } = useContext(AuthContext);
+  const { userID, token } = useContext(AuthContext);
   const [saldoGeral, setSaldoGeral] = useState("NÃO");
   const [balancoMensal, setBalancoMensal] = useState("")
   const [showSaldoGeral, setShowSaldoGeral] = useState(false);
