@@ -1,6 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import useApi from "../../../../hooks/useApi";
+import { AuthContext } from "../../../auth";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ModalDespesasFixas = ({ Aberto, Fechado }) => {
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [preco, setPreco] = useState("");
+  const { userID, token } = useContext(AuthContext);
+  const api = useApi();
+  const dataAtual = new Date().toISOString();
+
+  const handleChange = (event, setText) => {
+    setText(event.target.value);
+  };
+
+  function formatarDataParaEnvio(data) {
+    const dataFormatada = new Date(data);
+    const ano = dataFormatada.getFullYear();
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
+    const dia = dataFormatada.getDate().toString().padStart(2, '0');
+  
+    return `${ano}-${mes}-${dia}`;
+  }
+
+  async function handleEnvio(event) {
+    event.preventDefault();
+    const body = {
+      userId:  userID,
+      nome: nome,
+      valor: preco,
+      descricao: descricao,
+      dataPagamento: formatarDataParaEnvio(dataAtual),
+    };
+    try {
+      const response = await api.post("http://localhost:5000/despesa_fixa", body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data);
+      if (response.data.status === true) {
+        toast.success("Despesa adicionada com sucesso!");
+      } else if (response.data.status === false){
+        toast.error(response.data.message.toString())
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   if (!Aberto) return null;
   return (
     <div className="w-[100.2%] h-[100.1%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[rgba(0,0,0,0.7)]  rounded-[96px]">
@@ -19,13 +70,17 @@ const ModalDespesasFixas = ({ Aberto, Fechado }) => {
             Lembrando que essa é uma despesa fixa e se manterá todo mês
           </h1>
           <div>
-            <form className="flex flex-col items-center">
+            <form 
+              className="flex flex-col items-center"
+              onSubmit={handleEnvio}
+            >
               <div className="mb-30 mt-[20px]">
                 <h1 className="text-black">Nome despesa:</h1>
                 <input
                   id="nome"
                   className="border border-black rounded-[5px] w-[380px] h-[40px] mb-[30px] pl-[5px]"
                   placeholder="Digite o nome"
+                  onChange={(event) => handleChange(event, setNome)}
                 />
               </div>
               <div className="mb-30">
@@ -34,6 +89,7 @@ const ModalDespesasFixas = ({ Aberto, Fechado }) => {
                   id="detalhes"
                   className="border border-black rounded-[5px] w-[380px] h-[150px] mb-[30px] pl-[5px] pt-[5px]"
                   placeholder="Detalhes da despesa"
+                  onChange={(event) => handleChange(event, setDescricao)}
                 />
               </div>
               <div className="mb-30 ml-[-2%]">
@@ -43,12 +99,19 @@ const ModalDespesasFixas = ({ Aberto, Fechado }) => {
                   id="valor"
                   className="border border-black rounded-[5px] w-[380px] mb-[30px] h-[40px] pl-[5px]"
                   placeholder="Digite o valor"
+                  onChange={(event) => handleChange(event, setPreco)}
                 />
               </div>
-              <button className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]">
+              <button 
+                className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
+                type="submit"
+                >
                 Salvar
               </button>
-              <button className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]">
+              <button 
+                className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
+                onClick={Fechado}
+                >
                 Cancelar
               </button>
             </form>
