@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { EyeSlash, Eye } from "phosphor-react";
 import Sidebar from "../components/sideBar";
-import ModalReceita from "../components/modais/modalReceitas";
-import ModalDespesa from "../components/modais/modalDespesas";
+import ModalReceita from "../components/modais/modaisReceitas/modalReceitas";
+import ModalDespesa from "../components/modais/modaisDespesas/modalDespesas";
 import useApi from "../hooks/useApi";
 import axios from "axios";
 import { AuthContext } from "../components/auth";

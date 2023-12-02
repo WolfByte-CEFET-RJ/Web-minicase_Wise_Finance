@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import ModalDespesasFixas from "./modalAdicionarDespesasFIxas";
-import ModalDespesasVariaveis from "./modalAdicionarDespesasVariaveis";
+import ModalDespesasFixas from "./fixas/modalAdicionarDespesasFIxas";
+import ModalDespesasVariaveis from "./variaveis/modalAdicionarDespesasVariaveis";
 const ModalDespesa = ({ Aberto, Fechado }) => {
   const [totalDespesas, setTotalDespesas] = useState("R$4000,00");
   const [totalDespesasFixas, setTotalDespesasFixas] = useState("R$2000,00");
