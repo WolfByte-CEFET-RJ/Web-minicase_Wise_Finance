@@ -3,26 +3,43 @@ import useApi from "../../../hooks/useApi";
 import { AuthContext } from "../../auth";
 import ModalReceitasFixas from "./fixas/modalAdicionarReceitasFixas";
 import ModalReceitasVariaveis from "./variaveis/modalAdicionarReceitasVariaveis";
-import ReceitasFixasGerador from "../../modalComponent/receitas/receitaFixaGerador"
+import ReceitasFixasGerador from "../../modalComponent/receitas/receitaFixaGerador";
 
 const ModalReceita = ({ Aberto, Fechado }) => {
   const [receitasFixas, setReceitasFixas] = useState([]);
   const [receitasVariaveis, setReceitasVariaveis] = useState([]);
   const { userID, token } = useContext(AuthContext);
+  const valorTotalReceitasFixas = receitasFixas.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0);
+  const totalReceitasFixas = "R$" + valorTotalReceitasFixas
+  const valorTotalReceitasVariaveis = receitasVariaveis.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0);
+  const totalReceitasVariaveis = "R$" + valorTotalReceitasVariaveis
   const api = useApi();
 
-  const [totalReceitasFixas, setTotalReceitasFixas] = useState("R$2000,00");
-  const [totalReceitasVariaveis, setTotalReceitasVariaveis] = useState("R$2000,00");
-  
   const [estadoModalAdicionarFixas, setEstadoModalAdicionarFixas] =
     useState(false);
   const [estadoModalAdicionarVariaveis, setEstadoModalAdicionarVariaveis] =
     useState(false);
-    
-    
-    async function loadReceitas() {
+
+  const AbrirModalAdicionarFixas = () => {
+    setEstadoModalAdicionarFixas(true);
+  };
+
+  const FecharModalAdicionarFixas = () => {
+    setEstadoModalAdicionarFixas(false);
+  };
+
+  const AbrirModalAdicionarVariaveis = () => {
+    setEstadoModalAdicionarVariaveis(true);
+  };
+
+  const FecharModalAdicionarVariaveis = () => {
+    setEstadoModalAdicionarVariaveis(false);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
       try {
-        const receitasFixas = await api.get("http://localhost:5000/receita_fixa/", {
+        const receitasFixasData = await api.get("http://localhost:5000/receita_fixa/", {
           body: {
             userId: userID,
           },
@@ -30,32 +47,30 @@ const ModalReceita = ({ Aberto, Fechado }) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setReceitasFixas(receitasFixas.data);
+        setReceitasFixas(receitasFixasData.data);
+        const receitasVariaveisData = await api.get("http://localhost:5000/receita_var/", {
+          body: {
+            userId: userID,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setReceitasVariaveis(receitasVariaveisData.data);
       } catch (error) {
         console.log(error);
       }
+    };
+
+    if (Aberto) {
+      fetchData();
     }
-    
-    const AbrirModalAdicionarFixas = () => {
-      setEstadoModalAdicionarFixas(true);
-    };
-    
-    const FecharModalAdicionarFixas = () => {
-      setEstadoModalAdicionarFixas(false);
-    };
-  const AbrirModalAdicionarVariaveis = () => {
-    setEstadoModalAdicionarVariaveis(true);
-  };
-  
-  const FecharModalAdicionarVariaveis = () => {
-    setEstadoModalAdicionarVariaveis(false);
-  };
-  
-  if (!Aberto){
-    return null
-  } else{
-    loadReceitas();
+  }, [Aberto, userID, token]);
+
+  if (!Aberto) {
+    return null;
   }
+
   return (
     <div className="w-[100%] h-[100%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  rounded-[96px]">
       <div className="container-modal w-[100%] h-[80%]">
@@ -91,7 +106,6 @@ const ModalReceita = ({ Aberto, Fechado }) => {
               valor={receita.Valor}
             />
           ))}
-
           </div>
         </div>
 
@@ -110,7 +124,14 @@ const ModalReceita = ({ Aberto, Fechado }) => {
               Fechado={FecharModalAdicionarVariaveis}
             />
             <div className="w-[87%] h-[180px] overflow-auto">
-              
+            {receitasVariaveis.map((receita, i) => (
+            <ReceitasFixasGerador
+              key={receita.id}
+              id={receita.id}
+              nome={receita.Nome}
+              valor={receita.Valor}
+            />
+          ))}
             </div>
           </div>
         </div>

@@ -43,6 +43,7 @@ const ModalReceitasFixas = ({ Aberto, Fechado }) => {
       console.log(response.data);
       if (response.data.status === true) {
         toast.success("Receita adicionada com sucesso!");
+        window.location.reload();
       } else if (response.data.status === false){
         toast.error(response.data.message.toString())
       }
