@@ -4,14 +4,15 @@ import { AuthContext } from "../../auth";
 import ModalReceitasFixas from "./fixas/modalAdicionarReceitasFixas";
 import ModalReceitasVariaveis from "./variaveis/modalAdicionarReceitasVariaveis";
 import ReceitasFixasGerador from "../../modalComponent/receitas/receitaFixaGerador";
+import ReceitasVariaveisGerador from "../../modalComponent/receitas/receitaVariavelGerador";
 
 const ModalReceita = ({ Aberto, Fechado }) => {
   const [receitasFixas, setReceitasFixas] = useState([]);
   const [receitasVariaveis, setReceitasVariaveis] = useState([]);
   const { userID, token } = useContext(AuthContext);
-  const valorTotalReceitasFixas = receitasFixas.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0);
+  const valorTotalReceitasFixas = receitasFixas.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0).toFixed(2);
   const totalReceitasFixas = "R$" + valorTotalReceitasFixas
-  const valorTotalReceitasVariaveis = receitasVariaveis.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0);
+  const valorTotalReceitasVariaveis = receitasVariaveis.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0).toFixed(2);
   const totalReceitasVariaveis = "R$" + valorTotalReceitasVariaveis
   const api = useApi();
 
@@ -100,8 +101,8 @@ const ModalReceita = ({ Aberto, Fechado }) => {
           <div className="w-[87%] h-[180px] overflow-auto">
           {receitasFixas.map((receita, i) => (
             <ReceitasFixasGerador
-              key={receita.id}
-              id={receita.id}
+              key={receita.ID}
+              id={receita.ID}
               nome={receita.Nome}
               valor={receita.Valor}
             />
@@ -125,9 +126,9 @@ const ModalReceita = ({ Aberto, Fechado }) => {
             />
             <div className="w-[87%] h-[180px] overflow-auto">
             {receitasVariaveis.map((receita, i) => (
-            <ReceitasFixasGerador
-              key={receita.id}
-              id={receita.id}
+            <ReceitasVariaveisGerador
+              key={receita.ID}
+              id={receita.ID}
               nome={receita.Nome}
               valor={receita.Valor}
             />
