@@ -3,7 +3,7 @@ import useApi from "../../../hooks/useApi";
 import { AuthContext } from "../../auth";
 import ModalReceitasFixas from "./fixas/modalAdicionarReceitasFixas";
 import ModalReceitasVariaveis from "./variaveis/modalAdicionarReceitasVariaveis";
-import ReceitasFixasGerador from "../../modalComponent/gerador"
+import ReceitasFixasGerador from "../../modalComponent/receitas/receitaFixaGerador"
 
 const ModalReceita = ({ Aberto, Fechado }) => {
   const [receitasFixas, setReceitasFixas] = useState([]);
