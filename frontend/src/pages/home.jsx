@@ -84,7 +84,7 @@ const Home = () => {
 
   return (
     <div
-      className="h-screen bg-no-repeat bg-cover relative "
+      className="h-screen bg-no-repeat bg-cover relative"
       style={{ backgroundImage: "url(/Fundo.svg)" }}
     >
       {estadoModalReceitas || estadoModalDespesas ? (

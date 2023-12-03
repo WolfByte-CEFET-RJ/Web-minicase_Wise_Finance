@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function EquipeAccordion({ id, nome, valor }) {
+export default function ReceitasFixasGerador({ id, nome, valor }) {
     return(
 <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
             <span className="mr-[10%] ml-[10%]">{nome}</span>{" "}
@@ -8,7 +8,7 @@ export default function EquipeAccordion({ id, nome, valor }) {
             <div className="ml-[20%]">
               <button
                 className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black"
-                onClick={AbrirModalAdicionarFixas}
+               
               >
                 Editar
               </button>
