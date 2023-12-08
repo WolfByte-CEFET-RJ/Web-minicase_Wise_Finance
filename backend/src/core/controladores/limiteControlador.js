@@ -4,7 +4,6 @@ require('dotenv').config();
 
 async function defineLimite (req = request, res = response, next) {
     try {
-  
         const user = req.usuario.id;
         const limite = req.body.val;
         
@@ -20,9 +19,8 @@ async function defineLimite (req = request, res = response, next) {
 
 async function readLimite (req = request, res = response) {
     try {
-  
         const user = req.usuario.id;
-        
+
         const limite = await readByUsuario(user); 
 
         res.json(limite);

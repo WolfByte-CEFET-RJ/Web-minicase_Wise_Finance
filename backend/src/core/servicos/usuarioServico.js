@@ -2,7 +2,7 @@ const database = require('../../database/index');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 
-// Função para gerar um hash de senha
+// Cria hash da senha
 async function HashPassword(password) {
   const saltRounds = 10;
   return await bcrypt.hash(password, saltRounds);
@@ -174,7 +174,7 @@ async function cadastrarUsuario(nome, username, email, senha, senhaConfirmacao) 
     };
 
     const insertedUser = await database("Usuario").insert(newUser);
-    const idUser = insertedUser[0]; // Assume que o retorno inclui o ID inserido
+    const idUser = insertedUser[0]; // Referencia ao usuario novo
 
     //DEFINE LIMITE
     const data = new Date();
