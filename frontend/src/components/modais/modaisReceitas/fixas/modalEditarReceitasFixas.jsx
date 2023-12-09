@@ -53,7 +53,7 @@ const ModalReceitasFixas = ({ idReceita, Aberto, Fechado }) => {
     event.preventDefault();
     const body = {
       userId:  userID,
-      receitaFixaId: idReceita,
+      receitaId: idReceita,
       nome: nome,
       valor: preco,
       descricao: descricao,
