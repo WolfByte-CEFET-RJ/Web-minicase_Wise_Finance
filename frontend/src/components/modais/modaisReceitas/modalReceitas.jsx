@@ -98,7 +98,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
             Aberto={estadoModalAdicionarFixas}
             Fechado={FecharModalAdicionarFixas}
           />
-          <div className="w-[87%] h-[180px] overflow-auto">
+          <div className="w-[87%] h-[180px] overflow-auto mt-[10px]">
           {receitasFixas.map((receita, i) => (
             <ReceitasFixasGerador
               key={receita.ID}
@@ -124,7 +124,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
               Aberto={estadoModalAdicionarVariaveis}
               Fechado={FecharModalAdicionarVariaveis}
             />
-            <div className="w-[87%] h-[180px] overflow-auto">
+            <div className="w-[87%] h-[180px] overflow-auto mt-[10px]">
             {receitasVariaveis.map((receita, i) => (
             <ReceitasVariaveisGerador
               key={receita.ID}
