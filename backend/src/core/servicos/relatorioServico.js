@@ -57,36 +57,44 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   doc.moveDown();
   doc.text('Despesas Fixas:');
   doc.moveDown();
+  var qtDespesasFixas = 0;
   despesasFixas.forEach((despesa) => {
+    qtDespesasFixas++;
     doc.fontSize(12);
-    doc.text(` ${despesa.ID}      ${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.text(` ${qtDespesasFixas}      ${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text('Despesas Variáveis:');
   doc.moveDown();
+  var qtDespesasVariaveis = 0;
   despesasVariaveis.forEach((despesa) => {
+    qtDespesasVariaveis++;
     doc.fontSize(12);
-    doc.text(` ${despesa.ID}      ${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.text(` ${qtDespesasVariaveis}      ${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text('Receitas Fixas:');
   doc.moveDown();
+  var qtReceitasFixas = 0;
   receitasFixas.forEach((receita) => {
+    qtReceitasFixas++;
     doc.fontSize(12);
-    doc.text(` ${receita.ID}      ${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.text(` ${qtReceitasFixas}      ${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text('Receitas Variáveis:');
   doc.moveDown();
+  var qtReceitasVariaveis = 0;
   receitasVariaveis.forEach((receita) => {
+    qtReceitasVariaveis++;
     doc.fontSize(12);
-    doc.text(` ${receita.ID}      ${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.text(` ${qtReceitasVariaveis}      ${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
