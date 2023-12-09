@@ -95,7 +95,7 @@ const max = 30000;
 
         <div className="text-[30px] mt-[2%] ml-[10%] font-black text-green">
           Despesas Fixas:
-          <span className="text-[black] ">{totalDespesasFixas}</span>
+          <span className="text-[green] ">{totalDespesasFixas}</span>
           <button
             className="  ml-[38.5%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
             onClick={AbrirModalAdicionarFixas}
@@ -121,7 +121,7 @@ const max = 30000;
         <div className="border-green border-t-2 w-[80%] ml-[10%] mt-[2%] ">
           <div className="text-[30px] mt-[3%] ml-[0%] font-black text-green">
             Despesas Variaveis:
-            <span className="text-[black] ">{totalDespesasVariaveis}</span>
+            <span className="text-[green] ">{totalDespesasVariaveis}</span>
             <button
               className="  ml-[25%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
               onClick={AbrirModalAdicionarVariaveis}
@@ -133,7 +133,7 @@ const max = 30000;
             Fechado={FecharModalAdicionarVariaveis}
           />
           <div className="w-[87%] h-[100px] overflow-auto mt-[10px]">
-          {despesasFixas.map((despesa, i) => (
+          {despesasVariaveis.map((despesa, i) => (
             <DespesasVariaveisGerador
               key={despesa.ID}
               id={despesa.ID}

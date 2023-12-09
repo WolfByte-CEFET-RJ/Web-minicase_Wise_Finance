@@ -87,7 +87,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
 
         <div className="text-[30px] mt-[2%] ml-[10%] font-black text-green">
           Receitas Fixas:
-          <span className="text-[#156808] ">{totalReceitasFixas}</span>
+          <span className="text-[green] ">{totalReceitasFixas}</span>
           <button
             className="  ml-[30%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
             onClick={AbrirModalAdicionarFixas}
@@ -113,7 +113,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
         <div className="border-green border-t-2 w-[80%] ml-[10%] mt-[2%] ">
           <div className="text-[30px] mt-[3%] ml-[0%] font-black text-green">
             Receitas Variaveis:
-            <span className="text-[#156808] ">{totalReceitasVariaveis}</span>
+            <span className="text-[green] ">{totalReceitasVariaveis}</span>
             <button
               className="  ml-[28%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
               onClick={AbrirModalAdicionarVariaveis}
