@@ -61,6 +61,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.moveDown();
   doc.fontSize(20);
   doc.text('Despesas Variáveis:');
   despesasVariaveis.forEach((despesa) => {
@@ -68,6 +69,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.moveDown();
   doc.fontSize(20);
   doc.text('Receitas Fixas:');
   receitasFixas.forEach((receita) => {
@@ -75,6 +77,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.moveDown();
   doc.fontSize(20);
   doc.text('Receitas Variáveis:');
   receitasVariaveis.forEach((receita) => {
@@ -82,6 +85,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
     doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.moveDown();
   doc.fontSize(20);
   doc.text(`Balanço Mensal: R$ ${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
 
