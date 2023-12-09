@@ -56,39 +56,42 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   doc.text(`Saldo Geral: R$ ${parseFloat(usuario.Saldo_Geral).toFixed(2)}`);
   doc.moveDown();
   doc.text('Despesas Fixas:');
+  doc.moveDown();
   despesasFixas.forEach((despesa) => {
     doc.fontSize(12);
-    doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.text(` ${despesa.ID}      ${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text('Despesas Variáveis:');
+  doc.moveDown();
   despesasVariaveis.forEach((despesa) => {
     doc.fontSize(12);
-    doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.text(` ${despesa.ID}      ${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text('Receitas Fixas:');
+  doc.moveDown();
   receitasFixas.forEach((receita) => {
     doc.fontSize(12);
-    doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.text(` ${receita.ID}      ${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text('Receitas Variáveis:');
+  doc.moveDown();
   receitasVariaveis.forEach((receita) => {
     doc.fontSize(12);
-    doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.text(` ${receita.ID}      ${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
   doc.moveDown();
   doc.fontSize(20);
   doc.text(`Balanço Mensal: R$ ${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
-
   // Finalizando PDF
   doc.end();
 
