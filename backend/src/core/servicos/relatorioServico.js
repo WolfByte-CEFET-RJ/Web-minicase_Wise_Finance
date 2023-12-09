@@ -5,7 +5,10 @@ const database = require('../../database/index');
 
 async function gerarRelatorioServico(id_user, mes, ano) {
   const doc = new PDFDocument();
-  doc.fontSize(12);
+  const fontPath = path.join(__dirname, 'Relatorio', 'Merriweather-Italic.ttf');
+  doc.font(fontPath);
+  doc.fontSize(20);
+
 
   const usuario = await database('Usuario').select('*').where('ID', id_user).first();
 
@@ -39,28 +42,40 @@ async function gerarRelatorioServico(id_user, mes, ano) {
 
   // Criando PDF
   doc.pipe(fs.createWriteStream(outputFilePath));
-  
+  doc.rect(45, 110, 520, 1).stroke(); 
+  doc.moveDown();
+  doc.moveDown();
+  const imagePath = path.join(__dirname,'Relatorio','ImagemRelatorio.png'); 
+  doc.image(imagePath, 285, 30, { width: 50, height: 50 });
+  doc.moveDown();
   // Adicionando informações ao PDF
   doc.text('Relatório Mensal de Finanças Pessoais', { align: 'center' });
+  doc.moveDown();
   doc.text(`Usuário: ${usuario.Nome}`);
-  doc.text(`Saldo Geral: $${parseFloat(usuario.Saldo_Geral).toFixed(2)}`);
+  doc.moveDown();
+  doc.text(`Saldo Geral: R$ ${parseFloat(usuario.Saldo_Geral).toFixed(2)}`);
+  doc.moveDown();
   doc.text('Despesas Fixas:');
   despesasFixas.forEach((despesa) => {
-    doc.text(`${despesa.Nome}: $${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.moveDown();
   });
   doc.text('Despesas Variáveis:');
   despesasVariaveis.forEach((despesa) => {
-    doc.text(`${despesa.Nome}: $${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
+    doc.moveDown();
   });
   doc.text('Receitas Fixas:');
   receitasFixas.forEach((receita) => {
-    doc.text(`${receita.Nome}: $${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.moveDown();
   });
   doc.text('Receitas Variáveis:');
   receitasVariaveis.forEach((receita) => {
-    doc.text(`${receita.Nome}: $${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
+    doc.moveDown();
   });
-  doc.text(`Balanço Mensal: $${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
+  doc.text(`Balanço Mensal: R$ ${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
 
   // Finalizando PDF
   doc.end();

@@ -33,8 +33,8 @@ async function geraRelatorioMensal() {
     }
 
     const dataAtual = new Date();
-    //const mesAtual = 2;
-    const mesAtual = dataAtual.getMonth() + 1; 
+    const mesAtual = 12;
+    //const mesAtual = dataAtual.getMonth() + 1; 
     const anoAtual = dataAtual.getFullYear(); 
 
     for (const user of usuarios) {
@@ -88,8 +88,8 @@ async function geraBalanco(){
     }
 
     const timer = new Date();
-    //const mesAtual = 2;
-    const mesAtual = dataAtual.getMonth() + 1;
+    const mesAtual = 12;
+    //const mesAtual = dataAtual.getMonth() + 1;
     const anoAtual = timer.getFullYear();
 
     for (const user of usuarios) {
@@ -136,8 +136,8 @@ async function geraBalanco(){
  balanco --> relatorio --> atualiza saldo --> limpar variáveis (despesas e receitas)
 */
 async function viraMes(){
-    schedule.scheduleJob('0 0 1 * *', geraBalanco);
-    //schedule.scheduleJob(new Date(Date.now() + 100), geraBalanco);
+    //schedule.scheduleJob('0 0 1 * *', geraBalanco);
+    schedule.scheduleJob(new Date(Date.now() + 100), geraBalanco);
 }
 
 module.exports = {
