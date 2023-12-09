@@ -57,24 +57,32 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   doc.moveDown();
   doc.text('Despesas Fixas:');
   despesasFixas.forEach((despesa) => {
+    doc.fontSize(12);
     doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.fontSize(20);
   doc.text('Despesas Variáveis:');
   despesasVariaveis.forEach((despesa) => {
+    doc.fontSize(12);
     doc.text(`${despesa.Nome}: R$ ${parseFloat(despesa.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.fontSize(20);
   doc.text('Receitas Fixas:');
   receitasFixas.forEach((receita) => {
+    doc.fontSize(12);
     doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.fontSize(20);
   doc.text('Receitas Variáveis:');
   receitasVariaveis.forEach((receita) => {
+    doc.fontSize(12);
     doc.text(`${receita.Nome}: R$ ${parseFloat(receita.Valor).toFixed(2)}`);
     doc.moveDown();
   });
+  doc.fontSize(20);
   doc.text(`Balanço Mensal: R$ ${parseFloat(balancoMensal.Valor_Balanco).toFixed(2)}`);
 
   // Finalizando PDF
