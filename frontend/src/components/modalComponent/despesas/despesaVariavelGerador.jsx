@@ -30,7 +30,6 @@ export default function DespesasVariaveisGerador({ id, nome, valor }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       if (response.data.status === true) {
         toast.success("Despesa Variável deletada com sucesso!");
       } else if (response.data.status === false){

@@ -30,7 +30,6 @@ export default function DespesasFixasGerador({ id, nome, valor }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       if (response.data.status === true) {
         toast.success("Despesa Fixa deletada com sucesso!");
       } else if (response.data.status === false){

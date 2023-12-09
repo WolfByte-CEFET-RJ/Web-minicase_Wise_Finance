@@ -40,7 +40,6 @@ const ModalDespesasFixas = ({ Aberto, Fechado }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       if (response.data.status === true) {
         toast.success("Despesa Fixa adicionada com sucesso!");
         Fechado();

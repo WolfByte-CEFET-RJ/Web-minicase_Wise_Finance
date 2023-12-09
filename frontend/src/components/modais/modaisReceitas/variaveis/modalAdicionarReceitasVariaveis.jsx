@@ -40,7 +40,6 @@ const ModalReceitasVariaveis = ({ Aberto, Fechado }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       if (response.data.status === true) {
         toast.success("Receita Variável adicionada com sucesso!");
         Fechado();

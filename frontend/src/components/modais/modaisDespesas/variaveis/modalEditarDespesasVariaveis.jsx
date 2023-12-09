@@ -65,7 +65,6 @@ const ModalDespesasVariaveis = ({ idDespesa, Aberto, Fechado }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       if (response.data.status === true) {
         toast.success("Despesa Variável alterada com sucesso!");
         Fechado();

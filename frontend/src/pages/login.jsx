@@ -25,7 +25,6 @@ const Login = () => {
     };
     try {
       const response = await api.post("http://localhost:5000/login", user);
-      console.log(response.data);
       if (response.data.success === false) {
         toast.error("Falha ao realizar o login!");
       }

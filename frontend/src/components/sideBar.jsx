@@ -27,7 +27,6 @@ const Sidebar = () => {
           },
         },
       );
-      console.log(response.data);
       if (response.data.status === false) {
         toast.error("Ocorreu um erro ao realizar o logout");
       } else if (response.data.status === true) {
