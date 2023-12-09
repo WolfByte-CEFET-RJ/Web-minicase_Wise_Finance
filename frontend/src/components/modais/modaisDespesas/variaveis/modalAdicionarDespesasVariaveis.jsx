@@ -42,7 +42,8 @@ const ModalDespesasVariaveis = ({ Aberto, Fechado }) => {
       });
       console.log(response.data);
       if (response.data.status === true) {
-        toast.success("Despesa adicionada com sucesso!");
+        toast.success("Despesa Variável adicionada com sucesso!");
+        Fechado();
       } else if (response.data.status === false){
         toast.error(response.data.message.toString())
       }

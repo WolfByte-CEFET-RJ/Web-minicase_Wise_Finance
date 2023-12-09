@@ -32,8 +32,7 @@ export default function ReceitasFixasGerador({ id, nome, valor }) {
       });
       console.log(response.data);
       if (response.data.status === true) {
-        toast.success("Receita deletada com sucesso!");
-        window.location.reload();
+        toast.success("Receita Fixa deletada com sucesso!");
       } else if (response.data.status === false){
         toast.error(response.data.message.toString())
       }

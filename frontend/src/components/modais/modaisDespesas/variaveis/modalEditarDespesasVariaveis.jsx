@@ -67,8 +67,8 @@ const ModalDespesasVariaveis = ({ idDespesa, Aberto, Fechado }) => {
       });
       console.log(response.data);
       if (response.data.status === true) {
-        toast.success("Despesa alterada com sucesso!");
-        window.location.reload();
+        toast.success("Despesa Variável alterada com sucesso!");
+        Fechado();
       } else if (response.data.status === false){
         toast.error(response.data.message.toString())
       }
