@@ -66,7 +66,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
     if (Aberto) {
       fetchData();
     }
-  }, [Aberto, userID, token]);
+  }, [Aberto, api, userID, token]);
 
   if (!Aberto) {
     return null;
