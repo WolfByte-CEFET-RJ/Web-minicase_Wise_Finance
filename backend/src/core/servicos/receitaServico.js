@@ -3,7 +3,7 @@ const Joi = require('joi');
 
 function validaReceita(nome, valor, descricao, dataPagamento) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[a-zA-Z0-9\s]+$/).required(),
+    nome: Joi.string().required(),
     valor: Joi.number().positive().required(),
     descricao: Joi.string().required(),
     dataPagamento: Joi.date().iso().required(),

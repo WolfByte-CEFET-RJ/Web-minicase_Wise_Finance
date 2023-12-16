@@ -10,8 +10,8 @@ async function HashPassword(password) {
 
 function validaUpdate(nome, username, senha, senhaConfirmacao) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[A-Za-z\s]+$/),
-    username: Joi.string().alphanum().min(3).max(30),
+    nome: Joi.string(),
+    username: Joi.string().min(3).max(30),
     senha: Joi.string().min(4),
     senhaConfirmacao: Joi.string().valid(Joi.ref('senha')),
   });
@@ -22,8 +22,8 @@ function validaUpdate(nome, username, senha, senhaConfirmacao) {
 
 function validaCadastro(nome, username, email, senha, senhaConfirmacao) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[A-Za-z\s]+$/).required(),
-    username: Joi.string().alphanum().min(3).max(30).required(),
+    nome: Joi.string().required(),
+    username: Joi.string().min(3).max(30).required(),
     email: Joi.string().email().required(),
     senha: Joi.string().min(4).required(),
     senhaConfirmacao: Joi.string().valid(Joi.ref('senha')).required(),
@@ -44,12 +44,19 @@ async function update(id, nome, username, senha, senhaConfirmacao) {
       throw new Error("Usuário não encontrado!");
     }
 
-    const userUsername = await database("Usuario")
-      .select("*")
-      .where({ Username: username })
-      .first();
-    if (userUsername) {
-      throw new Error("Username indisponível!");
+    if(username){
+      const userUsername = await database("Usuario")
+        .select("*")
+        .where({ Username: username })
+        .first();
+      if (userUsername) {
+        throw new Error("Username indisponível!");
+      }
+    }
+
+    let camposSenha = senha ? (senhaConfirmacao ? false : true ) : false; 
+    if(camposSenha){
+      throw new Error("Os campos se senha precisam ser ou ambos ou nenhum preenchido");
     }
 
     const { error } = validaUpdate(nome, username, senha, senhaConfirmacao);
