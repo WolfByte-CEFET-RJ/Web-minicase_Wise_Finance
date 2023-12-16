@@ -8,7 +8,7 @@ async function HashPassword(password) {
   return await bcrypt.hash(password, saltRounds);
 }
 
-async function validaUpdate(nome, username, senha, senhaConfirmacao) {
+function validaUpdate(nome, username, senha, senhaConfirmacao) {
   const schema = Joi.object({
     nome: Joi.string().regex(/^[A-Za-z\s]+$/),
     username: Joi.string().alphanum().min(3).max(30),
@@ -59,10 +59,6 @@ async function update(id, nome, username, senha, senhaConfirmacao) {
         status: false,
         message: customErrors,
       };
-    }
-
-    if (senha !== senhaConfirmacao) {
-      throw new Error("A senha de confirmação é diferente da senha fornecida inicialmente!");
     }
 
     const updatedUser = {
