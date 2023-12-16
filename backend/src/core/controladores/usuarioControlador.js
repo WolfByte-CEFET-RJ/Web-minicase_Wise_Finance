@@ -6,13 +6,17 @@ async function updateControlador (req = request, res = response) {
     const updateId = req.usuario.id;
     const {
       nome, 
-      username
+      username,
+      senha,
+      senhaConfirmacao
     } = req.body;
 
     let updateService = await update(
       updateId,
       nome,
-      username
+      username,
+      senha, 
+      senhaConfirmacao
     );
     
     res.json(updateService);

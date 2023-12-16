@@ -8,13 +8,15 @@ async function HashPassword(password) {
   return await bcrypt.hash(password, saltRounds);
 }
 
-function validaUpdate(nome, username) {
+async function validaUpdate(nome, username, senha, senhaConfirmacao) {
   const schema = Joi.object({
     nome: Joi.string().regex(/^[A-Za-z\s]+$/),
-    username: Joi.string().alphanum().min(3).max(30)
+    username: Joi.string().alphanum().min(3).max(30),
+    senha: Joi.string().min(4),
+    senhaConfirmacao: Joi.string().valid(Joi.ref('senha')),
   });
 
-  const usuario = { nome, username };
+  const usuario = { nome, username, senha, senhaConfirmacao };
   return schema.validate(usuario, { abortEarly: false });
 }
 
@@ -31,7 +33,7 @@ function validaCadastro(nome, username, email, senha, senhaConfirmacao) {
   return schema.validate(usuario, { abortEarly: false });
 }
 
-async function update(id, nome, username) {
+async function update(id, nome, username, senha, senhaConfirmacao) {
   try {
     const usuario = await database("usuario")
       .select("*")
@@ -50,7 +52,7 @@ async function update(id, nome, username) {
       throw new Error("Username indisponível!");
     }
 
-    const { error } = validaUpdate(nome, username);
+    const { error } = validaUpdate(nome, username, senha, senhaConfirmacao);
     if (error) {
       const customErrors = error.details.map(err => err.message);
       return {
@@ -59,10 +61,15 @@ async function update(id, nome, username) {
       };
     }
 
+    if (senha !== senhaConfirmacao) {
+      throw new Error("A senha de confirmação é diferente da senha fornecida inicialmente!");
+    }
+
     const updatedUser = {
       nome: nome,
-      username: username
-    }
+      username: username,
+      Senha: await HashPassword(senha), // Hash da nova senha
+    };
 
     await database("usuario")
       .update(updatedUser)
