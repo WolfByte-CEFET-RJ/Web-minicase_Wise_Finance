@@ -51,6 +51,7 @@ async function gerarRelatorioServico(id_user, mes, ano) {
   // Adicionando informações ao PDF
   doc.text('Relatório Mensal de Finanças Pessoais', { align: 'center' });
   doc.moveDown();
+  doc.moveDown();
   doc.text(`Usuário: ${usuario.Nome}`);
   doc.moveDown();
   doc.text(`Saldo Geral: R$ ${parseFloat(usuario.Saldo_Geral).toFixed(2)}`);

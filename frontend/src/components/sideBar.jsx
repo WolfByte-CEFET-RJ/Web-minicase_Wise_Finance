@@ -6,8 +6,12 @@ import useApi from "../hooks/useApi";
 import { AuthContext } from "./auth";
 
 const Sidebar = () => {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
+  const currentYear = currentDate.getFullYear();
   const { token } = useContext(AuthContext);
   const [expandir, setExpandir] = useState(false);
+  const [urlRelatorio, setUrlRelatorio] = useState("");
   const navigate = useNavigate();
   const api = useApi();
   const handleMouseEnter = () => {
@@ -38,20 +42,20 @@ const Sidebar = () => {
       toast.error("Falha ao realizar o logout");
     }
   }
+ 
+
+
+
   async function gerarRelatorio() {
     try {
-      const currentDate = new Date();
-      const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-      const currentYear = currentDate.getFullYear();
-      // console.log("Mês:", currentMonth);
-      // console.log("Ano:", currentYear);
-      const response = await api.get(`http://localhost:5000/relatorio`, {
+      const response = await api.get(`http://localhost:5000/relatorio/${currentMonth}/${currentYear}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      // console.log("Resposta da API:", response.data);
-      // window.open(response.data.link, "_blank");
+      console.log("Resposta da API:", response.data);
+      setUrlRelatorio(response.data.Link_Relatorio);
+      
     } catch (error) {
       console.error(error);
       toast.error("Falha ao baixar relatório");
