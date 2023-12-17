@@ -9,17 +9,20 @@ import { AuthContext } from "../components/auth";
 
 const Home = () => {
   const api = useApi();
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1;
+  const currentYear = currentDate.getFullYear();
   const { userID, token } = useContext(AuthContext);
-  const [saldoGeral, setSaldoGeral] = useState("NÃO");
+  const [saldoGeral, setSaldoGeral] = useState("");
   const [balancoMensal, setBalancoMensal] = useState("");
   const [showSaldoGeral, setShowSaldoGeral] = useState(false);
   const [totalDespesas, setTotalDespesas] = useState("");
   const [totalReceitas, setTotalReceitas] = useState("");
   const [limiteGastos, setLimiteGastos] = useState("");
-  const [despesasFixas, setDespesasFixas] = useState("NÃO");
-  const [despesasVariaveis, setDespesasVariaveis] = useState("NÃO");
-  const [receitasFixas, setReceitasFixas] = useState("NÃO");
-  const [receitasVariaveis, setReceitasVariaveis] = useState("NÃO");
+  const [despesasFixas, setDespesasFixas] = useState("");
+  const [despesasVariaveis, setDespesasVariaveis] = useState("");
+  const [receitasFixas, setReceitasFixas] = useState("");
+  const [receitasVariaveis, setReceitasVariaveis] = useState("");
 
   const [estadoModalReceitas, setEstadoModalReceitas] = useState(false);
   const [estadoModalDespesas, setEstadoModalDespesas] = useState(false);
@@ -42,45 +45,63 @@ const Home = () => {
   };
 
   useEffect(() => {
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1; // Months are zero-based, so add 1
-    const currentYear = currentDate.getFullYear();
-
-    // Exemplo de solicitação usando axios
-    api
-      .get(
-        `http://localhost:5000/balanco_mensal/${currentMonth}/${currentYear}`,
-        {
+    const fetchUsuario = async () => {
+      try {
+        const response = await api.get("http://localhost:5000/usuario", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        },
-      )
-      .then((response) => {
-        console.log("Dados recebidos:", response.data);
+        });
+        console.log("Dados Usuario:", response.data);
+        setSaldoGeral(response.data.usuario.Saldo_Geral);
+        setDespesasFixas(response.data.usuario.Desp_Fixa_Total);
+        setDespesasVariaveis(response.data.usuario.Desp_Var_Total);
+        setReceitasVariaveis(response.data.usuario.Rec_Var_Total);
+        setReceitasFixas(response.data.usuario.Rec_Fixa_Total);
+      } catch (error) {
+        console.error("Erro na solicitação:", error);
+      }
+    };
+    const fetchBalancoMensal = async () => {
+      try {
+        const response = await api.get(
+          `http://localhost:5000/balanco_mensal/${currentMonth}/${currentYear}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        console.log("Dados Balanço Mensal:", response.data);
         setBalancoMensal(response.data.balanco.Valor_Balanco);
         setTotalDespesas(response.data.balanco.Total_Despesas);
         setTotalReceitas(response.data.balanco.Total_Receitas);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Erro na solicitação:", error);
-      });
+      }
+    };
 
-    api
-      .get("http://localhost:5000/limite_mensal", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        console.log("Dados recebidos2:", response.data);
+    const fetchLimiteMensal = async () => {
+      try {
+        const response = await api.get("http://localhost:5000/limite_mensal", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log("Dados Limite gastos:", response.data);
         setLimiteGastos(response.data.limite.Valor_Limite);
-        console.log(limiteGastos);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Erro na solicitação:", error);
-      });
-  }, []);
+      }
+    };
+    
+
+    fetchUsuario();
+    fetchBalancoMensal();
+    fetchLimiteMensal();
+  }, [api, token]);
 
   return (
     <div
