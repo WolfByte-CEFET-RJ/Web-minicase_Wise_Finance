@@ -3,17 +3,20 @@ const { cadastrarUsuario, deletarUsuario, readOne, update } = require('../servic
 
 async function updateControlador (req = request, res = response) {
   try {
-
     const updateId = req.usuario.id;
     const {
       nome, 
-      username
+      username,
+      senha,
+      senhaConfirmacao
     } = req.body;
 
     let updateService = await update(
       updateId,
       nome,
-      username
+      username,
+      senha, 
+      senhaConfirmacao
     );
     
     res.json(updateService);
@@ -41,7 +44,6 @@ async function deleteControlador(req = request, res = response) {
   const deleteId = req.usuario.id;
   
   try {
-
     const deleteServiceResponse = await deletarUsuario(deleteId);
     
     if (deleteServiceResponse.status) {

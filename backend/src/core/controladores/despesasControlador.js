@@ -199,7 +199,6 @@ async function deleteDespesaVar(req, res) {
 }
 
 module.exports = {
-
   //DESPESA FIXA
   createDespesaFixa,
   getAllDespesasFixas_Usuario,

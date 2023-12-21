@@ -2,7 +2,6 @@ const {getTaxaDolarServico, getTaxaEuroServico} = require("../servicos/taxaServi
 
 async function getTaxaDolar(req, res){
     try {
-        
         const cotacaoDolar = await getTaxaDolarServico();
         res.json(cotacaoDolar);
 
@@ -16,7 +15,6 @@ async function getTaxaDolar(req, res){
 
 async function getTaxaEuro(req, res){
     try {
-        
         const cotacaoEuro = await getTaxaEuroServico();
         res.json(cotacaoEuro);
 

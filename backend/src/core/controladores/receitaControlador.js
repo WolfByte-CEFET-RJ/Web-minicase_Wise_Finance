@@ -5,7 +5,6 @@ const { createReceitaFixaServico, updateReceitaFixaServico, deleteReceitaFixaSer
 const { aumentaSaldo, diminuiSaldo } = require('../servicos/saldoGeralServico');
 
 //RECEITAS FIXAS
-
 async function createReceitaFixa(req, res) {
   const userId = req.usuario.id;
   const {
@@ -98,7 +97,6 @@ async function deleteReceitaFixa(req, res) {
 }
 
 //RECEITAS VARIÁVEIS
-
 async function createReceitaVar(req, res) {
     const userId = req.usuario.id;
     const {
@@ -194,7 +192,6 @@ async function deleteReceitaVar(req, res) {
 }
 
 module.exports = {
-  
     //RECEITA FIXA    
     createReceitaFixa,
     getAllReceitaFixa_Usuario,
@@ -207,6 +204,5 @@ module.exports = {
     getAllReceitaVar_Usuario,
     getReceitaVarById,
     updateReceitaVar,
-    deleteReceitaVar
-    
+    deleteReceitaVar  
 };
