@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect  } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useApi from "../hooks/useApi";
@@ -11,20 +11,22 @@ const Perfil = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
-  const [pass, setPass] = useState("123");
-  const [passVer, setPassVer] = useState("123");
+  const [pass, setPass] = useState(null);
+  const [passVer, setPassVer] = useState(null);
   const [editarNome, setEditarNome] = useState(false);
   const [editarPassword, setEditarPassword] = useState(false);
-  const [editarPasswordVer, setEditarPasswordVer] = useState(false);
+
+  const handleEditarNometrue = () => {
+    setEditarNome(true);
+  };
   const handleEditartrue = () => {
     setEditarNome(true);
     setEditarPassword(true);
-    setEditarPasswordVer(true);
   };
+
   const handleEditarFalse = () => {
     setEditarNome(false);
     setEditarPassword(false);
-    setEditarPasswordVer(false);
   };
   const handleChange = (event, setText) => {
     setText(event.target.value);
@@ -43,37 +45,39 @@ const Perfil = () => {
         console.log("Dados Usuario:", response.data);
         setName(response.data.usuario.Nome);
         setEmail(response.data.usuario.Email);
-        setUserName(response.data.usuario.Username);       
+        setUserName(response.data.usuario.Username);
       } catch (error) {
         console.error("Erro na solicitação:", error);
       }
     };
-   
+
     fetchUsuario();
   }, [api, token]);
 
   async function handleEnvio(event) {
     event.preventDefault();
-    
+    const body = {
+      updateId: userID,
+      nome: name,
+      username: userName,
+      senha: pass,
+      senhaConfirmacao: passVer,
+    };
     try {
-      const response = await api.patch("http://localhost:5000/usuario");
-      if (response.data.success === false) {
-        toast.error("Falha ao realizar o login!");
-      }
-      if (response.data.message === "Usuário não encontrado") {
-        toast.error("Usuário não encontrado!");
-      } else if (response.data.message === "Senha inválida") {
-        toast.error("Senha inválida!");
-      } else if (response.data.success === true) {
-        toast.success("Login realizado com sucesso!");
-        // navigate("/home");
+      const response = await api.patch(`http://localhost:5000/usuario`, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.status === true) {
+        toast.success("Usuario alterado com sucesso!");
+      } else if (response.data.status === false) {
+        toast.error(response.data.message.toString());
       }
     } catch (error) {
       console.log(error);
-      toast.error("Falha ao realizar o login!");
     }
   }
-
 
   return (
     <div
@@ -104,7 +108,7 @@ const Perfil = () => {
             <div className="mb-30  ">
               <h1 className="font-black text-[12px]">Nome completo:</h1>
               <div className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens">
-                {editarPassword === true ? (
+                {editarNome === true ? (
                   <input
                     id="nome"
                     className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
@@ -112,9 +116,8 @@ const Perfil = () => {
                     onChange={(event) => handleChange(event, setName)}
                   />
                 ) : (
-                  <h1 className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
-                    {" "}
-                    {name}{" "}
+                  <h1 className="text-[#A9A9AC] w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
+                    {name}
                   </h1>
                 )}
                 <div className="border-l border-green w-[10%] h-[34px] mt-[1.5%]">
@@ -122,7 +125,7 @@ const Perfil = () => {
                     src="/Lapis.png"
                     alt=""
                     className=" w-[18px] h-[19px] ml-[10px] mt-[6px]"
-                    onClick={handleEditartrue}
+                    onClick={handleEditarNometrue}
                   />
                 </div>
               </div>
@@ -130,7 +133,7 @@ const Perfil = () => {
             <div className="mb-30  ">
               <h1 className="font-black text-[12px]">Nome de Usuário:</h1>
               <div className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px] flex align-itens">
-                {editarPassword === true ? (
+                {editarNome === true ? (
                   <input
                     id="nome"
                     className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
@@ -138,9 +141,8 @@ const Perfil = () => {
                     onChange={(event) => handleChange(event, setUserName)}
                   />
                 ) : (
-                  <h1 className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
-                    {" "}
-                    {userName}{" "}
+                  <h1 className="text-[#A9A9AC] w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
+                    {userName}
                   </h1>
                 )}
                 <div className="border-l border-green w-[10%] h-[34px] mt-[1.5%]">
@@ -148,7 +150,7 @@ const Perfil = () => {
                     src="/Lapis.png"
                     alt=""
                     className=" w-[18px] h-[19px] ml-[10px] mt-[6px]"
-                    onClick={handleEditartrue}
+                    onClick={handleEditarNometrue}
                   />
                 </div>
               </div>
@@ -160,13 +162,11 @@ const Perfil = () => {
                   <input
                     id="senha"
                     className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
-                    placeholder={pass}
                     onChange={(event) => handleChange(event, setPass)}
                   />
                 ) : (
-                  <h1 className="w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
-                    {" "}
-                    {pass}{" "}
+                  <h1 className="text-[#A9A9AC] w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
+                    ********
                   </h1>
                 )}
                 <div className="border-l border-green w-[10%] h-[34px] mt-[1.5%]">
@@ -179,26 +179,28 @@ const Perfil = () => {
                 </div>
               </div>
             </div>
-            {editarNome === true ||
-            editarPassword === true ||
-            editarPasswordVer === true ? (
-              <div className="mb-30 ">
-                <h1 className="font-black text-[12px]">Confirmar senha:</h1>
-                <input
-                  id="nome"
-                  className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px]"
-                  placeholder={passVer}
-                  onChange={(event) => handleChange(event, setPassVer)}
-                />
-                <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]"
-                type="submit"
+            {editarNome === true || editarPassword === true ? (
+              <div className="mb-30">
+                {editarPassword === true ? (
+                  <div>
+                    <h1 className="font-black text-[12px]">Confirmar senha:</h1>
+                    <input
+                      id="nome"
+                      className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px]"
+                      placeholder={passVer}
+                      onChange={(event) => handleChange(event, setPassVer)}
+                    />
+                  </div>
+                ) : null}
+                <button
+                  className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]"
+                  type="submit"
                 >
                   Salvar
                 </button>
                 <button
                   className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]"
                   onClick={handleEditarFalse}
-
                 >
                   Cancelar
                 </button>
@@ -215,3 +217,4 @@ const Perfil = () => {
     </div>
   );
 };
+export default Perfil;

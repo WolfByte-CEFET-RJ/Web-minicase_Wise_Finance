@@ -60,15 +60,18 @@ const Home = () => {
         setDespesasVariaveis(response.data.usuario.Desp_Var_Total);
         setReceitasVariaveis(response.data.usuario.Rec_Var_Total);
         setReceitasFixas(response.data.usuario.Rec_Fixa_Total);
-        setTotalDespesas(parseFloat(despesasFixas) + parseFloat(despesasVariaveis));
-        setTotalReceitas(parseFloat(receitasFixas) + parseFloat(receitasVariaveis));
-        setBalancoMensal(parseFloat(totalReceitas) -parseFloat(totalDespesas));
-        
+        setTotalDespesas(
+          parseFloat(despesasFixas) + parseFloat(despesasVariaveis),
+        );
+        setTotalReceitas(
+          parseFloat(receitasFixas) + parseFloat(receitasVariaveis),
+        );
+        setBalancoMensal(parseFloat(totalReceitas) - parseFloat(totalDespesas));
       } catch (error) {
         console.error("Erro na solicitação:", error);
       }
     };
-    
+
     const fetchLimiteMensal = async () => {
       try {
         const response = await api.get("http://localhost:5000/limite_mensal", {
@@ -83,7 +86,6 @@ const Home = () => {
         console.error("Erro na solicitação:", error);
       }
     };
-    
 
     fetchUsuario();
     fetchLimiteMensal();
@@ -131,7 +133,8 @@ const Home = () => {
           </div>
           <div className="Container-BalancoMensal">
             <h1 className="text-[21px] ml-[37%] mt-[3%] font-black text-green">
-              Balanço Mensal:<span className="text-black"> R$ {balancoMensal}</span>
+              Balanço Mensal:
+              <span className="text-black"> R$ {balancoMensal}</span>
             </h1>
           </div>
         </div>
@@ -150,7 +153,7 @@ const Home = () => {
                 Fechado={FecharModalDespesas}
               />
               <div className="text-[#EF0606] font-black text-[35px] mt-[5%]">
-               R$ {totalDespesas}
+                R$ {totalDespesas}
               </div>
               <div className="text-[10px] ml-[15%] font-black text-green">
                 Limite de Gastos:
@@ -181,7 +184,7 @@ const Home = () => {
                 />
               </div>
               <div className="text-[#156808] font-black text-[35px] mt-[5%]">
-               R$ {totalReceitas}
+                R$ {totalReceitas}
               </div>
               <div className="text-[15px] mt-[5%] font-black text-green">
                 Receitas Fixas:

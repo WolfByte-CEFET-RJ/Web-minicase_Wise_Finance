@@ -10,61 +10,71 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
   const [despesasFixas, setDespesasFixas] = useState([]);
   const [despesasVariaveis, setDespesasVariaveis] = useState([]);
   const { userID, token } = useContext(AuthContext);
-  const valorTotalDespesasFixas = despesasFixas.reduce((acc, despesa) => acc + parseFloat(despesa.Valor), 0).toFixed(2);
-  const totalDespesasFixas = "R$" + valorTotalDespesasFixas
-  const valorTotalDespesasVariaveis = despesasVariaveis.reduce((acc, despesa) => acc + parseFloat(despesa.Valor), 0).toFixed(2);
-  const totalDespesasVariaveis = "R$" + valorTotalDespesasVariaveis
+  const valorTotalDespesasFixas = despesasFixas
+    .reduce((acc, despesa) => acc + parseFloat(despesa.Valor), 0)
+    .toFixed(2);
+  const totalDespesasFixas = "R$" + valorTotalDespesasFixas;
+  const valorTotalDespesasVariaveis = despesasVariaveis
+    .reduce((acc, despesa) => acc + parseFloat(despesa.Valor), 0)
+    .toFixed(2);
+  const totalDespesasVariaveis = "R$" + valorTotalDespesasVariaveis;
   const api = useApi();
 
   const [estadoModalAdicionarFixas, setEstadoModalAdicionarFixas] =
-  useState(false);
+    useState(false);
   const [estadoModalAdicionarVariaveis, setEstadoModalAdicionarVariaveis] =
-  useState(false);
+    useState(false);
 
-const AbrirModalAdicionarFixas = () => {
-  setEstadoModalAdicionarFixas(true);
-};
+  const AbrirModalAdicionarFixas = () => {
+    setEstadoModalAdicionarFixas(true);
+  };
 
-const FecharModalAdicionarFixas = () => {
-  setEstadoModalAdicionarFixas(false);
-};
-const AbrirModalAdicionarVariaveis = () => {
-  setEstadoModalAdicionarVariaveis(true);
-};
+  const FecharModalAdicionarFixas = () => {
+    setEstadoModalAdicionarFixas(false);
+  };
+  const AbrirModalAdicionarVariaveis = () => {
+    setEstadoModalAdicionarVariaveis(true);
+  };
 
-const FecharModalAdicionarVariaveis = () => {
-  setEstadoModalAdicionarVariaveis(false);
-};
+  const FecharModalAdicionarVariaveis = () => {
+    setEstadoModalAdicionarVariaveis(false);
+  };
 
-const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-const handleSliderChange = (event) => {
-  setProgress(event.target.value);
-};
+  const handleSliderChange = (event) => {
+    setProgress(event.target.value);
+  };
 
-const min = 0;
-const max = 30000;
+  const min = 0;
+  const max = 30000;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const despesasFixasData = await api.get("http://localhost:5000/despesa_fixa/", {
-          body: {
-            userId: userID,
+        const despesasFixasData = await api.get(
+          "http://localhost:5000/despesa_fixa/",
+          {
+            body: {
+              userId: userID,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        );
         setDespesasFixas(despesasFixasData.data);
-        const despesasVariaveisData = await api.get("http://localhost:5000/despesa_var/", {
-          body: {
-            userId: userID,
+        const despesasVariaveisData = await api.get(
+          "http://localhost:5000/despesa_var/",
+          {
+            body: {
+              userId: userID,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        );
         setDespesasVariaveis(despesasVariaveisData.data);
       } catch (error) {
         console.log(error);
@@ -107,14 +117,14 @@ const max = 30000;
             Fechado={FecharModalAdicionarFixas}
           />
           <div className="w-[87%] h-[100px] overflow-auto mt-[10px]">
-          {despesasFixas.map((despesa, i) => (
-            <DespesasFixasGerador
-              key={despesa.ID}
-              id={despesa.ID}
-              nome={despesa.Nome}
-              valor={despesa.Valor}
-            />
-          ))}
+            {despesasFixas.map((despesa, i) => (
+              <DespesasFixasGerador
+                key={despesa.ID}
+                id={despesa.ID}
+                nome={despesa.Nome}
+                valor={despesa.Valor}
+              />
+            ))}
           </div>
         </div>
 
@@ -129,19 +139,19 @@ const max = 30000;
               Adicionar
             </button>
             <ModalDespesasVariaveis
-            Aberto={estadoModalAdicionarVariaveis}
-            Fechado={FecharModalAdicionarVariaveis}
-          />
-          <div className="w-[87%] h-[100px] overflow-auto mt-[10px]">
-          {despesasVariaveis.map((despesa, i) => (
-            <DespesasVariaveisGerador
-              key={despesa.ID}
-              id={despesa.ID}
-              nome={despesa.Nome}
-              valor={despesa.Valor}
+              Aberto={estadoModalAdicionarVariaveis}
+              Fechado={FecharModalAdicionarVariaveis}
             />
-          ))}
-          </div>
+            <div className="w-[87%] h-[100px] overflow-auto mt-[10px]">
+              {despesasVariaveis.map((despesa, i) => (
+                <DespesasVariaveisGerador
+                  key={despesa.ID}
+                  id={despesa.ID}
+                  nome={despesa.Nome}
+                  valor={despesa.Valor}
+                />
+              ))}
+            </div>
             <div className=" mt-[3%]">
               <div className="text-center mt-4 ">
                 <h1 className="mr-[3%]">Limite de gastos</h1>

@@ -42,29 +42,37 @@ const Sidebar = () => {
       toast.error("Falha ao realizar o logout");
     }
   }
- 
 
   async function gerarRelatorio() {
     try {
-      const response = await api.get(`http://localhost:5000/relatorio/${currentMonth}/${currentYear}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.get(
+        `http://localhost:5000/relatorio/${currentMonth}/${currentYear}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob",
         },
-      });
-  
-      console.log("Resposta da API:", response.data);
-  
-      setUrlRelatorio(response.data.Link_Relatorio)
-  
-      window.open("/Web-minicase_Wise_Finance/backend/src/core/servicos/relatorios/relatorio_13_2023_12.pdf");
-      
-      
-  
+      );
+
+      console.log("Resposta da API:", response);
+
+      // Assume que a resposta da API contém o caminho local do arquivo
+      const filePath = response.data.Link_Relatorio;
+
+      // Construa a URL completa do arquivo
+      const url = `http://localhost:5000${filePath}`;
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("target", "_blank"); // Abre em uma nova aba/janela
+      link.click();
     } catch (error) {
       console.error(error);
       toast.error("Falha ao baixar relatório");
     }
   }
+
   return (
     <div
       className={`w-20 h-screen font-black text-white transition-[width] duration-[0.1s] ease-[ease] p-5

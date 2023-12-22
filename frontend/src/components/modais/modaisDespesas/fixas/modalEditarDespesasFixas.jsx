@@ -20,24 +20,27 @@ const ModalDespesasFixas = ({ idDespesa, Aberto, Fechado }) => {
   function formatarDataParaEnvio(data) {
     const dataFormatada = new Date(data);
     const ano = dataFormatada.getFullYear();
-    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
-    const dia = dataFormatada.getDate().toString().padStart(2, '0');
-  
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, "0");
+    const dia = dataFormatada.getDate().toString().padStart(2, "0");
+
     return `${ano}-${mes}-${dia}`;
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userData = await api.get(`http://localhost:5000/despesa_fixa/${idDespesa}`, {
-          body: {
-            userId: userID,
-            despesaFixalId: idDespesa,
+        const userData = await api.get(
+          `http://localhost:5000/despesa_fixa/${idDespesa}`,
+          {
+            body: {
+              userId: userID,
+              despesaFixalId: idDespesa,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        );
         setUserData(userData.data);
       } catch (error) {
         console.log(error);
@@ -52,7 +55,7 @@ const ModalDespesasFixas = ({ idDespesa, Aberto, Fechado }) => {
   async function handleEnvio(event) {
     event.preventDefault();
     const body = {
-      userId:  userID,
+      userId: userID,
       despesaId: idDespesa,
       nome: nome,
       valor: preco,
@@ -60,18 +63,21 @@ const ModalDespesasFixas = ({ idDespesa, Aberto, Fechado }) => {
       dataPagamento: formatarDataParaEnvio(dataAtual),
     };
     try {
-      const response = await api.patch(`http://localhost:5000/despesa_fixa/${idDespesa}`, body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.patch(
+        `http://localhost:5000/despesa_fixa/${idDespesa}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       if (response.data.status === true) {
         toast.success("Despesa Fixa alterada com sucesso!");
         Fechado();
-      } else if (response.data.status === false){
-        toast.error(response.data.message.toString())
+      } else if (response.data.status === false) {
+        toast.error(response.data.message.toString());
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +101,7 @@ const ModalDespesasFixas = ({ idDespesa, Aberto, Fechado }) => {
             Lembrando que essa é uma despesa fixa e se manterá todo mês
           </h1>
           <div>
-            <form 
+            <form
               className="flex flex-col items-center text-[15px]"
               onSubmit={handleEnvio}
             >
@@ -127,13 +133,13 @@ const ModalDespesasFixas = ({ idDespesa, Aberto, Fechado }) => {
                   onChange={(event) => handleChange(event, setPreco)}
                 />
               </div>
-              <button 
+              <button
                 className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
                 type="submit"
               >
                 Salvar
               </button>
-              <button 
+              <button
                 className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
                 onClick={Fechado}
               >

@@ -19,34 +19,37 @@ const ModalReceitasVariaveis = ({ Aberto, Fechado }) => {
   function formatarDataParaEnvio(data) {
     const dataFormatada = new Date(data);
     const ano = dataFormatada.getFullYear();
-    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
-    const dia = dataFormatada.getDate().toString().padStart(2, '0');
-  
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, "0");
+    const dia = dataFormatada.getDate().toString().padStart(2, "0");
+
     return `${ano}-${mes}-${dia}`;
   }
 
   async function handleEnvio(event) {
     event.preventDefault();
     const body = {
-      userId:  userID,
+      userId: userID,
       nome: nome,
       valor: preco,
       descricao: descricao,
       dataPagamento: formatarDataParaEnvio(dataAtual),
     };
     try {
-      const response = await api.post("http://localhost:5000/receita_var", body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.post(
+        "http://localhost:5000/receita_var",
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       if (response.data.status === true) {
         toast.success("Receita Variável adicionada com sucesso!");
         Fechado();
-      } else if (response.data.status === false){
-        toast.error(response.data.message.toString())
+      } else if (response.data.status === false) {
+        toast.error(response.data.message.toString());
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -69,10 +72,10 @@ const ModalReceitasVariaveis = ({ Aberto, Fechado }) => {
             Lembrando que essa é uma receita variável e será apagada após um mês
           </h1>
           <div>
-            <form 
+            <form
               className="flex flex-col items-center text-[15px]"
               onSubmit={handleEnvio}
-              >
+            >
               <div className="mb-30 mt-[20px]">
                 <h1 className="text-black">Nome Receita:</h1>
                 <input
@@ -101,16 +104,16 @@ const ModalReceitasVariaveis = ({ Aberto, Fechado }) => {
                   onChange={(event) => handleChange(event, setPreco)}
                 />
               </div>
-              <button 
+              <button
                 className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
                 type="submit"
-                >
+              >
                 Salvar
               </button>
-              <button 
+              <button
                 className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
                 onClick={Fechado}
-                >
+              >
                 Cancelar
               </button>
             </form>

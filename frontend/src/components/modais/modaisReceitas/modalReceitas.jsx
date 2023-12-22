@@ -10,10 +10,14 @@ const ModalReceita = ({ Aberto, Fechado }) => {
   const [receitasFixas, setReceitasFixas] = useState([]);
   const [receitasVariaveis, setReceitasVariaveis] = useState([]);
   const { userID, token } = useContext(AuthContext);
-  const valorTotalReceitasFixas = receitasFixas.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0).toFixed(2);
-  const totalReceitasFixas = "R$" + valorTotalReceitasFixas
-  const valorTotalReceitasVariaveis = receitasVariaveis.reduce((acc, receita) => acc + parseFloat(receita.Valor), 0).toFixed(2);
-  const totalReceitasVariaveis = "R$" + valorTotalReceitasVariaveis
+  const valorTotalReceitasFixas = receitasFixas
+    .reduce((acc, receita) => acc + parseFloat(receita.Valor), 0)
+    .toFixed(2);
+  const totalReceitasFixas = "R$" + valorTotalReceitasFixas;
+  const valorTotalReceitasVariaveis = receitasVariaveis
+    .reduce((acc, receita) => acc + parseFloat(receita.Valor), 0)
+    .toFixed(2);
+  const totalReceitasVariaveis = "R$" + valorTotalReceitasVariaveis;
   const api = useApi();
 
   const [estadoModalAdicionarFixas, setEstadoModalAdicionarFixas] =
@@ -40,23 +44,29 @@ const ModalReceita = ({ Aberto, Fechado }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const receitasFixasData = await api.get("http://localhost:5000/receita_fixa/", {
-          body: {
-            userId: userID,
+        const receitasFixasData = await api.get(
+          "http://localhost:5000/receita_fixa/",
+          {
+            body: {
+              userId: userID,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        );
         setReceitasFixas(receitasFixasData.data);
-        const receitasVariaveisData = await api.get("http://localhost:5000/receita_var/", {
-          body: {
-            userId: userID,
+        const receitasVariaveisData = await api.get(
+          "http://localhost:5000/receita_var/",
+          {
+            body: {
+              userId: userID,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        );
         setReceitasVariaveis(receitasVariaveisData.data);
       } catch (error) {
         console.log(error);
@@ -80,7 +90,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
           alt="Fechar"
           src="X.png"
           onClick={Fechado}
-          />
+        />
         <h1 className=" mt-[-3.6%] ml-[40%] text-[50px] font-black text-green">
           Receitas
         </h1>
@@ -99,14 +109,14 @@ const ModalReceita = ({ Aberto, Fechado }) => {
             Fechado={FecharModalAdicionarFixas}
           />
           <div className="w-[87%] h-[180px] overflow-auto mt-[10px]">
-          {receitasFixas.map((receita, i) => (
-            <ReceitasFixasGerador
-              key={receita.ID}
-              id={receita.ID}
-              nome={receita.Nome}
-              valor={receita.Valor}
-            />
-          ))}
+            {receitasFixas.map((receita, i) => (
+              <ReceitasFixasGerador
+                key={receita.ID}
+                id={receita.ID}
+                nome={receita.Nome}
+                valor={receita.Valor}
+              />
+            ))}
           </div>
         </div>
 
@@ -125,14 +135,14 @@ const ModalReceita = ({ Aberto, Fechado }) => {
               Fechado={FecharModalAdicionarVariaveis}
             />
             <div className="w-[87%] h-[180px] overflow-auto mt-[10px]">
-            {receitasVariaveis.map((receita, i) => (
-            <ReceitasVariaveisGerador
-              key={receita.ID}
-              id={receita.ID}
-              nome={receita.Nome}
-              valor={receita.Valor}
-            />
-          ))}
+              {receitasVariaveis.map((receita, i) => (
+                <ReceitasVariaveisGerador
+                  key={receita.ID}
+                  id={receita.ID}
+                  nome={receita.Nome}
+                  valor={receita.Valor}
+                />
+              ))}
             </div>
           </div>
         </div>

@@ -20,24 +20,27 @@ const ModalReceitasVariaveis = ({ idReceita, Aberto, Fechado }) => {
   function formatarDataParaEnvio(data) {
     const dataFormatada = new Date(data);
     const ano = dataFormatada.getFullYear();
-    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, '0');
-    const dia = dataFormatada.getDate().toString().padStart(2, '0');
-  
+    const mes = (dataFormatada.getMonth() + 1).toString().padStart(2, "0");
+    const dia = dataFormatada.getDate().toString().padStart(2, "0");
+
     return `${ano}-${mes}-${dia}`;
   }
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userData = await api.get(`http://localhost:5000/receita_var/${idReceita}`, {
-          body: {
-            userId: userID,
-            receitaVarId: idReceita,
+        const userData = await api.get(
+          `http://localhost:5000/receita_var/${idReceita}`,
+          {
+            body: {
+              userId: userID,
+              receitaVarId: idReceita,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        );
         setUserData(userData.data);
       } catch (error) {
         console.log(error);
@@ -52,7 +55,7 @@ const ModalReceitasVariaveis = ({ idReceita, Aberto, Fechado }) => {
   async function handleEnvio(event) {
     event.preventDefault();
     const body = {
-      userId:  userID,
+      userId: userID,
       receitaId: idReceita,
       nome: nome,
       valor: preco,
@@ -60,18 +63,21 @@ const ModalReceitasVariaveis = ({ idReceita, Aberto, Fechado }) => {
       dataPagamento: formatarDataParaEnvio(dataAtual),
     };
     try {
-      const response = await api.patch(`http://localhost:5000/receita_var/${idReceita}`, body, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await api.patch(
+        `http://localhost:5000/receita_var/${idReceita}`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       if (response.data.status === true) {
         toast.success("Receita Variável alterada com sucesso!");
         Fechado();
-      } else if (response.data.status === false){
-        toast.error(response.data.message.toString())
+      } else if (response.data.status === false) {
+        toast.error(response.data.message.toString());
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -89,13 +95,13 @@ const ModalReceitasVariaveis = ({ idReceita, Aberto, Fechado }) => {
             onClick={Fechado}
           />
           <h1 className=" mt-[-3.6%] ml-[30%] text-[50px] font-black text-green">
-          Receitas Variaveis
+            Receitas Variaveis
           </h1>
           <h1 className=" ml-[33%] text-[10px] font-black text-green">
-          Lembrando que essa é uma receita variável e será apagada após um mês
+            Lembrando que essa é uma receita variável e será apagada após um mês
           </h1>
           <div>
-            <form 
+            <form
               className="flex flex-col items-center text-[15px]"
               onSubmit={handleEnvio}
             >
@@ -127,13 +133,13 @@ const ModalReceitasVariaveis = ({ idReceita, Aberto, Fechado }) => {
                   onChange={(event) => handleChange(event, setPreco)}
                 />
               </div>
-              <button 
+              <button
                 className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
                 type="submit"
               >
                 Salvar
               </button>
-              <button 
+              <button
                 className="border border-black rounded-[9px] bg-[#1E7B71] mb-[10px] text-white h-[31px] w-[380px]"
                 onClick={Fechado}
               >
