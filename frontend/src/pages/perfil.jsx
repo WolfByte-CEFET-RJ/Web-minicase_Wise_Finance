@@ -16,7 +16,6 @@ const Perfil = () => {
   const [editarNome, setEditarNome] = useState(false);
   const [editarPassword, setEditarPassword] = useState(false);
   const [editarPasswordVer, setEditarPasswordVer] = useState(false);
-
   const handleEditartrue = () => {
     setEditarNome(true);
     setEditarPassword(true);
@@ -40,6 +39,7 @@ const Perfil = () => {
           },
         });
 
+        console.log(token);
         console.log("Dados Usuario:", response.data);
         setName(response.data.usuario.Nome);
         setEmail(response.data.usuario.Email);
@@ -54,10 +54,25 @@ const Perfil = () => {
 
   async function handleEnvio(event) {
     event.preventDefault();
-
-    const response = await api.patch("http://localhost:5000/usuario");
-  };
-
+    
+    try {
+      const response = await api.patch("http://localhost:5000/usuario");
+      if (response.data.success === false) {
+        toast.error("Falha ao realizar o login!");
+      }
+      if (response.data.message === "Usuário não encontrado") {
+        toast.error("Usuário não encontrado!");
+      } else if (response.data.message === "Senha inválida") {
+        toast.error("Senha inválida!");
+      } else if (response.data.success === true) {
+        toast.success("Login realizado com sucesso!");
+        // navigate("/home");
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Falha ao realizar o login!");
+    }
+  }
 
 
   return (
@@ -196,9 +211,7 @@ const Perfil = () => {
           </form>
         </div>
       </div>
-      <Sidebar />d
+      <Sidebar />
     </div>
   );
 };
-
-export default Perfil;
