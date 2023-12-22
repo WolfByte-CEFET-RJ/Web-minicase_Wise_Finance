@@ -44,8 +44,6 @@ const Sidebar = () => {
   }
  
 
-
-
   async function gerarRelatorio() {
     try {
       const response = await api.get(`http://localhost:5000/relatorio/${currentMonth}/${currentYear}`, {
@@ -53,9 +51,15 @@ const Sidebar = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+  
       console.log("Resposta da API:", response.data);
-      setUrlRelatorio(response.data.Link_Relatorio);
+  
+      setUrlRelatorio(response.data.Link_Relatorio)
+  
+      window.open("/Web-minicase_Wise_Finance/backend/src/core/servicos/relatorios/relatorio_13_2023_12.pdf");
       
+      
+  
     } catch (error) {
       console.error(error);
       toast.error("Falha ao baixar relatório");
