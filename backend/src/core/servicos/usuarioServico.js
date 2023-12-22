@@ -10,10 +10,10 @@ async function HashPassword(password) {
 
 function validaUpdate(nome, username, senha, senhaConfirmacao) {
   const schema = Joi.object({
-    nome: Joi.string(),
-    username: Joi.string().min(3).max(30),
-    senha: Joi.string().min(4),
-    senhaConfirmacao: Joi.string().valid(Joi.ref('senha')),
+    nome: Joi.string().allow(null),
+    username: Joi.string().min(3).max(30).allow(null),
+    senha: Joi.string().min(4).allow(null),
+    senhaConfirmacao: Joi.string().valid(Joi.ref('senha')).allow(null),
   });
 
   const usuario = { nome, username, senha, senhaConfirmacao };
@@ -71,7 +71,7 @@ async function update(id, nome, username, senha, senhaConfirmacao) {
     const updatedUser = {
       nome: nome,
       username: username,
-      Senha: await HashPassword(senha), // Hash da nova senha
+      Senha: senha?await HashPassword(senha):undefined, // Hash da nova senha (se ela for informada)
     };
 
     await database("usuario")
