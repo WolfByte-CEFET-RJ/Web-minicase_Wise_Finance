@@ -89,7 +89,7 @@ async function geraBalanco(){
 
     const timer = new Date();
     //const mesAtual = 2;
-    const mesAtual = dataAtual.getMonth() + 1;
+    const mesAtual = timer.getMonth() + 1;
     const anoAtual = timer.getFullYear();
 
     for (const user of usuarios) {
