@@ -62,6 +62,7 @@ const Perfil = () => {
       senha: pass,
       senhaConfirmacao: passVer,
     };
+    console.log(body);
     try {
       const response = await api.patch(`http://localhost:5000/usuario`, body, {
         headers: {
@@ -70,6 +71,7 @@ const Perfil = () => {
       });
       if (response.data.status === true) {
         toast.success("Usuario alterado com sucesso!");
+        window.location.reload();
       } else if (response.data.status === false) {
         toast.error(response.data.message.toString());
       }
@@ -91,9 +93,9 @@ const Perfil = () => {
           },
         },
       );
-      if (response.data.status === true) {
+      if (response.data.success === true) {
         toast.success("Usuario deletado com sucesso!");
-      } else if (response.data.status === false) {
+      } else if (response.data.success === false) {
         toast.error(response.data.message.toString());
       }
     } catch (error) {
