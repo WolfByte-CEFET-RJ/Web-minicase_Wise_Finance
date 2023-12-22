@@ -13,6 +13,8 @@ const Perfil = () => {
   const [userName, setUserName] = useState("");
   const [pass, setPass] = useState(null);
   const [passVer, setPassVer] = useState(null);
+  const [newName, setNewName] = useState("");
+  const [newUserName, setNewUserName] = useState("");
   const [editarNome, setEditarNome] = useState(false);
   const [editarPassword, setEditarPassword] = useState(false);
 
@@ -40,9 +42,6 @@ const Perfil = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-
-        console.log(token);
-        console.log("Dados Usuario:", response.data);
         setName(response.data.usuario.Nome);
         setEmail(response.data.usuario.Email);
         setUserName(response.data.usuario.Username);
@@ -58,8 +57,8 @@ const Perfil = () => {
     event.preventDefault();
     const body = {
       updateId: userID,
-      nome: name,
-      username: userName,
+      nome: newName,
+      username: newUserName,
       senha: pass,
       senhaConfirmacao: passVer,
     };
@@ -71,6 +70,29 @@ const Perfil = () => {
       });
       if (response.data.status === true) {
         toast.success("Usuario alterado com sucesso!");
+      } else if (response.data.status === false) {
+        toast.error(response.data.message.toString());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  async function Delete() {
+    try {
+      const response = await api.delete(
+        `http://localhost:5000/usuario`,
+        {
+          body: {
+            userId: userID,
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      if (response.data.status === true) {
+        toast.success("Usuario deletado com sucesso!");
       } else if (response.data.status === false) {
         toast.error(response.data.message.toString());
       }
@@ -113,7 +135,7 @@ const Perfil = () => {
                     id="nome"
                     className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
                     placeholder={name}
-                    onChange={(event) => handleChange(event, setName)}
+                    onChange={(event) => handleChange(event, setNewName)}
                   />
                 ) : (
                   <h1 className="text-[#A9A9AC] w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
@@ -138,7 +160,7 @@ const Perfil = () => {
                     id="nome"
                     className="w-[89%] h-[100%] ml-[-5px] pl-[5px]"
                     placeholder={userName}
-                    onChange={(event) => handleChange(event, setUserName)}
+                    onChange={(event) => handleChange(event, setNewUserName)}
                   />
                 ) : (
                   <h1 className="text-[#A9A9AC] w-[89%] h-[100%] ml-[-5px] pl-[5px]  pt-[3%]">
@@ -187,7 +209,6 @@ const Perfil = () => {
                     <input
                       id="nome"
                       className="border-2 border-green rounded-[5px] w-[380px] h-[51px] mb-[30px] pl-[5px]"
-                      placeholder={passVer}
                       onChange={(event) => handleChange(event, setPassVer)}
                     />
                   </div>
@@ -206,7 +227,10 @@ const Perfil = () => {
                 </button>
               </div>
             ) : (
-              <button className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]">
+              <button 
+                className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]"
+                onClick={Delete}  
+              >
                 Deletar
               </button>
             )}
