@@ -51,5 +51,4 @@ async function readOneRelatorios(req = request, res = response){
 module.exports = { 
   readAllRelatorios,
   readOneRelatorios,
-  gerarRelatorio 
 };

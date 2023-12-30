@@ -4,7 +4,6 @@ require('dotenv').config();
 
 async function readBalanco (req = request, res = response) {
     try {
-  
         const user = req.usuario.id;
         const mes = req.params.mes;
         const ano = req.params.ano;
@@ -12,11 +11,10 @@ async function readBalanco (req = request, res = response) {
         const balanco = await readByUsuario(user, mes, ano); 
 
         res.json(balanco);
-  
+
     } catch (error) {
       console.error("Erro:", error);
       res.status(500).json({ error: "Erro" });
-    
   }
 };
 

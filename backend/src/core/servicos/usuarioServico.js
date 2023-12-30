@@ -2,26 +2,28 @@ const database = require('../../database/index');
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 
-// Função para gerar um hash de senha
+// Cria hash da senha
 async function HashPassword(password) {
   const saltRounds = 10;
   return await bcrypt.hash(password, saltRounds);
 }
 
-function validaUpdate(nome, username) {
+function validaUpdate(nome, username, senha, senhaConfirmacao) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[A-Za-z\s]+$/),
-    username: Joi.string().alphanum().min(3).max(30)
+    nome: Joi.string(),
+    username: Joi.string().min(3).max(30),
+    senha: Joi.string().min(4),
+    senhaConfirmacao: Joi.string().valid(Joi.ref('senha')),
   });
 
-  const usuario = { nome, username };
+  const usuario = { nome, username, senha, senhaConfirmacao };
   return schema.validate(usuario, { abortEarly: false });
 }
 
 function validaCadastro(nome, username, email, senha, senhaConfirmacao) {
   const schema = Joi.object({
-    nome: Joi.string().regex(/^[A-Za-z\s]+$/).required(),
-    username: Joi.string().alphanum().min(3).max(30).required(),
+    nome: Joi.string().required(),
+    username: Joi.string().min(3).max(30).required(),
     email: Joi.string().email().required(),
     senha: Joi.string().min(4).required(),
     senhaConfirmacao: Joi.string().valid(Joi.ref('senha')).required(),
@@ -31,7 +33,7 @@ function validaCadastro(nome, username, email, senha, senhaConfirmacao) {
   return schema.validate(usuario, { abortEarly: false });
 }
 
-async function update(id, nome, username) {
+async function update(id, nome, username, senha, senhaConfirmacao) {
   try {
     const usuario = await database("usuario")
       .select("*")
@@ -42,15 +44,22 @@ async function update(id, nome, username) {
       throw new Error("Usuário não encontrado!");
     }
 
-    const userUsername = await database("Usuario")
-      .select("*")
-      .where({ Username: username })
-      .first();
-    if (userUsername) {
-      throw new Error("Username indisponível!");
+    if(username){
+      const userUsername = await database("Usuario")
+        .select("*")
+        .where({ Username: username })
+        .first();
+      if (userUsername) {
+        throw new Error("Username indisponível!");
+      }
     }
 
-    const { error } = validaUpdate(nome, username);
+    let camposSenha = senha ? (senhaConfirmacao ? false : true ) : false; 
+    if(camposSenha){
+      throw new Error("Os campos se senha precisam ser ou ambos ou nenhum preenchido");
+    }
+
+    const { error } = validaUpdate(nome, username, senha, senhaConfirmacao);
     if (error) {
       const customErrors = error.details.map(err => err.message);
       return {
@@ -61,8 +70,9 @@ async function update(id, nome, username) {
 
     const updatedUser = {
       nome: nome,
-      username: username
-    }
+      username: username,
+      Senha: senha?await HashPassword(senha):undefined, // Hash da nova senha (se ela for informada)
+    };
 
     await database("usuario")
       .update(updatedUser)
@@ -174,7 +184,7 @@ async function cadastrarUsuario(nome, username, email, senha, senhaConfirmacao) 
     };
 
     const insertedUser = await database("Usuario").insert(newUser);
-    const idUser = insertedUser[0]; // Assume que o retorno inclui o ID inserido
+    const idUser = insertedUser[0]; // Referencia ao usuario novo
 
     //DEFINE LIMITE
     const data = new Date();
