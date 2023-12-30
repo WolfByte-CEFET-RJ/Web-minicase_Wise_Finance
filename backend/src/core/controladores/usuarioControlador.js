@@ -42,34 +42,37 @@ async function readOneControlador (req = request, res = response) {
 
 async function deleteControlador(req = request, res = response) {
   const deleteId = req.usuario.id;
-  
+
   try {
     const deleteServiceResponse = await deletarUsuario(deleteId);
-    
+
     if (deleteServiceResponse.status) {
-      
+      res.cookie("access_token", '', { expires: new Date(0) });
+
+      res.clearCookie("access_token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+      });
+
       res.status(200).json({
         success: true,
         message: "Usuário excluído com sucesso.",
       });
-
     } else {
       res.status(404).json({
         success: false,
         message: deleteServiceResponse.message,
       });
     }
-
   } catch (error) {
-
     console.error("Erro:", error);
     res.status(500).json({
       success: false,
       message: "Ocorreu um erro ao excluir o usuário.",
     });
-
   }
 }
+
 
 async function cadastroControlador(req = request, res = response) {
   try {
