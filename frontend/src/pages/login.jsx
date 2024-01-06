@@ -42,23 +42,17 @@ const Login = () => {
     }
   }
   return (
-    <div className="w-screen">
-      <div
-        className=" fixed w-[45%] mt-[-12%] h-screen bg-no-repeat bg-cover flex items-center	justify-center flex-col"
-        style={{ backgroundImage: "url(/Fundo.svg)" }}
-      >
-        <img
-          className="mt-[-5%]"
-          alt="ramoLogo"
-          src="/android-chrome-192x192.png"
-        />
-        <h1 className="mt-[10%] font-black text-[white] text-[48px]">
-          Wise Finance
-        </h1>
+    <div className="flex flex-col md:flex-row min-h-screen">
+          <div className="w-full md:w-1/2 bg-cover flex items-center justify-center" style={{ backgroundImage: "url(/Fundo.svg)" }}>
+      <div className="text-center">
+        <img className="ml-[10%] mt-[-5%] w-[80%] h-[80%]" alt="ramoLogo" src="/android-chrome-192x192.png" />
+        <h1 className="mt-[10%] font-black text-white text-5xl">Wise Finance</h1>
       </div>
-      <div className=" mt-[12%] ml-[60%] w-[30%]">
+    </div>
+
+      <div className=" w-full md:w-1/2 flex items-center justify-center">
         <form
-          className="flex justify-items-center flex-col h-[100%] w-[100%] "
+          className="w-full md:w-3/4 lg:w-2/4 xl:w-1/3"
           onSubmit={handleEnvio}
         >
           <img
