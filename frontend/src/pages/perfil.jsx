@@ -11,8 +11,8 @@ const Perfil = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
-  const [pass, setPass] = useState(null);
-  const [passVer, setPassVer] = useState(null);
+  const [pass, setPass] = useState(undefined);
+  const [passVer, setPassVer] = useState(undefined);
   const [newName, setNewName] = useState("");
   const [newUserName, setNewUserName] = useState("");
   const [editarNome, setEditarNome] = useState(false);
@@ -71,7 +71,7 @@ const Perfil = () => {
       });
       if (response.data.status === true) {
         toast.success("Usuario alterado com sucesso!");
-        window.location.reload();
+        window.location.href = "http://localhost:3000/perfil"
       } else if (response.data.status === false) {
         toast.error(response.data.message.toString());
       }

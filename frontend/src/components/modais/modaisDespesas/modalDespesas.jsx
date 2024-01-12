@@ -1,6 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import useApi from "../../../hooks/useApi";
 import { AuthContext } from "../../auth";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import ModalDespesasFixas from "./fixas/modalAdicionarDespesasFIxas";
 import ModalDespesasVariaveis from "./variaveis/modalAdicionarDespesasVariaveis";
 import DespesasFixasGerador from "../../modalComponent/despesas/despesaFixaGerador";
@@ -39,16 +41,43 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
   const FecharModalAdicionarVariaveis = () => {
     setEstadoModalAdicionarVariaveis(false);
   };
-
+  
   const [progress, setProgress] = useState(0);
-
+  
   const handleSliderChange = (event) => {
     setProgress(event.target.value);
   };
-
+  
+  const handleSliderChangeComplete = () => {
+    handleEnvio(progress);
+  };
+  
+  
   const min = 0;
   const max = 30000;
 
+  const handleEnvio = async () => {
+    console.log(progress);
+    try {
+      const response = await api.patch(
+        "http://localhost:5000/limite_mensal",
+        { val: progress },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.status === true) {
+        toast.success(response.data.message.toString());
+      } else if (response.data.status === false) {
+        toast.error(response.data.message.toString());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -152,6 +181,9 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
                 />
               ))}
             </div>
+            {estadoModalAdicionarFixas || estadoModalAdicionarVariaveis ? (
+                <div />
+            ) : (
             <div className=" mt-[3%]">
               <div className="text-center mt-4 ">
                 <h1 className="mr-[3%]">Limite de gastos</h1>
@@ -161,6 +193,7 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
                     id="progressSlider"
                     value={progress}
                     onChange={handleSliderChange}
+                    onMouseUp={handleSliderChangeComplete}
                     min={min}
                     max={max}
                     className="w-full  p-1"
@@ -174,6 +207,7 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
                 <br />
               </div>
             </div>
+            )}
           </div>
         </div>
       </div>
