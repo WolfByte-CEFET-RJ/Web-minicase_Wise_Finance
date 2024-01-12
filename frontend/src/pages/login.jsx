@@ -74,7 +74,7 @@ const Login = () => {
               alt=""
               className="ml-auto mr-auto w-174 h-171"
             />
-            <h1 className="mt-[10%] text-[30px] font-black text-green flex items-center justify-center">
+            <h1 className="mt-[10%] text-[25px] font-black text-green flex items-center justify-center">
                 Wise Finance
             </h1>
             <div className="ml-4 mb-4">
@@ -161,7 +161,7 @@ const Login = () => {
               <div className="ml-[40px] mb-[20px]">
                 <h1 className="mt-[37px] font-medium">Login:</h1>
                 <input
-                  className="pt-3 w-[90%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
+                  className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
                   type="text"
                   name="login"
                   id="login"
@@ -171,7 +171,7 @@ const Login = () => {
                 <h1 className="mt-[10px] font-medium">Senha:</h1>
                 <div className="w-full flex justify-between items-center">
                   <input
-                    className="pt-3 w-[90%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
+                    className="pt-3 w-[100%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
                     type={showPassword ? "text" : "password"}
                     name="pass"
                     id="pass"
@@ -183,27 +183,27 @@ const Login = () => {
                       size={30}
                       weight="duotone"
                       onClick={handlePasswordToggle}
-                      className="ml-[-90%] h-[98%] mr-[13%] pt-1.5 cursor-pointer"
+                      className="ml-[-90%] h-[95%] mr-[7%] pt-1.5 cursor-pointer"
                     />
                   ) : (
                     <Eye
                       size={30}
                       weight="duotone"
                       onClick={handlePasswordToggle}
-                      className="ml-[-90%] h-[98%] mr-[13%] pt-1.5 cursor-pointer"
+                      className="ml-[-90%] h-[95%] mr-[7%] pt-1.5 cursor-pointer"
                     />
                   )}
                 </div>
               </div>
               <div className="ml-[40px]">
                 <button
-                  className="w-[90%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
+                  className="w-[100%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
                   type="submit"
                 >
                   Entrar
                 </button>
                 <button
-                  className=" w-[90%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
+                  className=" w-[100%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
                   onClick={() => navigate("/cadastro")}
                 >
                   Criar Conta
