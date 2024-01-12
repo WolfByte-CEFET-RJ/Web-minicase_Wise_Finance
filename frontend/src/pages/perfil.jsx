@@ -71,7 +71,7 @@ const Perfil = () => {
       });
       if (response.data.status === true) {
         toast.success("Usuario alterado com sucesso!");
-        window.location.reload();
+        window.location.href = "http://localhost:3000/perfil"
       } else if (response.data.status === false) {
         toast.error(response.data.message.toString());
       }
