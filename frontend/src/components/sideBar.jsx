@@ -50,23 +50,19 @@ const Sidebar = () => {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          },
-          responseType: "blob",
+          }
         },
       );
 
       console.log("Resposta da API:", response);
 
-      // Assume que a resposta da API contém o caminho local do arquivo
+      
       const filePath = response.data.Link_Relatorio;
 
-      // Construa a URL completa do arquivo
-      const url = `http://localhost:5000${filePath}`;
+     
+      navigate(`/relatorio/${filePath}`);
 
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("target", "_blank"); // Abre em uma nova aba/janela
-      link.click();
+      
     } catch (error) {
       console.error(error);
       toast.error("Falha ao baixar relatório");

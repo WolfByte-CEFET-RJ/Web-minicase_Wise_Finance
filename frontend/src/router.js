@@ -4,7 +4,7 @@ import Cadastro from "./pages/cadastro";
 import Login from "./pages/login";
 import Home from "./pages/home";
 import Perfil from "./pages/perfil";
-
+import Relatorio from "./pages/relatorio";
 const routes = [
   {
     path: "/cadastro",
@@ -21,6 +21,11 @@ const routes = [
   {
     path: "/perfil",
     element: <Perfil />,
+  },
+  {
+    path: "/relatorio/:relatorio",
+    element: <Relatorio />,
+    
   },
 ];
 

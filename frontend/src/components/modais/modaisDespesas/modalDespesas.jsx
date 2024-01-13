@@ -7,7 +7,6 @@ import ModalDespesasFixas from "./fixas/modalAdicionarDespesasFIxas";
 import ModalDespesasVariaveis from "./variaveis/modalAdicionarDespesasVariaveis";
 import DespesasFixasGerador from "../../modalComponent/despesas/despesaFixaGerador";
 import DespesasVariaveisGerador from "../../modalComponent/despesas/despesaVariavelGerador";
-
 const ModalDespesa = ({ Aberto, Fechado }) => {
   const [despesasFixas, setDespesasFixas] = useState([]);
   const [despesasVariaveis, setDespesasVariaveis] = useState([]);
@@ -21,23 +20,19 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
     .toFixed(2);
   const totalDespesasVariaveis = "R$" + valorTotalDespesasVariaveis;
   const api = useApi();
-
   const [estadoModalAdicionarFixas, setEstadoModalAdicionarFixas] =
     useState(false);
   const [estadoModalAdicionarVariaveis, setEstadoModalAdicionarVariaveis] =
     useState(false);
-
   const AbrirModalAdicionarFixas = () => {
     setEstadoModalAdicionarFixas(true);
   };
-
   const FecharModalAdicionarFixas = () => {
     setEstadoModalAdicionarFixas(false);
   };
   const AbrirModalAdicionarVariaveis = () => {
     setEstadoModalAdicionarVariaveis(true);
   };
-
   const FecharModalAdicionarVariaveis = () => {
     setEstadoModalAdicionarVariaveis(false);
   };
@@ -47,12 +42,12 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
   const handleSliderChange = (event) => {
     setProgress(event.target.value);
   };
-  
+
   const handleSliderChangeComplete = () => {
     handleEnvio(progress);
   };
-  
-  
+
+
   const min = 0;
   const max = 30000;
 
@@ -77,7 +72,7 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -109,16 +104,13 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
         console.log(error);
       }
     };
-
     if (Aberto) {
       fetchData();
     }
   }, [Aberto, api, userID, token]);
-
   if (!Aberto) {
     return null;
   }
-
   return (
     <div className="w-[100%] h-[100%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  rounded-[96px]">
       <div className="container-modal">
@@ -131,7 +123,6 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
         <h1 className=" mt-[-3.6%] ml-[40%] text-[50px] font-black text-green">
           Despesas
         </h1>
-
         <div className="text-[30px] mt-[2%] ml-[10%] font-black text-green">
           Despesas Fixas:
           <span className="text-[green] ">{totalDespesasFixas}</span>
@@ -156,7 +147,6 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
             ))}
           </div>
         </div>
-
         <div className="border-green border-t-2 w-[80%] ml-[10%] mt-[2%] ">
           <div className="text-[30px] mt-[3%] ml-[0%] font-black text-green">
             Despesas Variaveis:
@@ -214,5 +204,4 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
     </div>
   );
 };
-
 export default ModalDespesa;
