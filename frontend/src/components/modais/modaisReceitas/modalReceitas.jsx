@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import useApi from "../../../hooks/useApi";
+import { AuthContext } from "../../auth";
 import ModalReceitasFixas from "./fixas/modalAdicionarReceitasFixas";
 import ModalReceitasVariaveis from "./variaveis/modalAdicionarReceitasVariaveis";
+import ReceitasFixasGerador from "../../modalComponent/receitas/receitaFixaGerador";
+import ReceitasVariaveisGerador from "../../modalComponent/receitas/receitaVariavelGerador";
 
 const ModalReceita = ({ Aberto, Fechado }) => {
-  const [totalReceitasFixas, setTotalReceitasFixas] = useState("R$2000,00");
-  const [totalReceitasVariaveis, setTotalReceitasVariaveis] =
-    useState("R$2000,00");
-  const [ReceitaFixaUm, setReceitaFixaUm] = useState("R$1000,00");
-  const [ReceitasFixaDois, setReceitasFixaDois] = useState("R$1000,00");
-  const [ReceitaVariavelUm, setReceitaVariavelUm] = useState("R$1000,00");
-  const [ReceitasVariavelDois, setReceitasVariavelDois] = useState("R$1000,00");
+  const [receitasFixas, setReceitasFixas] = useState([]);
+  const [receitasVariaveis, setReceitasVariaveis] = useState([]);
+  const { userID, token } = useContext(AuthContext);
+  const valorTotalReceitasFixas = receitasFixas
+    .reduce((acc, receita) => acc + parseFloat(receita.Valor), 0)
+    .toFixed(2);
+  const totalReceitasFixas = "R$" + valorTotalReceitasFixas;
+  const valorTotalReceitasVariaveis = receitasVariaveis
+    .reduce((acc, receita) => acc + parseFloat(receita.Valor), 0)
+    .toFixed(2);
+  const totalReceitasVariaveis = "R$" + valorTotalReceitasVariaveis;
+  const api = useApi();
 
   const [estadoModalAdicionarFixas, setEstadoModalAdicionarFixas] =
     useState(false);
@@ -23,6 +32,7 @@ const ModalReceita = ({ Aberto, Fechado }) => {
   const FecharModalAdicionarFixas = () => {
     setEstadoModalAdicionarFixas(false);
   };
+
   const AbrirModalAdicionarVariaveis = () => {
     setEstadoModalAdicionarVariaveis(true);
   };
@@ -31,10 +41,50 @@ const ModalReceita = ({ Aberto, Fechado }) => {
     setEstadoModalAdicionarVariaveis(false);
   };
 
-  if (!Aberto) return null;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const receitasFixasData = await api.get(
+          "http://localhost:5000/receita_fixa/",
+          {
+            body: {
+              userId: userID,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setReceitasFixas(receitasFixasData.data);
+        const receitasVariaveisData = await api.get(
+          "http://localhost:5000/receita_var/",
+          {
+            body: {
+              userId: userID,
+            },
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+        setReceitasVariaveis(receitasVariaveisData.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    if (Aberto) {
+      fetchData();
+    }
+  }, [Aberto, api, userID, token]);
+
+  if (!Aberto) {
+    return null;
+  }
+
   return (
     <div className="w-[100%] h-[100%]  absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white  rounded-[96px]">
-      <div className="container-modal">
+      <div className="container-modal w-[100%] h-[80%]">
         <img
           className="ml-[8%] mt-[5%]"
           alt="Fechar"
@@ -47,9 +97,9 @@ const ModalReceita = ({ Aberto, Fechado }) => {
 
         <div className="text-[30px] mt-[2%] ml-[10%] font-black text-green">
           Receitas Fixas:
-          <span className="text-[#156808] ">{totalReceitasFixas}</span>
+          <span className="text-[green] ">{totalReceitasFixas}</span>
           <button
-            className="  ml-[40%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
+            className="  ml-[30%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
             onClick={AbrirModalAdicionarFixas}
           >
             Adicionar
@@ -58,44 +108,24 @@ const ModalReceita = ({ Aberto, Fechado }) => {
             Aberto={estadoModalAdicionarFixas}
             Fechado={FecharModalAdicionarFixas}
           />
-          <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
-            <span className="mr-[10%] ml-[10%]">Nome Receita</span>{" "}
-            <span className=" text-[#156808]">{ReceitaFixaUm}</span>
-            <div className="ml-[20%]">
-              <button
-                className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black"
-                onClick={AbrirModalAdicionarFixas}
-              >
-                Editar
-              </button>
-              <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
-                Excluir
-              </button>
-            </div>
-          </div>
-          <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
-            <span className="mr-[10%] ml-[10%]">Nome Receita</span>{" "}
-            <span className=" text-[#156808]">{ReceitasFixaDois}</span>
-            <div className="ml-[20%]">
-              <button
-                className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black"
-                onClick={AbrirModalAdicionarFixas}
-              >
-                Editar
-              </button>
-              <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
-                Excluir
-              </button>
-            </div>
+          <div className="w-[87%] h-[180px] overflow-auto mt-[10px]">
+            {receitasFixas.map((receita, i) => (
+              <ReceitasFixasGerador
+                key={receita.ID}
+                id={receita.ID}
+                nome={receita.Nome}
+                valor={receita.Valor}
+              />
+            ))}
           </div>
         </div>
 
         <div className="border-green border-t-2 w-[80%] ml-[10%] mt-[2%] ">
           <div className="text-[30px] mt-[3%] ml-[0%] font-black text-green">
             Receitas Variaveis:
-            <span className="text-[#156808] ">{totalReceitasVariaveis}</span>
+            <span className="text-[green] ">{totalReceitasVariaveis}</span>
             <button
-              className="  ml-[38%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
+              className="  ml-[28%]  w-[180px] h-[23px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black "
               onClick={AbrirModalAdicionarVariaveis}
             >
               Adicionar
@@ -104,35 +134,15 @@ const ModalReceita = ({ Aberto, Fechado }) => {
               Aberto={estadoModalAdicionarVariaveis}
               Fechado={FecharModalAdicionarVariaveis}
             />
-            <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
-              <span className="mr-[10%] ml-[10%]">Nome Receita</span>{" "}
-              <span className=" text-[#156808]">{ReceitaVariavelUm}</span>
-              <div className="ml-[25%]">
-                <button
-                  className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black"
-                  onClick={AbrirModalAdicionarVariaveis}
-                >
-                  Editar
-                </button>
-                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
-                  Excluir
-                </button>
-              </div>
-            </div>
-            <div className="text-[15px] mt-[2%] font-black text-green flex items-center">
-              <span className="mr-[10%] ml-[10%]">Nome Receita</span>{" "}
-              <span className=" text-[#156808]">{ReceitasVariavelDois}</span>
-              <div className="ml-[25%]">
-                <button
-                  className=" mr-5 w-[105px] h-[20px] rounded-[96px] bg-[#1E7B71] text-[10px] font-black text-white border border-black"
-                  onClick={AbrirModalAdicionarVariaveis}
-                >
-                  Editar
-                </button>
-                <button className="w-[105px] h-[20px] rounded-[96px] bg-[#EF0606] text-[10px] font-black text-white border border-black">
-                  Excluir
-                </button>
-              </div>
+            <div className="w-[87%] h-[180px] overflow-auto mt-[10px]">
+              {receitasVariaveis.map((receita, i) => (
+                <ReceitasVariaveisGerador
+                  key={receita.ID}
+                  id={receita.ID}
+                  nome={receita.Nome}
+                  valor={receita.Valor}
+                />
+              ))}
             </div>
           </div>
         </div>

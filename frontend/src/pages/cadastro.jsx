@@ -54,12 +54,12 @@ const Cadastro = () => {
   };
   return (
     <div
-      className=" fixed w-screen h-screen bg-no-repeat bg-cover flex items-center	justify-center flex-col"
+      className=" w-full min-h-screen bg-no-repeat bg-cover flex items-center justify-center"
       style={{ backgroundImage: "url(/Fundo.svg)" }}
     >
-      <div className="rounded-[60px] bg-[#FFF] md:h-[800px] md:w-[500px] p-[43px] ">
+      <div className="rounded-lg bg-white md:w-96 p-8 ">
         <form
-          className="flex justify-items-center flex-col h-[100%] w-[100%]"
+          className="flex flex-col space-y-4 w-full"
           onSubmit={handleEnvio}
         >
           {name === "" ? (
