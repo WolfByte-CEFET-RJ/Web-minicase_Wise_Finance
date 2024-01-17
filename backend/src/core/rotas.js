@@ -15,6 +15,8 @@ const { readOneRelatorios, readAllRelatorios} = require("./controladores/relator
 const { getTaxaDolar, getTaxaEuro } = require("./controladores/taxaControlador")
 const auth = require("../middleware/auth")
 
+//TESTE DE CONEXÃO
+router.get('/', (req, res) => res.json('Conexão estabelecida.'));
 
 //USUÁRIO
 router.get('/usuario',auth, readOneControlador);
@@ -51,7 +53,6 @@ router.patch('/receita_var/:id_rec',auth, updateReceitaVar);
 router.delete('/receita_var/:id_rec',auth, deleteReceitaVar);
 router.get('/receita_var',auth, getAllReceitaVar_Usuario);
 router.get('/receita_var/:id_rec',auth, getReceitaVarById);
-router.get('/', (req, res) => res.json('foi'));
 
 //LIMITE MENSAL
 router.patch('/limite_mensal', auth, defineLimite);
