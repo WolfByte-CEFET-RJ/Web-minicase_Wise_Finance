@@ -181,7 +181,14 @@ return (
                       <img className="w-[25px] h-[25px] ml-[30%]" id="sidebar-Icon" alt="SimboloPerfil" src="/Perfil.png" />  
                       <span className="text-base font-medium transition-all duration-[0.3s] ease-[ease-in-out] text-[rgb(253,253,253)] ml-[10px]" id="sidebar-text">Perfil</span>
                     </button>
-                   
+                    <button className="flex items-center justify-start w-full h-[60px] bg-[#3a3939] transition-[1s] transition-[background-color] cursor-pointer border-[none]" onClick={() => {gerarRelatorio(); abrirMenu();}} >
+                      <img className="w-[25px] h-[25px] ml-[30%]" id="sidebar-Icon" alt="SimboloBaixar" src="/Baixar.png" />  
+                      <span className="text-base font-medium transition-all duration-[0.3s] ease-[ease-in-out] text-[rgb(253,253,253)] ml-[10px]" id="sidebar-text">Relatório</span>
+                    </button>
+                    <button className="flex items-center justify-start w-full h-[60px] bg-[#3a3939] transition-[1s] transition-[background-color] cursor-pointer border-[none]" onClick={() => {logout(); abrirMenu();}} >
+                      <img className="w-[25px] h-[25px] ml-[30%]" id="sidebar-Icon" alt="SimboloLogout" src="/logout.png" />  
+                      <span className="text-base font-medium transition-all duration-[0.3s] ease-[ease-in-out] text-[rgb(253,253,253)] ml-[10px]" id="sidebar-text">Logout</span>
+                    </button>
                   </div>
                 </div>
               </div>

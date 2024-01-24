@@ -97,7 +97,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-no-repeat bg-cover relative" style={{ backgroundImage: "url(/Fundo.svg)" }}>
       <Sidebar />
-      {/* {estadoModalReceitas || estadoModalDespesas ? (
+      {estadoModalReceitas || estadoModalDespesas ? (
         <div className="fixed w-full h-full bg-[rgba(0,0,0,0.7)]  left-0 top-0" />
       ) : (
         <div />
@@ -198,10 +198,10 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
       </div>
       
-    //</div>
+    </div>
   );
 };
 
