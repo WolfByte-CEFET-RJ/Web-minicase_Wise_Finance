@@ -71,7 +71,7 @@ const Perfil = () => {
       });
       if (response.data.status === true) {
         toast.success("Usuario alterado com sucesso!");
-        window.location.href = "http://localhost:3000/perfil"
+        window.location.href = "http://localhost:3000/perfil";
       } else if (response.data.status === false) {
         toast.error(response.data.message.toString());
       }
@@ -79,20 +79,17 @@ const Perfil = () => {
       console.log(error);
     }
   }
-  
+
   async function Delete() {
     try {
-      const response = await api.delete(
-        `http://localhost:5000/usuario`,
-        {
-          body: {
-            userId: userID,
-          },
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      const response = await api.delete(`http://localhost:5000/usuario`, {
+        body: {
+          userId: userID,
         },
-      );
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.data.success === true) {
         toast.success("Usuario deletado com sucesso!");
       } else if (response.data.success === false) {
@@ -229,9 +226,9 @@ const Perfil = () => {
                 </button>
               </div>
             ) : (
-              <button 
+              <button
                 className="border-2 border-black rounded-[9px] bg-[#1E7B71] mb-[10px] font-black text-white h-[31px] w-[380px]"
-                onClick={Delete}  
+                onClick={Delete}
               >
                 Deletar
               </button>

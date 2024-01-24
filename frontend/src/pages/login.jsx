@@ -75,58 +75,58 @@ const Login = () => {
               className="ml-auto mr-auto w-174 h-171"
             />
             <h1 className="mt-[10%] text-[25px] font-black text-green flex items-center justify-center">
-                Wise Finance
+              Wise Finance
             </h1>
             <div className="ml-4 mb-4">
-                <h1 className="mt-[37px] font-medium">Login:</h1>
+              <h1 className="mt-[37px] font-medium">Login:</h1>
+              <input
+                className="pt-3 w-[90%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
+                type="text"
+                name="login"
+                id="login"
+                placeholder="Digite seu nome de usuário ou E-mail"
+                onChange={(event) => handleChange(event, setLogin)}
+              />
+              <h1 className="mt-[10px] font-medium">Senha:</h1>
+              <div className="w-full flex justify-between items-center">
                 <input
                   className="pt-3 w-[90%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
-                  type="text"
-                  name="login"
-                  id="login"
-                  placeholder="Digite seu nome de usuário ou E-mail"
-                  onChange={(event) => handleChange(event, setLogin)}
+                  type={showPassword ? "text" : "password"}
+                  name="pass"
+                  id="pass"
+                  placeholder="Digite sua senha"
+                  onChange={(event) => handleChange(event, setPass)}
                 />
-              <h1 className="mt-[10px] font-medium">Senha:</h1>
-                <div className="w-full flex justify-between items-center">
-                  <input
-                    className="pt-3 w-[90%] h-[46px] border-2 border-green rounded-[9px] pb-[10px] pl-[10px] font-black"
-                    type={showPassword ? "text" : "password"}
-                    name="pass"
-                    id="pass"
-                    placeholder="Digite sua senha"
-                    onChange={(event) => handleChange(event, setPass)}
+                {showPassword ? (
+                  <EyeSlash
+                    size={20}
+                    weight="duotone"
+                    onClick={handlePasswordToggle}
+                    className="ml-[-90%] h-[98%] mr-[13%] pt-1.5 cursor-pointer"
                   />
-                  {showPassword ? (
-                    <EyeSlash
-                      size={20}
-                      weight="duotone"
-                      onClick={handlePasswordToggle}
-                      className="ml-[-90%] h-[98%] mr-[13%] pt-1.5 cursor-pointer"
-                    />
-                  ) : (
-                    <Eye
-                      size={20}
-                      weight="duotone"
-                      onClick={handlePasswordToggle}
-                      className="ml-[-90%] h-[98%] mr-[13%] pt-1.5 cursor-pointer"
-                    />
-                  )}
-                </div>
+                ) : (
+                  <Eye
+                    size={20}
+                    weight="duotone"
+                    onClick={handlePasswordToggle}
+                    className="ml-[-90%] h-[98%] mr-[13%] pt-1.5 cursor-pointer"
+                  />
+                )}
+              </div>
             </div>
             <div className="ml-4">
-                <button
-                  className="w-[90%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
-                  type="submit"
-                >
-                  Entrar
-                </button>
-                <button
-                  className=" w-[90%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
-                  onClick={() => navigate("/cadastro")}
-                >
-                  Criar Conta
-                </button>
+              <button
+                className="w-[90%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
+                type="submit"
+              >
+                Entrar
+              </button>
+              <button
+                className=" w-[90%] h-[100%] mt-[15px] border-2 border-2 border-black rounded-[9px] bg-green text-[#FFF] font-black"
+                onClick={() => navigate("/cadastro")}
+              >
+                Criar Conta
+              </button>
             </div>
           </form>
         </div>

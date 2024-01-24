@@ -25,7 +25,6 @@ const routes = [
   {
     path: "/relatorio/:relatorio",
     element: <Relatorio />,
-    
   },
 ];
 

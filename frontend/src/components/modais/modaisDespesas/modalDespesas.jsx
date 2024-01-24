@@ -36,9 +36,9 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
   const FecharModalAdicionarVariaveis = () => {
     setEstadoModalAdicionarVariaveis(false);
   };
-  
+
   const [progress, setProgress] = useState(0);
-  
+
   const handleSliderChange = (event) => {
     setProgress(event.target.value);
   };
@@ -46,7 +46,6 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
   const handleSliderChangeComplete = () => {
     handleEnvio(progress);
   };
-
 
   const min = 0;
   const max = 30000;
@@ -61,7 +60,7 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       if (response.data.status === true) {
         toast.success(response.data.message.toString());
@@ -172,31 +171,31 @@ const ModalDespesa = ({ Aberto, Fechado }) => {
               ))}
             </div>
             {estadoModalAdicionarFixas || estadoModalAdicionarVariaveis ? (
-                <div />
+              <div />
             ) : (
-            <div className=" mt-[3%]">
-              <div className="text-center mt-4 ">
-                <h1 className="mr-[3%]">Limite de gastos</h1>
-                <div className="relative">
-                  <input
-                    type="range"
-                    id="progressSlider"
-                    value={progress}
-                    onChange={handleSliderChange}
-                    onMouseUp={handleSliderChangeComplete}
-                    min={min}
-                    max={max}
-                    className="w-full  p-1"
-                  />
-                  <div className="flex justify-between">
-                    <span>{min}</span>
-                    <span>{progress}</span>
-                    <span>{max}</span>
+              <div className=" mt-[3%]">
+                <div className="text-center mt-4 ">
+                  <h1 className="mr-[3%]">Limite de gastos</h1>
+                  <div className="relative">
+                    <input
+                      type="range"
+                      id="progressSlider"
+                      value={progress}
+                      onChange={handleSliderChange}
+                      onMouseUp={handleSliderChangeComplete}
+                      min={min}
+                      max={max}
+                      className="w-full  p-1"
+                    />
+                    <div className="flex justify-between">
+                      <span>{min}</span>
+                      <span>{progress}</span>
+                      <span>{max}</span>
+                    </div>
                   </div>
+                  <br />
                 </div>
-                <br />
               </div>
-            </div>
             )}
           </div>
         </div>

@@ -15,7 +15,7 @@ root.render(
     <ToastContainer position="top-center" autoClose={1500} />
     <RecoilRoot>
       <AuthProvider>
-       <Router />
+        <Router />
       </AuthProvider>
     </RecoilRoot>
   </React.StrictMode>,

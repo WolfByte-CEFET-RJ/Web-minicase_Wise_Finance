@@ -58,10 +58,7 @@ const Cadastro = () => {
       style={{ backgroundImage: "url(/Fundo.svg)" }}
     >
       <div className="rounded-lg bg-white md:w-96 p-8 ">
-        <form
-          className="flex flex-col space-y-4 w-full"
-          onSubmit={handleEnvio}
-        >
+        <form className="flex flex-col space-y-4 w-full" onSubmit={handleEnvio}>
           {name === "" ? (
             <img
               src="/ImagemLogin.svg"
